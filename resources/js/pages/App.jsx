@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import Dashboard from '../Layouts/Dashboard'
 
-function App() {
+function App(props) {
   return (
-    <div className="bg-red-400">App</div>
+    <>
+      <div className="">TEst Dashboasdasdasdard Layout</div>
+    </>
   )
 }
-
 export default App

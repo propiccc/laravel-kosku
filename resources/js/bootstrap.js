@@ -37,6 +37,6 @@ var cssRule2 = "display:block;border-radius: 0 3px 3px 0;padding:3px 15px;backgr
 var cssRule = "border-radius: 3px 0 0 3px;padding:3px 15px;background:#35495e;color:#fff;font-size: 12px;font-weight: bold;";
 var cssRule2 = "border-radius:0px;padding:3px 0px;background:#35495e;color:#FF5722;padding-left:0px;font-size: 12px;font-weight: bold;";
 var cssRule3 = "border-radius: 0 3px 3px 0;padding:3px 15px;background:#35495e;color:#108bc3;font-size: 12px;font-weight: bold;";
-console.log("%cThis System Development By Alexandro And Alfian" + "%c@" + "https://www.instagram.com/lex09.__" + "%c@" + "https://www.instagram.com/al.fa_26", cssRule, cssRule2, cssRule3);
+console.log("%cThis System Development By Alexandro And Alfian" + "%c@" + "https://www.instagram.com/lex09.__" + "%c@" + "https://www.instagram.com/al.fa_267/", cssRule, cssRule2, cssRule3);
 
 
