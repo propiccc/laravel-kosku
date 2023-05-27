@@ -28,7 +28,7 @@ function Dashboard({ children, className }) {
 
   return (
     <>
-      <div className="flex w-full bg-gray-200 h-screen max-h-fit scrollbar-hide flex-col lg:flex-row">
+      <div className="flex w-full bg-gray-300 h-screen max-h-fit scrollbar-hide flex-col lg:flex-row">
         <div className="bg-[#00092b] w-full lg:w-80 flex flex-col overflow-auto">
           <div className="h-[106px] border-b-2 border-gray-200 flex items-center">
             <img className='h-[80px] w-[240px] text-white' src="/storage/asset/LogoDashboard.png" alt="logo bmc" />
@@ -62,7 +62,7 @@ function Dashboard({ children, className }) {
           {/* Navabr end */}
 
           {/* Componenet start */}
-          <div className={`bg-gray-200 h-max max-h-fit ${className} py-6 px-6 transition-all duration-500`}>
+          <div className={`bg-gray-300 h-max max-h-fit ${className} py-6 px-6 transition-all duration-500`}>
             {children}
           </div>
           {/* Componenet end */}
