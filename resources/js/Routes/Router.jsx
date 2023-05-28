@@ -3,6 +3,7 @@ import { Routes, Route } from 'react-router-dom'
 import App from '../pages/App'
 import Dashboard from '../Layouts/Dashboard'
 import Test from './../pages/test';
+import Login from '../pages/Auth/Login';
 function Router() {
   return (
     <React.StrictMode>
@@ -11,6 +12,7 @@ function Router() {
       */}
       <Routes>
         <Route path='/' element={<Test />} />
+        <Route path='/@System@bmc' element={<Login />} />
       </Routes>
 
       {/*
