@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { FaRegSun, FaUserAlt } from 'react-icons/fa'
 import Menu from './../Components/Menu';
+import { Link } from 'react-router-dom';
 function Dashboard({ children, className }) {
   const [Time, setTime] = useState(null)
   //setup
-  const Logout = () => {
-    router.post('/logout')
-  }
 
   //functions
-  const HandleZise = () => {
-    setZise(!zise);
-  }
-
   function DateKu() {
     var d = (new Date() + "").split(" ");
     return [d[2], d[1], d[3]].join(" ");
@@ -54,7 +48,7 @@ function Dashboard({ children, className }) {
             </div>
             {/* <div className="flex justify-center items-center text-lg font-semibold ml-4">{header}</div> */}
             <div className="flex justify-center items-center mr-2">
-              {/* <Link href='/' className='btn btn-ghost btn-info'>Home</Link> */}
+              <Link to='/' className='btn btn-ghost btn-info'>Home</Link>
               <button className='btn btn-ghost btn-info' onClick={Logout}>Logout</button>
               {/* <button className='btn btn-circle btn-info' onClick={HandleZise}>Profile</button> */}
             </div>

@@ -24,8 +24,6 @@ function Router() {
           <Dashboard children={<Test />} />
         } />
       </Routes>
-
-
     </React.StrictMode>
   )
 }

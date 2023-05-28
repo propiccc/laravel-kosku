@@ -4,7 +4,7 @@ import Dashboard from '../Layouts/Dashboard'
 function App(props) {
   return (
     <>
-      <div className="">TEst Dashboasdasdasdard Layout</div>
+      <div className="">TE Layout</div>
     </>
   )
 }
