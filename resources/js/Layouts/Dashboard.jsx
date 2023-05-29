@@ -49,7 +49,7 @@ function Dashboard({ children, className }) {
             {/* <div className="flex justify-center items-center text-lg font-semibold ml-4">{header}</div> */}
             <div className="flex justify-center items-center mr-2">
               <Link to='/' className='btn btn-ghost btn-info'>Home</Link>
-              <button className='btn btn-ghost btn-info' onClick={Logout}>Logout</button>
+              {/* <button className='btn btn-ghost btn-info' onClick={Logout}>Logout</button> */}
               {/* <button className='btn btn-circle btn-info' onClick={HandleZise}>Profile</button> */}
             </div>
           </div>
