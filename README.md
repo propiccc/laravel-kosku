@@ -66,14 +66,12 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## How To Run!!!
-<div>
--clone $this->repository
-- cd to clone repository
-- composoer install
-- npm install 
-- php artisan key:generate
-- php artisan migrate --seed
-- npm run dev
-- php artisan serve
-</div>
+-   $this->repository
+-   cd to clone repository
+-   composoer install
+-   npm install 
+-   php artisan key:generate
+-   php artisan migrate --seed
+-   npm run dev
+-   php artisan serve
 
