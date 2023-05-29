@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { FaRegSun, FaUserAlt } from 'react-icons/fa'
 import Menu from './../Components/Menu';
-import { Link } from 'react-router-dom';
+import { Link, Outlet } from 'react-router-dom';
 function Dashboard({ children, className }) {
   const [Time, setTime] = useState(null)
   //setup
@@ -57,7 +57,8 @@ function Dashboard({ children, className }) {
 
           {/* Componenet start */}
           <div className={`bg-gray-300 h-max max-h-fit ${className} py-6 px-6 transition-all duration-500`}>
-            {children}
+            {/* {children} */}
+            <Outlet />
           </div>
           {/* Componenet end */}
         </div>
