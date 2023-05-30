@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Dashboard from '../Layouts/Dashboard'
 
-function App(props) {
+function App() {
   return (
     <>
-      <div className="">TEst Dashboasdasdasdard Layout</div>
+      <div className="">
+        asdasdasd
+      </div>
     </>
   )
 }
