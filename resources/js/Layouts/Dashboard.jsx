@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { FaRegSun, FaUserAlt } from 'react-icons/fa'
 import Menu from './../Components/Menu';
 import { Link, Outlet } from 'react-router-dom';
+
 function Dashboard({ children, className }) {
   const [Time, setTime] = useState(null)
   //setup
@@ -28,14 +29,8 @@ function Dashboard({ children, className }) {
             <img className='h-[80px] w-[240px] text-white' src="/storage/asset/LogoDashboard.png" alt="logo bmc" />
           </div>
           <div className="h-full overflow-y-scroll p-2 py-1 scrollbar-none">
-            {/* <Menu href='/dashboard' name="Dashboard" icon={<FaRegChartBar className={`w-[27px] h-[37px] ${"/dashboard" == window.location.pathname ? 'text-black' : "text-white"}`} />} />
-            <Menu href='/user' name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/user" == window.location.pathname ? 'text-black' : "text-white"}`} />} />
-            <Menu href='/slider' name="Slider" icon={<FaRegImages className={`w-[27px] h-[37px] ${"/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />} />
-            <Menu href='/admin/divisi' name="Divisi" icon={<HiUserGroup className={`w-[27px] h-[37px] ${"/admin/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/admin/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/setting' name="Setting" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/setting' name="Setting" icon={ } /> */}
-            <Menu href='/test' name="Test" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/test" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/test" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/user' name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/user" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/user" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/user' name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/test' name="Test" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />
           </div>
         </div>
         <div className="w-full overflow-y-auto-auto scrollbar-hide">
@@ -57,8 +52,7 @@ function Dashboard({ children, className }) {
 
           {/* Componenet start */}
           <div className={`bg-gray-300 h-max max-h-fit ${className} py-6 px-6 transition-all duration-500`}>
-            {/* {children} */}
-            <Outlet />
+            {children}
           </div>
           {/* Componenet end */}
         </div>

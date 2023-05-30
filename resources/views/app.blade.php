@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Betany Miracle Center</title>
-    <link href={{ asset('storage/asset/LogoBmc.png') }} rel="icon" />
+    <link href={{ asset('storage/asset/LogoBmc.png') }} rel="icon" class="bg-white" />
     @viteReactRefresh
     @vite(['resources/js/app.jsx', 'resources/css/app.css'])
 </head>

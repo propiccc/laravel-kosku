@@ -5,7 +5,10 @@ import Dashboard from '../Layouts/Dashboard'
 import Test from './../pages/test';
 import Login from '../pages/Auth/Login';
 import NotFound from '../pages/Auth/NotFound';
+import Index from '../pages/User/Index';
+
 function Router() {
+
   return (
     <>
       <Routes>
@@ -15,11 +18,11 @@ function Router() {
 
         <Route path="/system">
           <Route path='user' element={
-            <Dashboard children={<App />} />
+            <Dashboard children={<Index />} />
           } />
-          <Route path='test' element={
+          {/* <Route path='test' element={
             <Dashboard children={<Test />} />
-          } />
+          } /> */}
         </Route>
       </Routes>
     </>
