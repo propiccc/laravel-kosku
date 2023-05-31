@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, Suspense } from 'react'
 import { FaRegSun, FaUserAlt } from 'react-icons/fa'
 import Menu from './../Components/Menu';
 import { Link, Outlet } from 'react-router-dom';
 
 function Dashboard({ children, className }) {
   const [Time, setTime] = useState(null)
-  //setup
 
   //functions
   function DateKu() {
@@ -52,13 +51,25 @@ function Dashboard({ children, className }) {
 
           {/* Componenet start */}
           <div className={`bg-gray-300 h-max max-h-fit ${className} py-6 px-6 transition-all duration-500`}>
-            {children}
+            {/* {children} */}
+            <Suspense fallback={<Loading />}>
+              <Outlet />
+            </Suspense>
           </div>
           {/* Componenet end */}
         </div>
       </div>
     </>
   )
+}
+
+function Loading() {
+  return (<>
+    <div className="flex p-4 bg-white rounded-lg shadow-lg justify-center">
+      <span className='text-lg text-center'>Loading...</span>
+
+    </div>
+  </>)
 }
 
 export default Dashboard

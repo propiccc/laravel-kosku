@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -13,32 +14,8 @@ use Illuminate\Support\Facades\Route;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
-Route::post('/login', function (Request $request) {
-    $request->validate([
-        'email' => ['required', 'string'],
-        'password' => ['required', 'string']
-    ]);
-
-    $credentials = [
-        'email' => $request->email,
-        'password' => $request->password
-    ];
-
-    $data = Auth::attempt($credentials);
-    if ($data) {
-        return response()->json([
-            'user' => Auth::user(),
-            'token' => $data
-        ]);
-    };
-    return response()->json([
-        'message' => 'failed to login!'
-    ]);
-
-});
+Route::post('/login', [AuthController::class, 'login']);
 
 Route::middleware('auth')->group(function () {
-    Route::post('/user', function () {
-        return response()->json(['user' => Auth::user()]);
-    });
+    Route::post('/check', [AuthController::class, 'CheckUser']);
 });

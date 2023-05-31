@@ -1,29 +1,42 @@
-import React from 'react'
+import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
-import App from '../pages/App'
 import Dashboard from '../Layouts/Dashboard'
 import Test from './../pages/test';
 import Login from '../pages/Auth/Login';
 import NotFound from '../pages/Auth/NotFound';
-import Index from '../pages/User/Index';
+import PrivateRoute from '../util/PrivateRoute';
+import Guest from '../util/Guest';
+
+const Form = lazy(() => {
+  return new Promise(resolve => {
+    setTimeout(() => resolve(import("../pages/User/Form")), 1000);
+  });
+})
+// const Index = lazy(() => {
+//   return new Promise(resolve => {
+//     setTimeout(() => resolve(import("../pages/User/Index")), 1000);
+//   });
+// })
+const Index = lazy(() => import('../pages/User/Index'));
 
 function Router() {
-
   return (
     <>
       <Routes>
-        <Route path='/*' element={<NotFound />} />
         <Route path='/' element={<Test />} />
-        <Route path='/@System@bmc' element={<Login />} />
+        <Route path='/*' element={<NotFound />} />
 
-        <Route path="/system">
-          <Route path='user' element={
-            <Dashboard children={<Index />} />
-          } />
-          {/* <Route path='test' element={
-            <Dashboard children={<Test />} />
-          } /> */}
+        <Route element={<Guest />}>
+          <Route path='/@System@bmc' element={<Login />} />
         </Route>
+
+        <Route path="/system" element={<PrivateRoute />}>
+          <Route element={<Dashboard />}>
+            <Route path='user' element={<Index />} exact />
+            <Route path='test' element={<Form />} exact />
+          </Route>
+        </Route>
+
       </Routes>
     </>
   )

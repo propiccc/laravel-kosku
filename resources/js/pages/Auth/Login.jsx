@@ -1,11 +1,13 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, redirect, useNavigate } from 'react-router-dom';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 
 function Login() {
 
-
+  const navigate = useNavigate()
   const [animate, setAnimate] = useState(1);
   const [loading, setLoading] = useState(false)
   const [Data, setData] = useState({
@@ -24,11 +26,29 @@ function Login() {
 
   const Login = async () => {
     setLoading(true);
+    // delete axios.defaults.headers.common["Authorization"];
     try {
-      const res = await axios.post('/api/login');
-      console.log(res);
-    } catch (error) {
+      const res = await axios.post('/api/login', Data);
 
+      if (res.data.data.access_token) {
+        var token = `Bearer ${res.data.data.access_token}`;
+        localStorage.setItem("access_token", token);
+        axios.defaults.headers.common["Authorization"] = localStorage.getItem('access_token');
+        console.log('chch', axios.defaults.headers.common['Authorization']);
+
+      } else {
+        return navigate('/')
+      }
+
+      setTimeout(() => {
+        return navigate('/')
+      }, 1000);
+
+    } catch (error) {
+      error.response.data.data.forEach(e => {
+        toast.error(e);
+      });
+      setLoading(false);
     }
   }
 
@@ -45,33 +65,28 @@ function Login() {
 
 
   return (
-    <div className={`bg-gradient-to-r from-purple-700 to-fuchsia-800 h-screen flex justify-center items-center `}>
-      <section className="bg-white bg-opacity-20 p-6 text-center w-[600px] shadow-md rounded-xl max-h-fit border-[1px] border-white">
+    <div className={`bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen flex justify-center items-center `}>
+      <Toaster />
+      <section className="bg-opacity-10 bg-white p-6 text-center w-[600px] shadow-md rounded-xl max-h-fit border-[1px] border-white backdrop-blur-sm animate-background ">
 
         <div className='h-20 w-full flex justify-center mb-5'>
           <img src="/storage/asset/LogoBmc.png" alt="Logo Bmc" className='w-20 h-20 bg-white rounded-[50%]' />
         </div>
-
         <span className='text-xl font-semibold text-white'>Login Your Account Here!</span>
 
-        <div className="flex flex-col text-start mt-5 backdrop-blur-sm">
-
+        <div className="flex flex-col text-start mt-5">
           <div className="flex flex-col mb-10">
-            <input type="text" id="username" className='focus:outline-none focus:border-b-blue-700 bg-transparent border-b-[2px] p-4 text-white transition-colors duration-200 text-lg' placeholder='Username/Email' autoComplete='off' name='username' onChange={HandleChange} />
+            <input type="text" id="username" className='focus:outline-none focus:border-b-blue-500 bg-transparent border-b-[2px] p-4 text-white transition-colors duration-200 text-lg placeholder-white' placeholder='Username/Email' autoComplete='off' name='username' onChange={HandleChange} />
           </div>
-
           <div className="flex flex-col mb-10">
-            <input type="password" id="password" className='focus:outline-none focus:border-b-blue-700 bg-transparent border-b-[2px] p-4 text-white transition-colors duration-200 text-lg' placeholder='Password' autoComplete='off' name='password' onChange={HandleChange} />
+            <input type="password" id="password" className='focus:outline-none focus:border-b-blue-500 bg-transparent border-b-[2px] p-4 text-white transition-colors duration-200 text-lg placeholder-white' placeholder='Password' autoComplete='off' name='password' onChange={HandleChange} />
           </div>
-
-          <div className="flex justify-center w-full mt-2 mb-5">
+          <div className="flex justify-center w-fu ll mt-2 mb-5">
             <button className='bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white font-semibold shadow-white w-full p-2 rounded-lg active:scale-95' onClick={Login} disabled={loading}>{loading ? (<ComLoading />) : "Login"}</button>
           </div>
-
           <div className="flex w-full justify-start font-semibold">
-            <Link className='text-gray-200 hover:text-fuchsia-700' to="/">Back To Home</Link>
+            <Link className='text-gray-200 hover:text-cyan-400' to="/">Back To Home</Link>
           </div>
-
         </div>
       </section>
     </div>
