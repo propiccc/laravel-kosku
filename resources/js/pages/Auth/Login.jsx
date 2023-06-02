@@ -29,26 +29,25 @@ function Login() {
     // delete axios.defaults.headers.common["Authorization"];
     try {
       const res = await axios.post('/api/login', Data);
-
       if (res.data.data.access_token) {
         var token = `Bearer ${res.data.data.access_token}`;
         localStorage.setItem("access_token", token);
-        axios.defaults.headers.common["Authorization"] = localStorage.getItem('access_token');
-        console.log('chch', axios.defaults.headers.common['Authorization']);
-
+        return navigate('/system/user');
       } else {
+        localStorage.removeItem('access_token');
         return navigate('/')
       }
 
-      setTimeout(() => {
-        return navigate('/')
-      }, 1000);
-
     } catch (error) {
-      error.response.data.data.forEach(e => {
-        toast.error(e);
-      });
-      setLoading(false);
+      if (error.response.data.data) {
+        error.response.data.data.forEach(e => {
+          toast.error(e);
+        });
+      } else {
+        toast.error("Username/Password Anda Salah!");
+      }
+    } finally {
+      setLoading(false)
     }
   }
 

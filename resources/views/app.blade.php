@@ -10,9 +10,14 @@
     @vite(['resources/js/app.jsx', 'resources/css/app.css'])
 </head>
 
-<body>
+<body class="">
     {{-- <h1>{{ asset('storage/asset/LogoBmc.png') }}</h1> --}}
     <div id="app"></div>
 </body>
 
 </html>
+<style>
+    body::-webkit-scrollbar {
+        display: none;
+    }
+</style>

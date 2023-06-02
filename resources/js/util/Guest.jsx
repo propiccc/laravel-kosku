@@ -2,30 +2,40 @@ import React, { useEffect, useState } from 'react'
 import { Navigate, Outlet } from 'react-router-dom';
 
 function Guest() {
-  // * setuo
-  const [auth, setAuth] = useState(false)
-  // * req Api
-  const check = async () => {
-    try {
-      const res = await axios.post('/api/check');
-      setAuth(res.data.auth);
-    } catch (error) {
-      setAuth(false);
-    }
-  }
+  const [authenticated, setAuthenticated] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // * chcek user
   useEffect(() => {
-    var a = true
-    if (a) {
-      check()
-    }
-    return () => { a = false }
+    axios.post('/api/check')
+      .then(res => {
+        if (res.data.auth === true) {
+          setAuthenticated(true);
+        } else {
+          setAuthenticated(false);
+        }
+      })
+      .catch(error => {
+        if (error.response && error.response.status === 401) {
+          setAuthenticated(false);
+        }
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
-  return (
-    auth ? <Navigate to="/system/user" /> : <Outlet />
-  )
+  if (loading) {
+    return (<div className='h-screen w-full items-center flex justify-center text-white bg-[#00092b]'>
+      <span className='text-2xl font-semibold'>Loading...</span>
+    </div>)
+  }
+
+  if (authenticated) {
+    return <Navigate to="/system/user" />;
+  } else {
+    return <Outlet />;
+  }
 }
+
 
 export default Guest

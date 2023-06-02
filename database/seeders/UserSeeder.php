@@ -19,5 +19,15 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('admin@123')
         ]);
+        User::create([
+            'name' => 'alex',
+            'email' => 'alex@gmail.com',
+            'password' => Hash::make('admin@123')
+        ]);
+        User::create([
+            'name' => 'test',
+            'email' => 'test@gmail.com',
+            'password' => Hash::make('admin@123')
+        ]);
     }
 }

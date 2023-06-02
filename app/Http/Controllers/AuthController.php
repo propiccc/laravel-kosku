@@ -18,8 +18,8 @@ class AuthController extends Controller
         ]);
 
         if ($validate->fails()) {
-            $errors = $validate->errors();
             $message = [];
+            $errors = $validate->errors();
             foreach ($errors->messages() as $err) {
                 $message[] = $err[0];
             }
@@ -38,8 +38,7 @@ class AuthController extends Controller
                 'access_token' => $token
             ], 200, 'success');
         } else {
-            // Auth::logout();
-            if (Auth::check()) {
+            if (Auth::check() === true) {
                 Auth::logout();
             }
             return response()->json(['message' => 'Faild For Authenticate!'], 400);
