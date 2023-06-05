@@ -22,5 +22,9 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('user')->group(function () {
         Route::post('/', [UserController::class, 'index']);
+        Route::post('/store', [UserController::class, 'store']);
+        Route::post('{uuid}/edit', [UserController::class, 'show']);
+        Route::post('{uuid}/update', [UserController::class, 'update']);
+        Route::delete('{uuid}/delete', [UserController::class, 'delete']);
     });
 });
