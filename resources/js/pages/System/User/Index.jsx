@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react'
-import Add from './../../Components/Button/Add';
+import Add from '../../../Components/Button/Add';
 import Form from './Form';
-import Loading from '../../Components/Loading';
+import Loading from '../../../Components/Loading';
 import axios from 'axios';
-import Delete from './../../Components/Button/Delete';
+import Delete from '../../../Components/Button/Delete';
 import Swal from 'sweetalert2';
-import Edit from './../../Components/Button/Edit';
+import Edit from '../../../Components/Button/Edit';
 import toast, { Toaster } from 'react-hot-toast';
+import { MdOutlineNavigateNext, MdNavigateBefore } from 'react-icons/md'
 
 function DateKu() {
   var d = (new Date() + "").split(" ");
@@ -14,10 +15,12 @@ function DateKu() {
 }
 
 function Index() {
+
   const [type, setType] = useState('create')
   const [toggle, setToggle] = useState(false)
   const [block, setBlock] = useState(true)
   const [User, setUser] = useState([])
+  const [page, setPage] = useState(1)
   const [DataEdit, setDataEdit] = useState([])
   const [Paginate, setPagiante] = useState({
     search: "",
@@ -37,6 +40,8 @@ function Index() {
       }, 600)
     )
   }
+
+
 
   const GetUser = (uuid) => {
     setToggle(false)
@@ -75,9 +80,6 @@ function Index() {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-
-
-        // TODO : Loading 
         Swal.fire({
           title: 'Please Wait !',
           html: 'Loading...',// add html attribute if you want or remove
@@ -102,6 +104,17 @@ function Index() {
         });
       }
     })
+  }
+
+  const HandleSwitchPage = (type) => {
+    switch (type) {
+      case "next":
+        setPage(e => e + 1)
+        break;
+      case "prev":
+        setPage(e => e - 1)
+        break;
+    }
   }
 
   const HandleCancel = () => {
@@ -129,6 +142,14 @@ function Index() {
     }, 700);
     return () => clearTimeout(debounce)
   }, [Paginate])
+
+  useEffect(() => {
+    const debounce = setTimeout(() => {
+      console.log("test");
+    }, 600);
+    return () => clearTimeout(debounce)
+  }, [page])
+
   return (
     <>
       <Toaster />
@@ -140,8 +161,8 @@ function Index() {
         </div>
         <div className="h-[2px] w-full bg-gray-300 my-3"></div>
         <div className="flex justify-between items-center mb-4">
-          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md w-[80px]' value={Paginate.tampilkan} onChange={(e) => setPagiante({ ...Paginate, tampilkan: e.target.value })} />
-          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md' placeholder='Search' value={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.target.value })} />
+          <input type="number" className='p-2 border-[1px] border-gray-400 rounded-md w-[80px]' defaultValue={Paginate.tampilkan} onChange={(e) => setPagiante({ ...Paginate, tampilkan: e.value })} />
+          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md' placeholder='Search' defaultValue={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.value })} />
         </div>
         <div className="overflow-y-auto">
           <table className='w-full'>
@@ -171,18 +192,31 @@ function Index() {
                   </tr>)
                 ))
               }
+
               {/* 
               // TODO: Data Not Found If Data Index Null
               */}
+
+              {User?.data?.length == 0 && !block ? (
+                <tr className='bg-gray-200 h-14'>
+                  <td colSpan={5} className='font-semibold'><span className='ml-1'>Not Found</span></td>
+                </tr>
+              ) : null}
             </tbody>
           </table>
           {/* 
             // TODO : Paginate Navigator
           */}
+          <div className="flex justify-end mt-2">
+            <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => { HandleSwitchPage('prev') }}><MdNavigateBefore className='text-white' /></button>
+            <input type="number" className='h-8 w-8 max-w-fit rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none border-black border-[2px] p-1 mx-1 active:scale-10' defaultValue={page} min={0} />
+            <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => { HandleSwitchPage('next') }}><MdOutlineNavigateNext className='text-white' /></button>
+          </div>
         </div>
       </div>
     </>
   )
 }
+
 
 export default Index

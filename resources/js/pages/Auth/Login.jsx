@@ -26,7 +26,6 @@ function Login() {
 
   const Login = async () => {
     setLoading(true);
-    // delete axios.defaults.headers.common["Authorization"];
     try {
       const res = await axios.post('/api/login', Data);
       if (res.data.data.access_token) {

@@ -83,7 +83,7 @@ class UserController extends Controller
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'min:4'],
+                'name' => ['required', 'string', 'min:4', 'unique:users,name'],
                 'email' => ['required', 'string', 'email'],
                 'password' => ['nullable', 'confirmed'],
             ]);
@@ -96,8 +96,6 @@ class UserController extends Controller
                 }
                 return RestApi::error($message, 400);
             }
-
-            // return RestApi::error(['Data Not Found!'], 404);
 
             $req = $request->all();
             if ($request->password != "" && $request->password != null) {

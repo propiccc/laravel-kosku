@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import Cancel from './../../Components/Button/Cancel';
-import Create from './../../Components/Button/Create';
-import Update from './../../Components/Button/Update';
+import Cancel from '../../../Components/Button/Cancel';
+import Create from '../../../Components/Button/Create';
+import Update from '../../../Components/Button/Update';
 import axios from 'axios';
 import { toast, Toaster } from 'react-hot-toast';
 
