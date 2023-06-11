@@ -2,7 +2,7 @@ import React from 'react'
 
 function Test() {
   return (
-    <div>Iki tes</div>
+    <div className=''></div>
   )
 }
 
