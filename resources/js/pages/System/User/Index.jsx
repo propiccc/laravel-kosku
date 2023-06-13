@@ -41,13 +41,25 @@ function Index() {
     )
   }
 
-
+  const SwitchPage = (url, page) => {
+    setBlock(true)
+    axios.post(url + page, Paginate).then(res => {
+      setUser(res.data);
+    }).catch(error => {
+      setUser([]);
+      console.log(error);
+    }).finally(
+      setTimeout(() => {
+        setBlock(false)
+      }, 600)
+    );
+  }
 
   const GetUser = (uuid) => {
     setToggle(false)
     var url = `/api/user/${uuid}/edit`
     axios.post(url).then(res => {
-      setType('update')
+      setType('update');
       setDataEdit(res.data.data)
       setToggle(true)
     }).catch(error => {
@@ -138,18 +150,20 @@ function Index() {
   // * Debonce Search && Paginate && Show 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      IndexUser()
+      SwitchPage('/api/user?page=', page)
     }, 700);
     return () => clearTimeout(debounce)
   }, [Paginate])
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      console.log("test");
+      SwitchPage('/api/user?page=', page)
     }, 600);
     return () => clearTimeout(debounce)
   }, [page])
 
+
+  console.log(User);
   return (
     <>
       <Toaster />
@@ -161,8 +175,8 @@ function Index() {
         </div>
         <div className="h-[2px] w-full bg-gray-300 my-3"></div>
         <div className="flex justify-between items-center mb-4">
-          <input type="number" className='p-2 border-[1px] border-gray-400 rounded-md w-[80px]' defaultValue={Paginate.tampilkan} onChange={(e) => setPagiante({ ...Paginate, tampilkan: e.value })} />
-          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md' placeholder='Search' defaultValue={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.value })} />
+          <input type="number" className='p-2 border-[1px] border-gray-400 rounded-md w-[80px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' value={Paginate.tampilkan} onChange={(e) => setPagiante({ ...Paginate, tampilkan: e.target.value })} />
+          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md' placeholder='Search' value={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.target.value })} />
         </div>
         <div className="overflow-y-auto">
           <table className='w-full'>
@@ -179,7 +193,7 @@ function Index() {
               {block ? (<Loading colSpan={5} />) :
                 (User?.data?.map((item, index) => (
                   <tr className={`${index % 2 ? 'bg-gray-100' : 'bg-white'} h-14 hover:bg-gray-200`} key={item.id}>
-                    <td className='text-start px-2 font-semibold'>{index + 1}</td>
+                    <td className='text-start px-2 font-semibold'>{index + User.from}</td>
                     <td>{item?.name}</td>
                     <td>{item?.email}</td>
                     <td>{DateKu(item.created_at)}</td>
@@ -207,10 +221,18 @@ function Index() {
           {/* 
             // TODO : Paginate Navigator
           */}
-          <div className="flex justify-end mt-2">
-            <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => { HandleSwitchPage('prev') }}><MdNavigateBefore className='text-white' /></button>
-            <input type="number" className='h-8 w-8 max-w-fit rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none border-black border-[2px] p-1 mx-1 active:scale-10' defaultValue={page} min={0} />
-            <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => { HandleSwitchPage('next') }}><MdOutlineNavigateNext className='text-white' /></button>
+          <div className="flex justify-between mt-2">
+            <span className='font-semibold'>Page {User.current_page ?? null} of {User?.last_page ?? null}</span>
+            <div className="flex">
+              {page != 1 ? (
+                <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => HandleSwitchPage('prev')} readOnly><MdNavigateBefore className='text-white' /></button>
+              ) : null}
+
+              <input disabled type="number" className='h-8 w-8 max-w-fit rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none border-black border-[2px] p-1 mx-1 active:scale-10' value={page} />
+              {page != User?.last_page ? (
+                <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => HandleSwitchPage('next')}><MdOutlineNavigateNext className='text-white' /></button>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
