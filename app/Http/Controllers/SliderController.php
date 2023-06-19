@@ -27,6 +27,15 @@ class SliderController extends Controller
         }
     }
 
+    public function fetch()
+    {
+        if (request()->wantsJson()) {
+            $data = Slider::all();
+            return response()->json($data, 200);
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
+        }
+    }
 
     public function store(Request $request)
     {
