@@ -169,10 +169,9 @@ function Index() {
           <table className='w-full'>
             <thead className='h-10 bg-gray-300 rounded-lg text-start'>
               <tr className='rounded-lg'>
-                <th className='text-start px-2'>No.</th>
-                <th className='text-start'>Name</th>
-                <th className='text-start'>Email</th>
-                <th className='text-start'>Tgl Dibuat</th>
+                <th className='text-start px-2 w-10'>No.</th>
+                <th className='text-center w-60'>Image</th>
+                <th className='text-center'>Tgl Dibuat</th>
                 <th className='text-center'>Action</th>
               </tr>
             </thead>
@@ -180,10 +179,17 @@ function Index() {
               {block ? (<Loading colSpan={5} />) :
                 (Slider?.data?.map((item, index) => (
                   <tr className={`${index % 2 ? 'bg-gray-100' : 'bg-white'} h-14 hover:bg-gray-200`} key={item.id}>
-                    <td className='text-start px-2 font-semibold'>{index + Slider.from}</td>
-                    <td>{item?.name}</td>
-                    <td>{item?.email}</td>
-                    <td>{DateKu(item.created_at)}</td>
+                    <td className='text-center px-2 font-semibold'>{index + Slider.from}</td>
+                    {/* <td>{item?.imagedir}</td> */}
+                    <td>
+                      <div className="flex h-20">
+                        <a href={item?.imagedir} target="_blank" className="flex h-20 w-full justify-center p-2">
+                          <img src={item?.imagedir} alt="Image" className='rounded-md w-28' />
+                        </a>
+                      </div>
+                    </td>
+
+                    <th className='text-center'>{DateKu(item.created_at)}</th>
                     <td>
                       <div className="flex justify-center gap-x-1">
                         <Edit onClick={() => { GetSlider(item.uuid) }} />
