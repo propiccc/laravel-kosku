@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
-use App\Models\User;
+use App\Models\Slider;
 use App\Helpers\RestApi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
-
-class UserController extends Controller
+class SliderController extends Controller
 {
     public function index(Request $request)
     {
@@ -19,8 +17,7 @@ class UserController extends Controller
                 'tampilkan' => ['nullable', 'string']
             ]);
 
-            $data = User::where('name', 'LIKE', "%" . $request->search . "%")
-                ->orWhere('email', 'LIKE', "%" . $request->search . "%")
+            $data = Slider::where('title', 'LIKE', "%" . $request->search . "%")
                 ->paginate(isset($request->tampilkan) ? $request->tampilkan : 10);
 
             return response()->json($data, 200);
@@ -33,12 +30,11 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
-
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'min:4', 'unique:users,name'],
-                'email' => ['required', 'string', 'email', 'unique:users,email'],
-                'password' => ['required', 'confirmed']
+                'image' => ['required', 'image', 'mimes:jpg,png'],
+                'title' => ['string', 'required'],
+                'description' => ['string', 'required']
             ]);
 
             if ($validate->fails()) {
@@ -50,11 +46,20 @@ class UserController extends Controller
                 return RestApi::error($message, 400);
             }
 
-            $data = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
-            ]);
+            $req = $request->all();
+            if ($req['image'] && $request->hasFile('image')) {
+                $image = $request->file('image');
+                $image_name = $image->getClientOriginalName();
+
+                if ($image_name != 'blob') {
+                    $image->storeAs('/public/SliderImage', $image_name);
+                    $req['image'] = $image_name;
+                } else {
+                    unset($req['image']);
+                }
+            }
+            dd($req);
+            $data = Slider::create($req);
 
             if ($data) {
                 return RestApi::success(['Data Successfully Created'], 201);
@@ -98,11 +103,6 @@ class UserController extends Controller
             }
 
             $req = $request->all();
-            if ($request->password != "" && $request->password != null) {
-                $req['password'] = Hash::make($request->password);
-            } else {
-                unset($req["password"]);
-            }
 
             $user = User::where('uuid', $uuid)->first();
             if (!isset($user)) {
@@ -137,5 +137,4 @@ class UserController extends Controller
             return RestApi::error(['Bad Request!'], 400);
         }
     }
-
 }

@@ -42,8 +42,9 @@ function Dashboard({ children, className }) {
         <div className="bg-[#00092b] w-full lg:w-80 flex flex-col overflow-auto">
           <div className="h-full overflow-y-auto p-2 py-1 scrollbar-none max-h-fit bg-[#00092b]">
             <Menu href='/system/user' name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/test' name="Test" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/test' name="Test" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/slider' name="Slider" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/visimisi' name="Visi Misi" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            {/* <Menu href='/system/test' name="Test" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} /> */}
           </div>
         </div>
         <div className="w-full overflow-y-auto scrollbar-none">

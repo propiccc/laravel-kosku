@@ -6,8 +6,10 @@ import NotFound from '../pages/Auth/NotFound';
 import PrivateRoute from '../util/PrivateRoute';
 import Guest from '../util/Guest';
 
-const Index = lazy(() => import('../pages/System/User/Index'));
+const UserIndex = lazy(() => import('../pages/System/User/Index'));
+const SliderIndex = lazy(() => import('../pages/System/Slider/Index'));
 const Home = lazy(() => import('../pages/View/Home/Home'));
+const VisiMisiIndex = lazy(() => import('../pages/System/VisiMisi/Index'));
 
 function Router() {
   return (
@@ -21,7 +23,9 @@ function Router() {
 
         <Route path="/system" element={<PrivateRoute />}>
           <Route element={<Dashboard />}>
-            <Route path='user' element={<Index />} exact />
+            <Route path='user' element={<UserIndex />} exact />
+            <Route path='slider' element={<SliderIndex />} exact />
+            <Route path='visimisi' element={<VisiMisiIndex />} exact />
           </Route>
         </Route>
 

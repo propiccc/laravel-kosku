@@ -1,8 +1,103 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
+import Cancel from '../../../Components/Button/Cancel';
+import Create from '../../../Components/Button/Create';
+import Update from '../../../Components/Button/Update';
+import axios from 'axios';
+import { toast, Toaster } from 'react-hot-toast';
+import ImageUpload from './../../../Components/ImageUpload';
+import { BsSliders } from 'react-icons/bs';
 
-function Form() {
+function Form({ DataEdit, type, setToggle, cancle, close }) {
+  // * Setup 
+  const [edit, setEdit] = useState(DataEdit)
+  const [ImageFile, setImageFile] = useState(edit.imagedir ?? null);
+  const [Data, setData] = useState({
+    title: edit?.title ?? "",
+    description: edit?.description ?? "",
+    image: null
+  })
+
+
+  const HandleChange = (e) => {
+    var key = e.target.name;
+    var val = e.target.value;
+    setData(data => ({
+      ...data,
+      [key]: val
+    }))
+  }
+
+  const HandleSubmit = (e) => {
+    console.log(e);
+    e.preventDefault()
+    const formData = new FormData();
+    // if (typeof ImageFile == 'object' && ImageFile?.file?.name != 'blob') {
+    // }
+    formData.append('image', ImageFile.file)
+    formData.append('title', Data?.title)
+    formData.append('description', Data.description)
+
+    // var url = '/api/slider/store'
+    // if (type == 'update') {
+    //   url = `/api/user/${edit?.uuid}/update`
+    // }
+    // axios.post(url, Data).then(res => {
+    //   if (res.data.success === true) {
+    //     toast.success(res.data.data);
+    //     setTimeout(() => {
+    //       close()
+    //     }, 300);
+    //   }
+    // }).catch((error) => {
+    //   if (error.response.data.data) {
+    //     error.response.data.data.forEach(e => {
+    //       toast.error(e)
+    //     })
+    //   } else {
+    //     toast.error(error.response.data)
+    //   }
+    // })
+  }
+
+  // useEffect(() => {
+  //   if (typeof ImageFile === 'object' && ImageFile?.name != 'blob') {
+  //     setData(data => ({
+  //       ...data,
+  //       image: ImageFile[0]?.file ?? null
+  //     }))
+  //   }
+  // }, [ImageFile])
+
   return (
-    <div>Form</div>
+    <div className='bg-white rounded-lg p-6 mb-2'>
+      <Toaster />
+      <div className="flex justify-between items-center">
+        <span className='font-semibold text-xl'>User {type == 'create' ? 'Create' : "Edit"}</span>
+        <Cancel onClick={() => { cancle() }} />
+      </div>
+      <div className="h-[2px] w-full bg-gray-200 my-3"></div>
+      <form onSubmit={HandleSubmit} >
+        <div className="flex flex-wrap gap-x-1 gap-y-2">
+          <div className="flex w-full gap-x-1">
+            <div className="flex flex-col w-full">
+              <label htmlFor="title" className='font-semibold'>Title : <span className='text-red-600 font-semibold'>*</span></label>
+              <input id='title' type="text" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1' name='title' value={Data.title} onChange={HandleChange} autoComplete='off' />
+            </div>
+            <div className="flex flex-col w-full">
+              <label htmlFor="description" className='font-semibold'>Description : <span className='text-red-600 font-semibold'>*</span></label>
+              <input id='description' type="text" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1' name='description' value={Data.description} onChange={HandleChange} autoComplete='off' />
+            </div>
+          </div>
+          <div className=" w-full flex">
+            <ImageUpload files={ImageFile} setFiles={setImageFile} />
+          </div>
+          <div className="h-[2px] w-full bg-gray-200 my-3"></div>
+          <div className="flex justify-end w-full">
+            {type == 'create' ? (<Create onClick={HandleSubmit} />) : (<Update onClick={HandleSubmit} />)}
+          </div>
+        </div>
+      </form>
+    </div>
   )
 }
 

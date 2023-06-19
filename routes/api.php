@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisiMisiController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,12 +28,19 @@ Route::middleware('auth')->group(function () {
         Route::post('{uuid}/update', [UserController::class, 'update']);
         Route::delete('{uuid}/delete', [UserController::class, 'delete']);
     });
-    
+
     Route::prefix('visimisi')->group(function () {
         Route::post('/', [VisiMisiController::class, 'index']);
         Route::post('/store', [VisiMisiController::class, 'store']);
         Route::post('{uuid}/edit', [VisiMisiController::class, 'show']);
         Route::post('{uuid}/update', [VisiMisiController::class, 'update']);
         Route::delete('{uuid}/delete', [VisiMisiController::class, 'delete']);
+    });
+    Route::prefix('slider')->group(function () {
+        Route::post('/', [SliderController::class, 'index']);
+        Route::post('/store', [SliderController::class, 'store']);
+        Route::post('{uuid}/edit', [SliderController::class, 'show']);
+        Route::post('{uuid}/update', [SliderController::class, 'update']);
+        Route::delete('{uuid}/delete', [SliderController::class, 'delete']);
     });
 });
