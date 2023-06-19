@@ -61,7 +61,6 @@ function Login() {
     )
   }
 
-
   return (
     <div className={`bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen flex justify-center items-center `}>
       <Toaster />
@@ -83,6 +82,7 @@ function Login() {
             <button className='bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white font-semibold shadow-white w-full p-2 rounded-lg active:scale-95' onClick={Login} disabled={loading}>{loading ? (<ComLoading />) : "Login"}</button>
           </div>
           <div className="flex w-full justify-start font-semibold">
+
             <Link className='text-gray-200 hover:text-cyan-400' to="/">Back To Home</Link>
           </div>
         </div>

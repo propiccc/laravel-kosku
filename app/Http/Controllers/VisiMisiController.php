@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use Validator;
-use App\Models\User;
+use App\Models\VisiMisi;
+
 use App\Helpers\RestApi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
-
-class UserController extends Controller
+class VisiMisiController extends Controller
 {
     public function index(Request $request)
     {
@@ -19,8 +19,8 @@ class UserController extends Controller
                 'tampilkan' => ['nullable', 'string']
             ]);
 
-            $data = User::where('name', 'LIKE', "%" . $request->search . "%")
-                ->orWhere('email', 'LIKE', "%" . $request->search . "%")
+            $data = VisiMisi::where('visi', 'LIKE', "%" . $request->search . "%")
+                ->orWhere('misi', 'LIKE', "%" . $request->search . "%")
                 ->paginate(isset($request->tampilkan) ? $request->tampilkan : 10);
 
             return response()->json($data, 200);
@@ -36,9 +36,8 @@ class UserController extends Controller
 
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'min:4', 'unique:users,name'],
-                'email' => ['required', 'string', 'email', 'unique:users,email'],
-                'password' => ['required', 'confirmed']
+                'visi' => ['required', 'string'],
+                'misi' => ['required', 'string']
             ]);
 
             if ($validate->fails()) {
@@ -50,10 +49,9 @@ class UserController extends Controller
                 return RestApi::error($message, 400);
             }
 
-            $data = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
+            $data = VisiMisi::create([
+                'visi' => $request->visi,
+                'misi' => $request->misi,
             ]);
 
             if ($data) {
@@ -69,11 +67,11 @@ class UserController extends Controller
     public function show($uuid)
     {
         if (request()->wantsJson()) {
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
+            $visimisi = VisiMisi::where('uuid', $uuid)->first();
+            if (!isset($visimisi)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-            return RestApi::success($user, 200);
+            return RestApi::success($visimisi, 200);
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }
@@ -83,9 +81,8 @@ class UserController extends Controller
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'min:4', 'unique:users,name'],
-                'email' => ['required', 'string', 'email'],
-                'password' => ['nullable', 'confirmed'],
+                'visi' => ['required', 'string'],
+                'misi' => ['required', 'string'],
             ]);
 
             if ($validate->fails()) {
@@ -104,14 +101,14 @@ class UserController extends Controller
                 unset($req["password"]);
             }
 
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
+            $visimisi = VisiMisi::where('uuid', $uuid)->first();
+            if (!isset($visimisi)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
 
-            $user = $user->update($req);
+            $visimisi = $visimisi->update($req);
 
-            if ($user) {
+            if ($visimisi) {
                 return RestApi::success(['Data Successfully Update'], 200);
             } else {
                 return RestApi::error(['Data Failed To Update'], 400);
@@ -125,17 +122,18 @@ class UserController extends Controller
     {
         if (request()->wantsJson()) {
 
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
+            $visimisi = VisiMisi::where('uuid', $uuid)->first();
+
+
+            if (!isset($visimisi)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-            $user->delete();
-            if ($user) {
+            $visimisi->delete();
+            if ($visimisi) {
                 return RestApi::success(['Data Successfully Deleted'], 200);
             }
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }
     }
-
 }
