@@ -48,6 +48,7 @@ class SliderController extends Controller
 
             $req = $request->all();
             if ($req['image'] && $request->hasFile('image')) {
+
                 $image = $request->file('image');
                 $image_name = $image->getClientOriginalName();
 
@@ -58,9 +59,7 @@ class SliderController extends Controller
                     unset($req['image']);
                 }
             }
-            dd($req);
             $data = Slider::create($req);
-
             if ($data) {
                 return RestApi::success(['Data Successfully Created'], 201);
             } else {
@@ -74,11 +73,11 @@ class SliderController extends Controller
     public function show($uuid)
     {
         if (request()->wantsJson()) {
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
+            $data = Slider::where('uuid', $uuid)->first();
+            if (!isset($data)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-            return RestApi::success($user, 200);
+            return RestApi::success($data, 200);
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }

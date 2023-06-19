@@ -163,7 +163,6 @@ function Index() {
   }, [page])
 
 
-  console.log(User);
   return (
     <>
       <Toaster />
