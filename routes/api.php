@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisiMisiController;
+use App\Http\Controllers\SettingController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -25,7 +26,6 @@ Route::prefix('public')->group(function () {
 Route::middleware('auth')->group(function () {
     Route::post('/check', [AuthController::class, 'CheckUser']);
 
-
     Route::prefix('user')->group(function () {
         Route::post('/', [UserController::class, 'index']);
         Route::post('/store', [UserController::class, 'store']);
@@ -41,11 +41,20 @@ Route::middleware('auth')->group(function () {
         Route::post('{uuid}/update', [VisiMisiController::class, 'update']);
         Route::delete('{uuid}/delete', [VisiMisiController::class, 'delete']);
     });
+
     Route::prefix('slider')->group(function () {
         Route::post('/', [SliderController::class, 'fetch']);
         Route::post('/store', [SliderController::class, 'store']);
         Route::post('{uuid}/edit', [SliderController::class, 'show']);
         Route::post('{uuid}/update', [SliderController::class, 'update']);
         Route::delete('{uuid}/delete', [SliderController::class, 'delete']);
+    });
+
+    Route::prefix('setting')->group(function () {
+        Route::post('/', [SettingController::class, 'index']);
+        Route::post('/store', [SettingController::class, 'store']);
+        Route::post('{uuid}/edit', [SettingController::class, 'show']);
+        Route::post('{uuid}/update', [SettingController::class, 'update']);
+        Route::delete('{uuid}/delete', [SettingController::class, 'delete']);
     });
 });
