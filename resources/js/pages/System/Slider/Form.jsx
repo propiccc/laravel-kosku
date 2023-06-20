@@ -10,7 +10,7 @@ import { BsSliders } from 'react-icons/bs';
 function Form({ DataEdit, type, setToggle, cancle, close }) {
   // * Setup 
   const [edit, setEdit] = useState(DataEdit)
-  const [ImageFile, setImageFile] = useState(edit?.imagedir ?? []);
+  const [ImageFile, setImageFile] = useState(edit?.imagedir ?? null);
   const [Data, setData] = useState({
     title: edit?.title ?? "",
     description: edit?.description ?? "",
@@ -30,7 +30,7 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
     e.preventDefault()
     var url = '/api/slider/store'
     if (type == 'update') {
-      url = `/api/user/${edit?.uuid}/update`
+      url = `/api/slider/${edit?.uuid}/update`
     }
 
     const headers = {
@@ -51,13 +51,13 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
           close()
         }, 300);
       }
-    }).catch((error) => {
-      if (error.response.data.data) {
-        error.response.data.data.forEach(e => {
-          toast.error(e)
-        })
+    }).catch(err => {
+      if (err.response.data.message != null) {
+        toast.error(err.response.data.message)
       } else {
-        toast.error('Data Gagal Di Update!')
+        err.response.data.data.forEach(el => {
+          toast.error(el)
+        });
       }
     })
   }

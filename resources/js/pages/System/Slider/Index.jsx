@@ -69,7 +69,7 @@ function Index() {
 
   // * function 
   const HandleDelete = (uuid) => {
-    var url = `/api/Slider/${uuid}/delete`
+    var url = `/api/slider/${uuid}/delete`
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",

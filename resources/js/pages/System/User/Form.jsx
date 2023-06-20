@@ -36,13 +36,13 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
           close()
         }, 300);
       }
-    }).catch((error) => {
-      if (error.response.data.data[0]) {
-        error.response.data.data.forEach(e => {
-          toast.error(e)
-        })
+    }).catch(err => {
+      if (err.response.data.message != null) {
+        toast.error(err.response.data.message)
       } else {
-        toast.error(error.response.data)
+        err.response.data.data.forEach(el => {
+          toast.error(el)
+        });
       }
     })
   }

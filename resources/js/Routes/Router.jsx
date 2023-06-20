@@ -23,7 +23,7 @@ function Router() {
 
         <Route path="/system" element={<PrivateRoute />}>
           <Route element={<Dashboard />}>
-            <Route path='user' element={<UserIndex />} exact />
+            <Route path='user' element={<UserIndex />} />
             <Route path='slider' element={<SliderIndex />} exact />
             <Route path='visimisi' element={<VisiMisiIndex />} exact />
           </Route>
