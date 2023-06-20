@@ -145,12 +145,13 @@ function Index() {
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      SwitchPage('/api/slider?page=', page)
+      IndexSlider()
+      // SwitchPage('/api/slider?page=', page)
     }, 600);
     return () => clearTimeout(debounce)
   }, [page])
 
-
+  console.log(Slider);
   return (
     <>
       <Toaster />

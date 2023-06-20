@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::prefix('public')->group(function () {
+Route::prefix('/public')->group(function () {
     Route::get('/slider', [SliderController::class, 'fetch']);
 });
 
@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('{uuid}/delete', [VisiMisiController::class, 'delete']);
     });
     Route::prefix('slider')->group(function () {
-        Route::post('/', [SliderController::class, 'fetch']);
+        Route::post('/', [SliderController::class, 'index']);
         Route::post('/store', [SliderController::class, 'store']);
         Route::post('{uuid}/edit', [SliderController::class, 'show']);
         Route::post('{uuid}/update', [SliderController::class, 'update']);
