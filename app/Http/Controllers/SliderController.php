@@ -69,6 +69,7 @@ class SliderController extends Controller
                     unset($req['image']);
                 }
             }
+
             $data = Slider::create($req);
             if ($data) {
                 return RestApi::success(['Data Successfully Created'], 201);
