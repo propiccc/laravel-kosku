@@ -10,18 +10,18 @@ registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 function ImageUpload({ className, name = 'Image', files, setFiles }) {
   const [Image, setImage] = useState();
-
   useEffect(() => {
-    if (Image?.file?.name != 'blob') {
-      setFiles(Image)
+    if (typeof files != 'string') {
+      setImage(files)
     }
-  }, [Image])
+  }, [files, Image])
+
   return (
     <div className='w-full'>
       <label className='font-semibold'>{name} : <span className='text-red-600 font-semibold'>*</span></label>
       <FilePond
         files={files}
-        onupdatefiles={setFiles}
+        onupdatefiles={setImage}
         allowMultiple={false}
         name="files"
         labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'

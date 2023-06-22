@@ -10,22 +10,13 @@ use Illuminate\Support\Facades\Hash;
 
 class SettingController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         if (request()->wantsJson()) {
-            $request->validate([
-                'search' => ['nullable', 'string'],
-                'tampilkan' => ['nullable', 'string']
-            ]);
-
-            $data = Setting::where('no_telp', 'LIKE', "%" . $request->search . "%")
-                ->orWhere('link_youtube', 'LIKE', "%" . $request->search . "%")
-                ->orWhere('link_maps', 'LIKE', "%" . $request->search . "%")
-                ->orWhere('link_facebook', 'LIKE', "%" . $request->search . "%")
-                ->orWhere('link_twitter', 'LIKE', "%" . $request->search . "%")
-                ->orWhere('copyright', 'LIKE', "%" . $request->search . "%")
-                ->paginate(isset($request->tampilkan) ? $request->tampilkan : 10);
-
+            $data = Setting::first();
+            if (!isset($data)) {
+                return response()->json(['No Data In Here!'], 404);
+            }
             return response()->json($data, 200);
 
         } else {
@@ -35,15 +26,14 @@ class SettingController extends Controller
 
     public function store(Request $request)
     {
-
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'no_telp' => ['required', 'string'],
-                'link_youtube' => ['required', 'string'],
-                'link_maps' => ['required', 'string'],
-                'link_facebook' => ['required', 'string'],
-                'link_twitter' => ['required', 'string'],
-                'copyright' => ['required', 'string']
+                'no_telp' => ['nullable', 'string'],
+                'link_youtube' => ['nullable', 'string'],
+                'link_maps' => ['nullable', 'string'],
+                'link_facebook' => ['nullable', 'string'],
+                'link_twitter' => ['nullable', 'string'],
+                'copyright' => ['nullable', 'string']
             ]);
 
             if ($validate->fails()) {
@@ -55,14 +45,7 @@ class SettingController extends Controller
                 return RestApi::error($message, 400);
             }
 
-            $data = Setting::create([
-                'no_telp' => $request->no_telp,
-                'link_youtube' => $request->link_youtube,
-                'link_maps' => $request->link_maps,
-                'link_facebook' => $request->link_facebook,
-                'link_twitter' => $request->link_twitter,
-                'copyright' => $request->copyright
-            ]);
+            $data = Setting::create($request->all());
 
             if ($data) {
                 return RestApi::success(['Data Successfully Created'], 201);
@@ -72,31 +55,19 @@ class SettingController extends Controller
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }
-    }
-
-    public function show($uuid)
-    {
-        if (request()->wantsJson()) {
-            $setting = Setting::where('uuid', $uuid)->first();
-            if (!isset($setting)) {
-                return RestApi::error(['Data Not Found!'], 404);
-            }
-            return RestApi::success($setting, 200);
-        } else {
-            return RestApi::error(['Bad Request!'], 400);
-        }
+        ;
     }
 
     public function update(Request $request, $uuid)
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'no_telp' => ['required', 'string'],
-                'link_youtube' => ['required', 'string'],
-                'link_maps' => ['required', 'string'],
-                'link_facebook' => ['required', 'string'],
-                'link_twitter' => ['required', 'string'],
-                'copyright' => ['required', 'string']
+                'no_telp' => ['nullable', 'string'],
+                'link_youtube' => ['nullable', 'string'],
+                'link_maps' => ['nullable', 'string'],
+                'link_facebook' => ['nullable', 'string'],
+                'link_twitter' => ['nullable', 'string'],
+                'copyright' => ['nullable', 'string']
             ]);
 
             if ($validate->fails()) {
@@ -109,19 +80,11 @@ class SettingController extends Controller
             }
 
             $req = $request->all();
-            if ($request->password != "" && $request->password != null) {
-                $req['password'] = Hash::make($request->password);
-            } else {
-                unset($req["password"]);
-            }
-
             $setting = Setting::where('uuid', $uuid)->first();
             if (!isset($setting)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-
             $setting = $setting->update($req);
-
             if ($setting) {
                 return RestApi::success(['Data Successfully Update'], 200);
             } else {
@@ -137,8 +100,6 @@ class SettingController extends Controller
         if (request()->wantsJson()) {
 
             $setting = Setting::where('uuid', $uuid)->first();
-
-
             if (!isset($setting)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }

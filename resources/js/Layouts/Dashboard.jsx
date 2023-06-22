@@ -1,5 +1,7 @@
 import React, { useEffect, useState, Suspense } from 'react'
 import { FaRegSun, FaUserAlt } from 'react-icons/fa'
+import { BsImages } from 'react-icons/bs'
+import { TbBinaryTree } from 'react-icons/tb'
 import Menu from './../Components/Menu';
 import { Link, Outlet } from 'react-router-dom';
 
@@ -23,7 +25,7 @@ function Dashboard({ children, className }) {
   return (
     <>
       {/* Navabr Start */}
-      <div className="bg-[#00092b] w-full flex h-24 justify-between text-white border-b-2 border-gray-200">
+      <div className="bg-[#00092b] w-full flex h-24 justify-between text-white border-b-2 border-gray-200 px-1">
         <div className="w-full flex items-center justify-start">
           <img className='h-[80px] w-fit text-white' src="/storage/asset/LogoDashboard.png" alt="logo bmc" />
         </div>
@@ -33,8 +35,9 @@ function Dashboard({ children, className }) {
           </div>
         </div>
         {/* <div className="flex justify-center items-center text-lg font-semibold ml-4">{header}</div> */}
-        <div className="flex justify-center items-center mr-2 w-full">
-          <Link to='/' className='btn btn-ghost btn-info'>Home</Link>
+        <div className="flex justify-end items-center mr-2 w-full gap-x-2 font-semibold">
+          <button className='py-2 px-4 transition-color duration-300 rounded-lg hover:bg-gray-100 hover:bg-opacity-10'>Home</button>
+          <button className='py-2 px-4 transition-color duration-300 rounded-lg hover:bg-gray-100 hover:bg-opacity-10'>Logout</button>
         </div>
       </div>
       {/* Navabr end */}
@@ -42,14 +45,13 @@ function Dashboard({ children, className }) {
         <div className="bg-[#00092b] w-full lg:w-80 flex flex-col overflow-auto">
           <div className="h-full overflow-y-auto p-2 py-1 scrollbar-none max-h-fit bg-[#00092b]">
             <Menu href='/system/user' name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/slider' name="Slider" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/visimisi' name="Visi Misi" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/slider' name="Slider" icon={<BsImages className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/visimisi' name="Visi Misi" icon={<TbBinaryTree className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/setting' name="Setting" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />
             {/* <Menu href='/system/test' name="Test" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} /> */}
           </div>
         </div>
         <div className="w-full overflow-y-auto scrollbar-none">
-
-
           {/* Componenet start */}
           <div className={`bg-gray-300 h-screen  ${className} py-10 px-24 transition-all duration-500 overflow-y-auto`}>
             <Suspense fallback={<Loading />}>

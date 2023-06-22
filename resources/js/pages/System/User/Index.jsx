@@ -167,7 +167,7 @@ function Index() {
     <>
       <Toaster />
       {toggle ? (<Form cancle={HandleCancel} DataEdit={DataEdit} type={type} close={HandleClose} />) : null}
-      <div className="bg-white rounded-lg p-6 shadow-lg">
+      <div className="bg-white rounded-lg p-6 shadow-lg transition-all duration-1000">
         <div className="flex justify-between items-center">
           <span className='font-semibold text-xl'>User Data</span>
           <Add onClick={HandleToggle} />
