@@ -109,11 +109,6 @@ class SettingController extends Controller
             }
 
             $req = $request->all();
-            if ($request->password != "" && $request->password != null) {
-                $req['password'] = Hash::make($request->password);
-            } else {
-                unset($req["password"]);
-            }
 
             $setting = Setting::where('uuid', $uuid)->first();
             if (!isset($setting)) {
