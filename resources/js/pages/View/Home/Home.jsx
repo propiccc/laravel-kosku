@@ -126,7 +126,12 @@ const About = () => {
                 <div className="text-white ">
                     <h1>Lorem Ipsum</h1>
                     <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quaerat enim aliquid iure magnam consequatur ducimus error, hic beatae tenetur, magni quos, excepturi doloribus. Libero quasi ipsum quisquam tempore aperiam.</p>
-                    <hr className="" />
+                    <hr className="border w-[240px]" />
+                    <button>
+                        <a href="" className="border border-black bg-white text-black font-semibold py-2 px-6">
+                            Read More
+                        </a>
+                    </button>
                 </div>
                 <div className=""></div>
             </div>
