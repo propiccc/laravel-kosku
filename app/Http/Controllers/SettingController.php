@@ -2,27 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Validator;
-use App\Models\User;
+use App\Models\Setting;
 use App\Helpers\RestApi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
-
-class UserController extends Controller
+class SettingController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         if (request()->wantsJson()) {
-            $request->validate([
-                'search' => ['nullable', 'string'],
-                'tampilkan' => ['nullable', 'string']
-            ]);
-
-            $data = User::where('name', 'LIKE', "%" . $request->search . "%")
-                ->orWhere('email', 'LIKE', "%" . $request->search . "%")
-                ->paginate(isset($request->tampilkan) ? $request->tampilkan : 10);
-
+            $data = Setting::first();
+            if (!isset($data)) {
+                return response()->json(['No Data In Here!'], 404);
+            }
             return response()->json($data, 200);
 
         } else {
@@ -30,14 +24,16 @@ class UserController extends Controller
         }
     }
 
-
     public function store(Request $request)
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'min:4', 'unique:users,name'],
-                'email' => ['required', 'string', 'email', 'unique:users,email'],
-                'password' => ['required', 'confirmed']
+                'no_telp' => ['nullable', 'string'],
+                'link_youtube' => ['nullable', 'string'],
+                'link_maps' => ['nullable', 'string'],
+                'link_facebook' => ['nullable', 'string'],
+                'link_twitter' => ['nullable', 'string'],
+                'copyright' => ['nullable', 'string']
             ]);
 
             if ($validate->fails()) {
@@ -49,11 +45,7 @@ class UserController extends Controller
                 return RestApi::error($message, 400);
             }
 
-            $data = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password)
-            ]);
+            $data = Setting::create($request->all());
 
             if ($data) {
                 return RestApi::success(['Data Successfully Created'], 201);
@@ -63,28 +55,19 @@ class UserController extends Controller
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }
-    }
-
-    public function show($uuid)
-    {
-        if (request()->wantsJson()) {
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
-                return RestApi::error(['Data Not Found!'], 404);
-            }
-            return RestApi::success($user, 200);
-        } else {
-            return RestApi::error(['Bad Request!'], 400);
-        }
+        ;
     }
 
     public function update(Request $request, $uuid)
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'min:4', 'unique:users,name'],
-                'email' => ['required', 'string', 'email'],
-                'password' => ['nullable', 'confirmed'],
+                'no_telp' => ['nullable', 'string'],
+                'link_youtube' => ['nullable', 'string'],
+                'link_maps' => ['nullable', 'string'],
+                'link_facebook' => ['nullable', 'string'],
+                'link_twitter' => ['nullable', 'string'],
+                'copyright' => ['nullable', 'string']
             ]);
 
             if ($validate->fails()) {
@@ -97,20 +80,12 @@ class UserController extends Controller
             }
 
             $req = $request->all();
-            if ($request->password != "" && $request->password != null) {
-                $req['password'] = Hash::make($request->password);
-            } else {
-                unset($req["password"]);
-            }
-
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
+            $setting = Setting::where('uuid', $uuid)->first();
+            if (!isset($setting)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-
-            $user = $user->update($req);
-
-            if ($user) {
+            $setting = $setting->update($req);
+            if ($setting) {
                 return RestApi::success(['Data Successfully Update'], 200);
             } else {
                 return RestApi::error(['Data Failed To Update'], 400);
@@ -124,17 +99,16 @@ class UserController extends Controller
     {
         if (request()->wantsJson()) {
 
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
+            $setting = Setting::where('uuid', $uuid)->first();
+            if (!isset($setting)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-            $user->delete();
-            if ($user) {
+            $setting->delete();
+            if ($setting) {
                 return RestApi::success(['Data Successfully Deleted'], 200);
             }
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }
     }
-
 }

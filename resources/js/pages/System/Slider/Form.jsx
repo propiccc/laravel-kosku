@@ -10,11 +10,10 @@ import { BsSliders } from 'react-icons/bs';
 function Form({ DataEdit, type, setToggle, cancle, close }) {
   // * Setup 
   const [edit, setEdit] = useState(DataEdit)
-  const [ImageFile, setImageFile] = useState(edit.imagedir ?? null);
+  const [ImageFile, setImageFile] = useState(edit?.imagedir ?? null);
   const [Data, setData] = useState({
     title: edit?.title ?? "",
     description: edit?.description ?? "",
-    image: null
   })
 
 
@@ -28,45 +27,41 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
   }
 
   const HandleSubmit = (e) => {
-    console.log(e);
     e.preventDefault()
+    var url = '/api/slider/store'
+    if (type == 'update') {
+      url = `/api/slider/${edit?.uuid}/update`
+    }
+
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+    };
+
     const formData = new FormData();
-    // if (typeof ImageFile == 'object' && ImageFile?.file?.name != 'blob') {
-    // }
-    formData.append('image', ImageFile.file)
-    formData.append('title', Data?.title)
+    formData.append('title', Data.title)
     formData.append('description', Data.description)
 
-    // var url = '/api/slider/store'
-    // if (type == 'update') {
-    //   url = `/api/user/${edit?.uuid}/update`
-    // }
-    // axios.post(url, Data).then(res => {
-    //   if (res.data.success === true) {
-    //     toast.success(res.data.data);
-    //     setTimeout(() => {
-    //       close()
-    //     }, 300);
-    //   }
-    // }).catch((error) => {
-    //   if (error.response.data.data) {
-    //     error.response.data.data.forEach(e => {
-    //       toast.error(e)
-    //     })
-    //   } else {
-    //     toast.error(error.response.data)
-    //   }
-    // })
+    if (typeof ImageFile == 'object' && ImageFile?.file?.name != 'blob') {
+      formData.append('image', ImageFile[0]?.file)
+    }
+    axios.post(url, formData, { headers }).then(res => {
+      if (res.data.success === true) {
+        toast.success(res.data.data);
+        setTimeout(() => {
+          close()
+        }, 300);
+      }
+    }).catch(err => {
+      if (err.response.data.message != null) {
+        toast.error(err.response.data.message)
+      } else {
+        err.response.data.data.forEach(el => {
+          toast.error(el)
+        });
+      }
+    })
   }
-
-  // useEffect(() => {
-  //   if (typeof ImageFile === 'object' && ImageFile?.name != 'blob') {
-  //     setData(data => ({
-  //       ...data,
-  //       image: ImageFile[0]?.file ?? null
-  //     }))
-  //   }
-  // }, [ImageFile])
+  console.log('data slider', ImageFile);
 
   return (
     <div className='bg-white rounded-lg p-6 mb-2'>

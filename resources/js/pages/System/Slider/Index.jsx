@@ -69,7 +69,7 @@ function Index() {
 
   // * function 
   const HandleDelete = (uuid) => {
-    var url = `/api/Slider/${uuid}/delete`
+    var url = `/api/slider/${uuid}/delete`
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -145,12 +145,13 @@ function Index() {
 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      SwitchPage('/api/slider?page=', page)
+      IndexSlider()
+      // SwitchPage('/api/slider?page=', page)
     }, 600);
     return () => clearTimeout(debounce)
   }, [page])
 
-
+  console.log(Slider);
   return (
     <>
       <Toaster />
@@ -163,16 +164,15 @@ function Index() {
         <div className="h-[2px] w-full bg-gray-300 my-3"></div>
         <div className="flex justify-between items-center mb-4">
           <input type="number" className='p-2 border-[1px] border-gray-400 rounded-md w-[80px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' value={Paginate.tampilkan} onChange={(e) => setPagiante({ ...Paginate, tampilkan: e.target.value })} />
-          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md' placeholder='Search' value={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.target.value })} />
+          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md cursor-not-allowed' placeholder='Search' value={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.target.value })} disabled />
         </div>
         <div className="overflow-y-auto">
           <table className='w-full'>
             <thead className='h-10 bg-gray-300 rounded-lg text-start'>
               <tr className='rounded-lg'>
-                <th className='text-start px-2'>No.</th>
-                <th className='text-start'>Name</th>
-                <th className='text-start'>Email</th>
-                <th className='text-start'>Tgl Dibuat</th>
+                <th className='text-start px-2 w-10'>No.</th>
+                <th className='text-center w-60'>Image</th>
+                <th className='text-center'>Tgl Dibuat</th>
                 <th className='text-center'>Action</th>
               </tr>
             </thead>
@@ -180,10 +180,17 @@ function Index() {
               {block ? (<Loading colSpan={5} />) :
                 (Slider?.data?.map((item, index) => (
                   <tr className={`${index % 2 ? 'bg-gray-100' : 'bg-white'} h-14 hover:bg-gray-200`} key={item.id}>
-                    <td className='text-start px-2 font-semibold'>{index + Slider.from}</td>
-                    <td>{item?.name}</td>
-                    <td>{item?.email}</td>
-                    <td>{DateKu(item.created_at)}</td>
+                    <td className='text-center px-2 font-semibold'>{index + Slider.from}</td>
+                    {/* <td>{item?.imagedir}</td> */}
+                    <td>
+                      <div className="flex h-20">
+                        <a href={item?.imagedir} target="_blank" className="flex h-20 w-full justify-center p-2">
+                          <img src={item?.imagedir} alt="Image" className='rounded-md w-28' />
+                        </a>
+                      </div>
+                    </td>
+
+                    <th className='text-center'>{DateKu(item.created_at)}</th>
                     <td>
                       <div className="flex justify-center gap-x-1">
                         <Edit onClick={() => { GetSlider(item.uuid) }} />

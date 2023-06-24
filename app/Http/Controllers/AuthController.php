@@ -13,8 +13,8 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'username' => ['required', 'string'],
-            'password' => ['required', 'string'],
+            'username' => ['required', 'min:2'],
+            'password' => ['required', 'min:4'],
         ]);
 
         if ($validate->fails()) {
@@ -29,7 +29,7 @@ class AuthController extends Controller
         $user = User::where('name', $request->username)
             ->orWhere('email', $request->username)->first();
         if (!isset($user)) {
-            return response()->json(['message' => 'Data Not Found!'], 404);
+            return response()->json(['message' => 'Username/Pasword Anda Salah!'], 404);
         }
 
         if ($token = Auth::attempt(['email' => $user->email, 'password' => $request->password])) {
@@ -41,7 +41,7 @@ class AuthController extends Controller
             if (Auth::check() === true) {
                 Auth::logout();
             }
-            return response()->json(['message' => 'Faild For Authenticate!'], 400);
+            return response()->json(['message' => 'Faild For Autenticate!'], 400);
         }
     }
 

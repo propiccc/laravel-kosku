@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Slider;
 use App\Helpers\RestApi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SliderController extends Controller
@@ -27,6 +28,15 @@ class SliderController extends Controller
         }
     }
 
+    public function PublicSlider()
+    {
+        if (request()->wantsJson()) {
+            $data = Slider::all();
+            return response()->json($data, 200);
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
+        }
+    }
 
     public function store(Request $request)
     {
@@ -48,6 +58,7 @@ class SliderController extends Controller
 
             $req = $request->all();
             if ($req['image'] && $request->hasFile('image')) {
+
                 $image = $request->file('image');
                 $image_name = $image->getClientOriginalName();
 
@@ -58,9 +69,8 @@ class SliderController extends Controller
                     unset($req['image']);
                 }
             }
-            dd($req);
-            $data = Slider::create($req);
 
+            $data = Slider::create($req);
             if ($data) {
                 return RestApi::success(['Data Successfully Created'], 201);
             } else {
@@ -74,11 +84,11 @@ class SliderController extends Controller
     public function show($uuid)
     {
         if (request()->wantsJson()) {
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
+            $data = Slider::where('uuid', $uuid)->first();
+            if (!isset($data)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-            return RestApi::success($user, 200);
+            return RestApi::success($data, 200);
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }
@@ -88,9 +98,9 @@ class SliderController extends Controller
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'min:4', 'unique:users,name'],
-                'email' => ['required', 'string', 'email'],
-                'password' => ['nullable', 'confirmed'],
+                'image' => ['nullable', 'image', 'mimes:jpg,png'],
+                'title' => ['string', 'required'],
+                'description' => ['string', 'required']
             ]);
 
             if ($validate->fails()) {
@@ -102,16 +112,26 @@ class SliderController extends Controller
                 return RestApi::error($message, 400);
             }
 
-            $req = $request->all();
-
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
+            $slider = slider::where('uuid', $uuid)->first();
+            if (!isset($slider)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
 
-            $user = $user->update($req);
+            $req = $request->all();
+            if ($req['image'] && $request->hasFile('image')) {
+                $image = $request->file('image');
+                $image_name = $image->getClientOriginalName();
+                if ($image_name != 'blob') {
+                    Storage::delete("/public/SliderImage/" . $slider->image);
+                    $image->storeAs('/public/SliderImage', $image_name);
+                    $req['image'] = $image_name;
+                } else {
+                    unset($req['image']);
+                }
+            }
 
-            if ($user) {
+            $slider = $slider->update($req);
+            if ($slider) {
                 return RestApi::success(['Data Successfully Update'], 200);
             } else {
                 return RestApi::error(['Data Failed To Update'], 400);
@@ -125,12 +145,14 @@ class SliderController extends Controller
     {
         if (request()->wantsJson()) {
 
-            $user = User::where('uuid', $uuid)->first();
-            if (!isset($user)) {
+            $slider = Slider::where('uuid', $uuid)->first();
+
+            if (!isset($slider)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-            $user->delete();
-            if ($user) {
+            Storage::delete("/public/SliderImage/" . $slider->image);
+            $slider->delete();
+            if ($slider) {
                 return RestApi::success(['Data Successfully Deleted'], 200);
             }
         } else {

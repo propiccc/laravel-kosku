@@ -11,8 +11,8 @@ function Login() {
   const [animate, setAnimate] = useState(1);
   const [loading, setLoading] = useState(false)
   const [Data, setData] = useState({
-    'username': "",
-    'password': ""
+    'username': null,
+    'password': null
   });
 
   const HandleChange = (e) => {
@@ -24,30 +24,41 @@ function Login() {
     }))
   }
 
-  const Login = async () => {
+  const Login = async (e) => {
+    e.preventDefault()
     setLoading(true);
-    try {
-      const res = await axios.post('/api/login', Data);
-      if (res.data.data.access_token) {
-        var token = `Bearer ${res.data.data.access_token}`;
-        localStorage.setItem("access_token", token);
-        return navigate('/system/user');
+
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+    };
+
+    const formData = new FormData();
+    formData.append('username', Data.username)
+    formData.append('password', Data.password)
+    axios.post('/api/login', formData, { headers }).then(res => {
+      console.log(res.data.success);
+      if (res.data.success === true && res.data.data.access_token != null) {
+        localStorage.setItem('access_token', res.data.data.access_token);
+        setTimeout(() => {
+          return navigate('/system/user')
+        }, 2000);
       } else {
         localStorage.removeItem('access_token');
         return navigate('/')
       }
-
-    } catch (error) {
-      if (error.response.data.data) {
-        error.response.data.data.forEach(e => {
-          toast.error(e);
-        });
+    }).catch(err => {
+      if (err.response.data.message != null) {
+        toast.error(err.response.data.message)
       } else {
-        toast.error("Username/Password Anda Salah!");
+        console.log('oioi', err.response);
+        err.response.data.data.forEach(el => {
+          toast.error(el)
+        });
       }
-    } finally {
+    }).finally(() => {
       setLoading(false)
-    }
+    })
+
   }
 
   const ComLoading = () => {
@@ -60,7 +71,6 @@ function Login() {
       </div>
     )
   }
-
   return (
     <div className={`bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen flex justify-center items-center `}>
       <Toaster />
@@ -70,8 +80,7 @@ function Login() {
           <img src="/storage/asset/LogoBmc.png" alt="Logo Bmc" className='w-20 h-20 bg-white rounded-[50%]' />
         </div>
         <span className='text-xl font-semibold text-white'>Login Your Account Here!</span>
-
-        <div className="flex flex-col text-start mt-5">
+        <form onSubmit={Login} className="flex flex-col text-start mt-5">
           <div className="flex flex-col mb-10">
             <input type="text" id="username" className='focus:outline-none focus:border-b-blue-500 bg-transparent border-b-[2px] p-4 text-white transition-colors duration-200 text-lg placeholder-white' placeholder='Username/Email' autoComplete='off' name='username' onChange={HandleChange} />
           </div>
@@ -79,13 +88,12 @@ function Login() {
             <input type="password" id="password" className='focus:outline-none focus:border-b-blue-500 bg-transparent border-b-[2px] p-4 text-white transition-colors duration-200 text-lg placeholder-white' placeholder='Password' autoComplete='off' name='password' onChange={HandleChange} />
           </div>
           <div className="flex justify-center w-fu ll mt-2 mb-5">
-            <button className='bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white font-semibold shadow-white w-full p-2 rounded-lg active:scale-95' onClick={Login} disabled={loading}>{loading ? (<ComLoading />) : "Login"}</button>
+            <button className='bg-blue-700 hover:bg-blue-600 transition-all duration-200 text-white font-semibold shadow-white w-full p-2 rounded-lg active:scale-95' type='submit' disabled={loading}>{loading ? (<ComLoading />) : "Login"}</button>
           </div>
           <div className="flex w-full justify-start font-semibold">
-
             <Link className='text-gray-200 hover:text-cyan-400' to="/">Back To Home</Link>
           </div>
-        </div>
+        </form>
       </section>
     </div>
   )
