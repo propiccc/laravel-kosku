@@ -40,6 +40,7 @@ function Index() {
       }, 600)
     )
   }
+  console.log('ik', IndexSlider);
 
   const SwitchPage = (url, page) => {
     setBlock(true)
@@ -67,7 +68,7 @@ function Index() {
     })
   }
 
-  // * function 
+  // * function
   const HandleDelete = (uuid) => {
     var url = `/api/slider/${uuid}/delete`
     Swal.fire({
@@ -135,7 +136,7 @@ function Index() {
     }, 400);
   }
 
-  // * Debonce Search && Paginate && Show 
+  // * Debonce Search && Paginate && Show
   useEffect(() => {
     const debounce = setTimeout(() => {
       SwitchPage('/api/slider?page=', page)

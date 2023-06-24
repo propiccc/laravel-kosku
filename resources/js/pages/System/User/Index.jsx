@@ -67,7 +67,7 @@ function Index() {
     })
   }
 
-  // * effect 
+  // * effect
   useState(() => {
     var a = true;
     if (a) {
@@ -79,7 +79,7 @@ function Index() {
   }, [])
 
 
-  // * function 
+  // * function
   const HandleDelete = (uuid) => {
     var url = `/api/user/${uuid}/delete`
     Swal.fire({
@@ -147,7 +147,7 @@ function Index() {
     }, 400);
   }
 
-  // * Debonce Search && Paginate && Show 
+  // * Debonce Search && Paginate && Show
   useEffect(() => {
     const debounce = setTimeout(() => {
       SwitchPage('/api/user?page=', page)
@@ -206,7 +206,7 @@ function Index() {
                 ))
               }
 
-              {/* 
+              {/*
               // TODO: Data Not Found If Data Index Null
               */}
 
@@ -217,7 +217,7 @@ function Index() {
               ) : null}
             </tbody>
           </table>
-          {/* 
+          {/*
             // TODO : Paginate Navigator
           */}
           <div className="flex justify-between mt-2">

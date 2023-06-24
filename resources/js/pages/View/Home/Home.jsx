@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Navbar from "../Navbar/Index";
 import "./Style.css";
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
+import axios from "axios";
+import Loading from '../../../Components/Loading';
 
-const Slider = ({ Data, ...props }) => {
-    const item = useState(Data);
+const Slider = ({Data}) => {
+    const [item, setItem] = useState();
+    useEffect(() => {
+        setItem(Data)
+      }, []);
+
     return (
         <>
-            {/* <div className="flex h-screen w-full md:h-[500px] lg:h-full">
-                <img src="https://plus.unsplash.com/premium_photo-1682551838486-a10e3704e8d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1932&q=80" alt="Slider Image" className='w-full' />
-            </div> */}
             <Splide
                 options={{
                     rewind: true,
@@ -23,9 +26,10 @@ const Slider = ({ Data, ...props }) => {
                 aria-label="..."
             >
                 <SplideTrack className="">
-                    {item[0]?.map((card) => (
+                    {item?.map((card) => (
                         <SplideSlide key={card.index}>
                             <div className="flex flex-col h-[300px] px-3 sm:h-[500px] md:h-[100vh] absolute justify-center items-center w-full text-white z-20">
+                            {console.log('alfian',item)}
                                 <p className="text-[10px] sm:text-[20px] text-center">
                                     {card.description}
                                 </p>
@@ -49,14 +53,14 @@ const Slider = ({ Data, ...props }) => {
 
 const Card = ({ Data, ...props }) => {
     const card = useState(Data);
-    console.log(card);
     return (
         <>
             <section className="flex flex-col justify-center items-center py-[100px]">
                 <h1 className="text-[48px] font-bold">Our Division</h1>
+                <p className="text-[24px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quas vero nihil.</p>
                 <div className="snap-x mx-auto py-[100px] px-[100px] gap-24 snap-mandatory flex w-full overflow-x-scroll scrollbar-none">
                     {card[0]?.map((item) => (
-                        <div className="snap-center flex-shrink-0 relative w-[520px] h-[320px] rounded-[35px] border-t border-slate-400 shadow-md shadow-slate-400 overflow-hidden">
+                        <div key={item.id} className="snap-center flex-shrink-0 relative w-[520px] h-[320px] rounded-[35px] border-t border-slate-400 shadow-md shadow-slate-400 overflow-hidden">
                             <div className="p-6 w-full h-full absolute">
                                 <p className="text-[26px] font-bold">
                                     {item.title}
@@ -87,7 +91,7 @@ const Card = ({ Data, ...props }) => {
 const Youtube = ({ url }) => {
     return (
         <>
-            <div className="bg-[#187FF7] px-10 flex max-h-fit py-10 gap-x-10 md:flex-col lg:flex-row md:justify-center lg:justify-center">
+            <div className="bg-[#187FF7] px-10 flex max-h-fit py-20 gap-x-10 md:flex-col lg:flex-row md:justify-center lg:justify-center">
                 <div className="h-[400px] w-1/3">
                     <iframe
                         src="https://www.youtube.com/embed/dQw4w9WgXcQ"
@@ -122,50 +126,50 @@ const Youtube = ({ url }) => {
 const About = () => {
     return (
         <>
-            <div className="bg-[#18C3F7]">
-                <div className="text-white ">
-                    <h1>Lorem Ipsum</h1>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quaerat enim aliquid iure magnam consequatur ducimus error, hic beatae tenetur, magni quos, excepturi doloribus. Libero quasi ipsum quisquam tempore aperiam.</p>
-                    <hr className="border w-[240px]" />
-                    <button>
-                        <a href="" className="border border-black bg-white text-black font-semibold py-2 px-6">
-                            Read More
-                        </a>
-                    </button>
+            <div className="bg-[#18C3F7] p-28 flex justify-between gap-[100px]">
+                <div className="text-white flex justify-end w-1/2">
+                    <div className="w-[500px] text-white flex flex-col gap-7 items-center">
+                        <h1 className="text-[36px]">Lorem Ipsum</h1>
+                        <p className="text-[18px] text-center w-[500px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quaerat enim aliquid iure magnam consequatur ducimus error, hic beatae tenetur, magni quos, excepturi doloribus. Libero quasi ipsum quisquam tempore aperiam.</p>
+                        <hr className="border w-[240px]" />
+                        <button className="h-[39px] w-[131px] relative">
+                            <a href="" className="w-full h-full border z-10 relative border-black bg-white text-black font-semibold py-2 px-6">
+                                Read More
+                            </a>
+                            <div className="h-[39px] w-[129px] -mt-[27px] ml-[4px] absolute bg-black"></div>
+                        </button>
+                    </div>
                 </div>
-                <div className=""></div>
+                <div className="w-1/2 flex justify-start">
+                    <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-[315px] h-[350px]" />
+                </div>
+            </div>
+        </>
+    )
+}
+
+const Banner = () => {
+    return(
+        <>
+            <img src="https://akcdn.detik.net.id/community/media/visual/2021/04/01/gereja-bethany-miracle-center-1_43.jpeg?w=250&q=" alt=""
+                className="w-full h-screen"
+            />
+        </>
+    )
+}
+
+const Maps = () => {
+    return(
+        <>
+            <div className="bg-white flex items-center justify-center">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.227001034966!2d112.67617191472291!3d-7.328382294711277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fce7cb57abd7%3A0x46d5d79523d232a9!2sGereja%20BMC%20Sumurwelut%20(Bethany%20Miracle%20Center)!5e0!3m2!1sid!2sid!4v1680935786302!5m2!1sid!2sid" className='w-full h-[600px]' referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </>
     )
 }
 
 function Home() {
-    const [Data, setData] = useState([
-        {
-            id: 1,
-            title: "Lorem ipsum dolor sit amet.",
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam non voluptatem ipsa error suscipit.",
-            imagedir:
-                "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
-        },
-        {
-            id: 2,
-            title: "Lorem ipsum dolor sit amet.",
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam non voluptatem ipsa error suscipit.",
-            imagedir:
-                "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
-        },
-        {
-            id: 3,
-            title: "Lorem ipsum dolor sit amet.",
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam non voluptatem ipsa error suscipit.",
-            imagedir:
-                "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
-        },
-    ]);
+
     const [card, setCard] = useState([
         {
             id: 1,
@@ -216,13 +220,41 @@ function Home() {
                 "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
         },
     ]);
+
+    const [block, setBlock] = useState(true)
+    const [slider, setSlider] = useState([])
+
+    // * Api Call & Request
+    useEffect(() => {
+        setBlock(true);
+
+        axios
+          .get('/api/public/slider')
+          .then(res => {
+            setSlider(res.data);
+          })
+          .catch(error => {
+            setSlider([]);
+          })
+          .finally(() => {
+            setTimeout(() => {
+              setBlock(false);
+            }, 600);
+          });
+      }, []);
+
     return (
         <>
             <Navbar />
-            <Slider Data={Data} />
+            {block ? (<Loading colSpan={5} />) :
+                (<Slider Data={slider} />)
+            }
             <Youtube />
             <Card Data={card} />
             <About />
+            <Banner />
+            <Maps />
+            <div className="h-screen"></div>
         </>
     );
 }
