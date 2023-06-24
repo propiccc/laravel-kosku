@@ -164,7 +164,7 @@ function Index() {
         <div className="h-[2px] w-full bg-gray-300 my-3"></div>
         <div className="flex justify-between items-center mb-4">
           <input type="number" className='p-2 border-[1px] border-gray-400 rounded-md w-[80px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' value={Paginate.tampilkan} onChange={(e) => setPagiante({ ...Paginate, tampilkan: e.target.value })} />
-          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md' placeholder='Search' value={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.target.value })} />
+          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md cursor-not-allowed' placeholder='Search' value={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.target.value })} disabled />
         </div>
         <div className="overflow-y-auto">
           <table className='w-full'>

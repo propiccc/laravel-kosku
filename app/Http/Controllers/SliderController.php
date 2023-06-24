@@ -28,7 +28,7 @@ class SliderController extends Controller
         }
     }
 
-    public function fetch()
+    public function PublicSlider()
     {
         if (request()->wantsJson()) {
             $data = Slider::all();

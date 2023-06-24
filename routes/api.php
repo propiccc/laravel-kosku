@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'login']);
 
 Route::prefix('/public')->group(function () {
-    Route::get('/slider', [SliderController::class, 'fetch']);
+    Route::get('/slider', [SliderController::class, 'PublicSlider']);
 });
 
 Route::middleware('auth')->group(function () {

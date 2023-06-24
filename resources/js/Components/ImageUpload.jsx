@@ -21,7 +21,7 @@ function ImageUpload({ className, name = 'Image', files, setFiles }) {
       <label className='font-semibold'>{name} : <span className='text-red-600 font-semibold'>*</span></label>
       <FilePond
         files={files}
-        onupdatefiles={setImage}
+        onupdatefiles={setFiles}
         allowMultiple={false}
         name="files"
         labelIdle='Drag & Drop your files or <span class="filepond--label-action">Browse</span>'
