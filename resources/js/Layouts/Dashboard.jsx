@@ -68,9 +68,8 @@ function Dashboard({ children, className }) {
 
 function Loading() {
   return (<>
-    <div className="flex p-4s bg-white rounded-lg shadow-lg justify-center">
+    <div className="flex p-40 bg-white rounded-lg shadow-lg justify-center">
       <span className='text-lg text-center'>Loading...</span>
-
     </div>
   </>)
 }
