@@ -126,11 +126,27 @@ const Youtube = ({ url }) => {
 const About = () => {
     return (
         <>
-            <div className="bg-[#18C3F7] p-28 flex justify-between gap-[100px]">
-                <div className="text-white flex justify-end w-1/2">
+            <div className="bg-gradient-to-r from-indigo-500 from-5% via-sky-500 via-30% to-indigo-700 p-10 flex justify-center gap-10 h-[570px]">
+
+                <div className="w-full h-full text-white p-4">
+                    <h1 className="font-extrabold text-4xl text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
+                    <div className="flex justify-center">
+                        <div className="bg-gradient-to-r from-black to-slate-700 h-[4px] w-[1000px] mt-6"></div>
+                    </div>
+                    <p className="text-center text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
+                    <div className="mt-10 flex justify-center">
+                        <button className="p-4 border-2 border-black w-52 font-semibold rounded-md hover:bg-white hover:text-black hover:scale-105 transition-all duration-500">Watch Online</button>
+                    </div>
+                </div>
+
+                <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500">
+                    <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-full h-full rounded-lg" />
+                </div>
+
+                {/* <div className="text-white flex justify-end w-1/2">
                     <div className="w-[500px] text-white flex flex-col gap-7 items-center">
                         <h1 className="text-[36px]">Lorem Ipsum</h1>
-                        <p className="text-[18px] text-center w-[500px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quaerat enim aliquid iure magnam consequatur ducimus error, hic beatae tenetur, magni quos, excepturi doloribus. Libero quasi ipsum quisquam tempore aperiam.</p>
+                        <p className="text-[18px] text-start w-[500px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quaerat enim aliquid iure magnam consequatur ducimus error, hic beatae tenetur, magni quos, excepturi doloribus. Libero quasi ipsum quisquam tempore aperiam.</p>
                         <hr className="border w-[240px]" />
                         <button className="h-[39px] w-[131px] relative">
                             <a href="" className="w-full h-full border z-10 relative border-black bg-white text-black font-semibold py-2 px-6">
@@ -142,7 +158,49 @@ const About = () => {
                 </div>
                 <div className="w-1/2 flex justify-start">
                     <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-[315px] h-[350px]" />
+                </div> */}
+            </div>
+        </>
+    )
+}
+const AboutRevese = () => {
+    return (
+        <>
+            <div className="bg-gradient-to-r from-sky-500 from-5% via-indigo-500 via-30% to-sky-700 p-10 flex justify-center gap-10 h-[570px]">
+
+                <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500">
+                    <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-full h-full rounded-lg" />
                 </div>
+
+                <div className="w-full h-full text-white p-4">
+                    <h1 className="font-extrabold text-4xl text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
+                    <div className="flex justify-center">
+                        <div className="bg-gradient-to-r from-black to-slate-700 h-[4px] w-[1000px] mt-6"></div>
+                    </div>
+                    <p className="text-center text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
+                    <div className="mt-10 flex justify-center">
+                        <button className="p-4 border-2 border-black w-52 font-semibold rounded-md hover:bg-white hover:text-black hover:scale-105 transition-all duration-500">Watch Online</button>
+                    </div>
+                </div>
+
+
+
+                {/* <div className="text-white flex justify-end w-1/2">
+                    <div className="w-[500px] text-white flex flex-col gap-7 items-center">
+                        <h1 className="text-[36px]">Lorem Ipsum</h1>
+                        <p className="text-[18px] text-start w-[500px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quaerat enim aliquid iure magnam consequatur ducimus error, hic beatae tenetur, magni quos, excepturi doloribus. Libero quasi ipsum quisquam tempore aperiam.</p>
+                        <hr className="border w-[240px]" />
+                        <button className="h-[39px] w-[131px] relative">
+                            <a href="" className="w-full h-full border z-10 relative border-black bg-white text-black font-semibold py-2 px-6">
+                                Read More
+                            </a>
+                            <div className="h-[39px] w-[129px] -mt-[27px] ml-[4px] absolute bg-black"></div>
+                        </button>
+                    </div>
+                </div>
+                <div className="w-1/2 flex justify-start">
+                    <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-[315px] h-[350px]" />
+                </div> */}
             </div>
         </>
     )
@@ -162,7 +220,7 @@ const Maps = () => {
     return (
         <>
             <div className="flex justify-center">
-                <div className="bg-blue-500 w-1/4">test</div>
+                <div className="bg-black w-1/4">test</div>
                 <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126636.3291129682!2d112.70553600000001!3d-7.310540800000009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fe9f794adb13%3A0x4da089d5c4cb9016!2sMitra%20Keluarga%20Surabaya!5e0!3m2!1sid!2sid!4v1687676442449!5m2!1sid!2sid" className='w-full h-[600px]' referrerPolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </>
@@ -171,25 +229,27 @@ const Maps = () => {
 
 const Instagram = (url) => {
     return (
-        <div className="flex bg-black max-h-fit p-2 justify-center">
+        <div className="flex bg-black max-h-fit p-2 justify-center border-2 border-purple-500">
             <div className="w-full p-4 flex flex-col">
-                <div className="w-full text-white">
-                    <h1 className="text-center mt-10 mb-4 text-5xl font-semibold">Follow Us On Instagram </h1>
-                    <div className="w-full flex justify-center">
-                        <h1 className="w-[1000px] text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse, libero beatae, odit sint, architecto non consequuntur quaerat adipisci possimus distinctio voluptatum. Repellendus iste ab debitis amet corrupti minima et asperiores hic eos quibusdam excepturi ipsa quas saepe sint ea exercitationem velit repudiandae officiis molestiae unde ex voluptatibus neque, odit accusantium? Placeat doloribus, eligendi porro, provident accusantium unde iure sapiente modi asperiores incidunt quis numquam totam iste omnis cumque dignissimos ipsam? Voluptate nostrum officiis distinctio similique officia a optio dolore ad.</h1>
+                <div className="w-full text-white p-1">
+                    <div className="flex justify-center h-[60px]">
+                        <h1 className="bg-white font-extrabold text-center text-black text-5xl text-transparent bg-clip-text bg-gradient-to-r from-purple-5    00 to-pink-600">Follow Us On Instagram </h1>
                     </div>
-                    <div className="bg-gray-600 h-[1px] w-full mt-6"></div>
+                    <div className="w-full flex justify-center">
+                        <text className="w-[1000px] text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse, libero beatae, odit sint, architecto non consequuntur quaerat adipisci possimus distinctio voluptatum. Repellendus iste ab debitis amet corrupti minima et asperiores hic eos quibusdam excepturi ipsa quas saepe sint ea exercitationem velit repudiandae officiis molestiae unde ex voluptatibus neque, odit accusantium? Placeat doloribus, eligendi porro, provident accusantium unde iure sapiente modi asperiores incidunt quis numquam totam iste omnis cumque dignissimos ipsam? Voluptate nostrum officiis distinctio similique officia a optio dolore ad.</text>
+                    </div>
+                    <div className="bg-gradient-to-r from-pink-500 to-blue-500 h-[1px] w-full mt-6"></div>
                 </div>
-                <div className="h-full p-6 flex gap-4 justify-center flex-wrap mt-10">
-                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
-                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
-                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
-                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
-                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
-                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
-                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
-                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
-                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+                <div className="h-full p-6 flex gap-4 justify-center flex-wrap">
+                    <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
 
                 </div>
             </div>
@@ -283,8 +343,9 @@ function Home() {
             <About />
             <Banner />
             <Maps />
+            <AboutRevese />
             <Instagram />
-            <div className="h-screen"></div>
+            {/* <div className="h-screen"></div> */}
         </>
     );
 }
