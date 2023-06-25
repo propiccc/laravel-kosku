@@ -11,6 +11,7 @@ const SliderIndex = lazy(() => import('../pages/System/Slider/Index'));
 const Home = lazy(() => import('../pages/View/Home/Home'));
 const VisiMisiIndex = lazy(() => import('../pages/System/VisiMisi/Index'));
 const SettingInadex = lazy(() => import('../pages/System/Setting/Index'));
+const DivisiIndex = lazy(() => import('../pages/System/Divisi/Index'));
 
 function Router() {
   return (
@@ -28,6 +29,7 @@ function Router() {
             <Route path='slider' element={<SliderIndex />} exact />
             <Route path='visimisi' element={<VisiMisiIndex />} exact />
             <Route path='setting' element={<SettingInadex />} exact />
+            <Route path='divisi' element={<DivisiIndex />} exact />
           </Route>
         </Route>
 

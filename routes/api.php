@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisiMisiController;
@@ -56,5 +57,12 @@ Route::middleware('auth')->group(function () {
         Route::post('{uuid}/edit', [SettingController::class, 'show']);
         Route::post('{uuid}/update', [SettingController::class, 'update']);
         Route::delete('{uuid}/delete', [SettingController::class, 'delete']);
+    });
+    Route::prefix('divisi')->group(function () {
+        Route::post('/', [DivisiController::class, 'index']);
+        Route::post('/store', [DivisiController::class, 'store']);
+        Route::post('{uuid}/edit', [DivisiController::class, 'show']);
+        Route::post('{uuid}/update', [DivisiController::class, 'update']);
+        Route::delete('{uuid}/delete', [DivisiController::class, 'delete']);
     });
 });
