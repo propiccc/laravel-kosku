@@ -28,19 +28,6 @@ function Index() {
   })
 
   // * Api Call & Request
-  const IndexSlider = () => {
-    setBlock(true)
-    axios.post('/api/slider', Paginate).then(res => {
-      setSlider(res.data);
-    }).catch(error => {
-      setSlider([]);
-    }).finally(
-      setTimeout(() => {
-        setBlock(false)
-      }, 600)
-    )
-  }
-
   const SwitchPage = (url, page) => {
     setBlock(true)
     axios.post(url + page, Paginate).then(res => {
@@ -55,9 +42,9 @@ function Index() {
     );
   }
 
-  const GetSlider = (uuid) => {
+  const GetDivisi = (uuid) => {
     setToggle(false)
-    var url = `/api/slider/${uuid}/edit`
+    var url = `/api/divisi/${uuid}/edit`
     axios.post(url).then(res => {
       setType('update');
       setDataEdit(res.data.data)
@@ -69,7 +56,7 @@ function Index() {
 
   // * function 
   const HandleDelete = (uuid) => {
-    var url = `/api/slider/${uuid}/delete`
+    var url = `/api/divisi/${uuid}/delete`
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -93,7 +80,7 @@ function Index() {
               'Your file has been deleted.',
               'success'
             )
-            IndexSlider();
+            SwitchPage('/api/divisi?page=', page)
           }
         }).catch(error => {
           Swal.fire({
@@ -131,27 +118,19 @@ function Index() {
     setDataEdit([]);
     setToggle(false)
     setTimeout(() => {
-      IndexSlider();
+      SwitchPage('/api/divisi?page=', page)
     }, 400);
   }
 
   // * Debonce Search && Paginate && Show 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      SwitchPage('/api/slider?page=', page)
+      SwitchPage('/api/divisi?page=', page)
     }, 700);
     return () => clearTimeout(debounce)
-  }, [Paginate])
+  }, [Paginate, page])
 
-  useEffect(() => {
-    const debounce = setTimeout(() => {
-      IndexSlider()
-      // SwitchPage('/api/slider?page=', page)
-    }, 600);
-    return () => clearTimeout(debounce)
-  }, [page])
 
-  console.log(Slider);
   return (
     <>
       <Toaster />
@@ -193,7 +172,7 @@ function Index() {
                     <th className='text-center'>{DateKu(item.created_at)}</th>
                     <td>
                       <div className="flex justify-center gap-x-1">
-                        <Edit onClick={() => { GetSlider(item.uuid) }} />
+                        <Edit onClick={() => { GetDivisi(item.uuid) }} />
                         <Delete onClick={() => { HandleDelete(item.uuid) }} />
                       </div>
                     </td>

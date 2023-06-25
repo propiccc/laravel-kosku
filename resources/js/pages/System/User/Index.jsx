@@ -28,19 +28,6 @@ function Index() {
   })
 
   // * Api Call & Request
-  const IndexUser = () => {
-    setBlock(true)
-    axios.post('/api/user', Paginate).then(res => {
-      setUser(res.data);
-    }).catch(error => {
-      setUser([]);
-    }).finally(
-      setTimeout(() => {
-        setBlock(false)
-      }, 600)
-    )
-  }
-
   const SwitchPage = (url, page) => {
     setBlock(true)
     axios.post(url + page, Paginate).then(res => {
@@ -66,18 +53,6 @@ function Index() {
       toast.error(error.response.data.message);
     })
   }
-
-  // * effect
-  useState(() => {
-    var a = true;
-    if (a) {
-      setTimeout(() => {
-        IndexUser();
-      }, 300)
-    }
-    return () => { a = false }
-  }, [])
-
 
   // * function
   const HandleDelete = (uuid) => {
@@ -105,7 +80,7 @@ function Index() {
               'Your file has been deleted.',
               'success'
             )
-            IndexUser();
+            SwitchPage('/api/user?page=', page)
           }
         }).catch(error => {
           Swal.fire({
@@ -143,7 +118,7 @@ function Index() {
     setDataEdit([]);
     setToggle(false)
     setTimeout(() => {
-      IndexUser();
+      SwitchPage('/api/user?page=', page)
     }, 400);
   }
 
@@ -153,15 +128,7 @@ function Index() {
       SwitchPage('/api/user?page=', page)
     }, 700);
     return () => clearTimeout(debounce)
-  }, [Paginate])
-
-  useEffect(() => {
-    const debounce = setTimeout(() => {
-      SwitchPage('/api/user?page=', page)
-    }, 600);
-    return () => clearTimeout(debounce)
-  }, [page])
-
+  }, [Paginate, page])
 
   return (
     <>

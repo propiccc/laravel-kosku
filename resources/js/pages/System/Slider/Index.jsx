@@ -40,7 +40,6 @@ function Index() {
       }, 600)
     )
   }
-  console.log('ik', IndexSlider);
 
   const SwitchPage = (url, page) => {
     setBlock(true)
@@ -94,7 +93,7 @@ function Index() {
               'Your file has been deleted.',
               'success'
             )
-            IndexSlider();
+            SwitchPage('/api/slider?page=', page)
           }
         }).catch(error => {
           Swal.fire({
@@ -132,7 +131,7 @@ function Index() {
     setDataEdit([]);
     setToggle(false)
     setTimeout(() => {
-      IndexSlider();
+      SwitchPage('/api/slider?page=', page)
     }, 400);
   }
 
@@ -142,17 +141,9 @@ function Index() {
       SwitchPage('/api/slider?page=', page)
     }, 700);
     return () => clearTimeout(debounce)
-  }, [Paginate])
+  }, [Paginate, page])
 
-  useEffect(() => {
-    const debounce = setTimeout(() => {
-      IndexSlider()
-      // SwitchPage('/api/slider?page=', page)
-    }, 600);
-    return () => clearTimeout(debounce)
-  }, [page])
 
-  console.log(Slider);
   return (
     <>
       <Toaster />

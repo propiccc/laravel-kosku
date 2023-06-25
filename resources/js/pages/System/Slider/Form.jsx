@@ -61,7 +61,6 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
       }
     })
   }
-  console.log('data slider', ImageFile);
 
   return (
     <div className='bg-white rounded-lg p-6 mb-2'>

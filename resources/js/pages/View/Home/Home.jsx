@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Navbar from "../Navbar/Index";
 import "./Style.css";
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
@@ -6,11 +6,11 @@ import "@splidejs/react-splide/css";
 import axios from "axios";
 import Loading from '../../../Components/Loading';
 
-const Slider = ({Data}) => {
+const Slider = ({ Data }) => {
     const [item, setItem] = useState();
     useEffect(() => {
         setItem(Data)
-      }, []);
+    }, []);
 
     return (
         <>
@@ -29,7 +29,7 @@ const Slider = ({Data}) => {
                     {item?.map((card) => (
                         <SplideSlide key={card.index}>
                             <div className="flex flex-col h-[300px] px-3 sm:h-[500px] md:h-[100vh] absolute justify-center items-center w-full text-white z-20">
-                            {console.log('alfian',item)}
+                                {console.log('alfian', item)}
                                 <p className="text-[10px] sm:text-[20px] text-center">
                                     {card.description}
                                 </p>
@@ -149,7 +149,7 @@ const About = () => {
 }
 
 const Banner = () => {
-    return(
+    return (
         <>
             <img src="https://akcdn.detik.net.id/community/media/visual/2021/04/01/gereja-bethany-miracle-center-1_43.jpeg?w=250&q=" alt=""
                 className="w-full h-screen"
@@ -159,10 +159,10 @@ const Banner = () => {
 }
 
 const Maps = () => {
-    return(
+    return (
         <>
             <div className="bg-white flex items-center justify-center">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.227001034966!2d112.67617191472291!3d-7.328382294711277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fce7cb57abd7%3A0x46d5d79523d232a9!2sGereja%20BMC%20Sumurwelut%20(Bethany%20Miracle%20Center)!5e0!3m2!1sid!2sid!4v1680935786302!5m2!1sid!2sid" className='w-full h-[600px]' referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.227001034966!2d112.67617191472291!3d-7.328382294711277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fce7cb57abd7%3A0x46d5d79523d232a9!2sGereja%20BMC%20Sumurwelut%20(Bethany%20Miracle%20Center)!5e0!3m2!1sid!2sid!4v1680935786302!5m2!1sid!2sid" className='w-full h-[600px]' referrerPolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </>
     )
@@ -229,19 +229,19 @@ function Home() {
         setBlock(true);
 
         axios
-          .get('/api/public/slider')
-          .then(res => {
-            setSlider(res.data);
-          })
-          .catch(error => {
-            setSlider([]);
-          })
-          .finally(() => {
-            setTimeout(() => {
-              setBlock(false);
-            }, 600);
-          });
-      }, []);
+            .get('/api/public/slider')
+            .then(res => {
+                setSlider(res.data);
+            })
+            .catch(error => {
+                setSlider([]);
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    setBlock(false);
+                }, 600);
+            });
+    }, []);
 
     return (
         <>
