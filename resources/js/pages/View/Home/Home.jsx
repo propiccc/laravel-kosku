@@ -161,12 +161,41 @@ const Banner = () => {
 const Maps = () => {
     return (
         <>
-            <div className="bg-white flex items-center justify-center">
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.227001034966!2d112.67617191472291!3d-7.328382294711277!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fce7cb57abd7%3A0x46d5d79523d232a9!2sGereja%20BMC%20Sumurwelut%20(Bethany%20Miracle%20Center)!5e0!3m2!1sid!2sid!4v1680935786302!5m2!1sid!2sid" className='w-full h-[600px]' referrerPolicy="no-referrer-when-downgrade"></iframe>
+            <div className="flex justify-center">
+                <div className="bg-blue-500 w-1/4">test</div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126636.3291129682!2d112.70553600000001!3d-7.310540800000009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fe9f794adb13%3A0x4da089d5c4cb9016!2sMitra%20Keluarga%20Surabaya!5e0!3m2!1sid!2sid!4v1687676442449!5m2!1sid!2sid" className='w-full h-[600px]' referrerPolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </>
     )
 }
+
+const Instagram = (url) => {
+    return (
+        <div className="flex bg-black max-h-fit p-2 justify-center">
+            <div className="w-full p-4 flex flex-col">
+                <div className="w-full text-white">
+                    <h1 className="text-center mt-10 mb-4 text-5xl font-semibold">Follow Us On Instagram </h1>
+                    <div className="w-full flex justify-center">
+                        <h1 className="w-[1000px] text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse, libero beatae, odit sint, architecto non consequuntur quaerat adipisci possimus distinctio voluptatum. Repellendus iste ab debitis amet corrupti minima et asperiores hic eos quibusdam excepturi ipsa quas saepe sint ea exercitationem velit repudiandae officiis molestiae unde ex voluptatibus neque, odit accusantium? Placeat doloribus, eligendi porro, provident accusantium unde iure sapiente modi asperiores incidunt quis numquam totam iste omnis cumque dignissimos ipsam? Voluptate nostrum officiis distinctio similique officia a optio dolore ad.</h1>
+                    </div>
+                    <div className="bg-gray-600 h-[1px] w-full mt-6"></div>
+                </div>
+                <div className="h-full p-6 flex gap-4 justify-center flex-wrap mt-10">
+                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+                    <div className="bg-gray-700 h-80 w-80 rounded-lg"></div>
+
+                </div>
+            </div>
+        </div >
+    )
+};
 
 function Home() {
 
@@ -254,6 +283,7 @@ function Home() {
             <About />
             <Banner />
             <Maps />
+            <Instagram />
             <div className="h-screen"></div>
         </>
     );
