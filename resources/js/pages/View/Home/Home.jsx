@@ -7,11 +7,7 @@ import axios from "axios";
 import Loading from '../../../Components/Loading';
 
 const Slider = ({ Data }) => {
-    const [item, setItem] = useState();
-    useEffect(() => {
-        setItem(Data)
-    }, []);
-
+    const [item, setItem] = useState(Data);
     return (
         <>
             <Splide
@@ -91,33 +87,26 @@ const Card = ({ Data, ...props }) => {
 const Youtube = ({ url }) => {
     return (
         <>
-            <div className="bg-[#187FF7] px-10 flex max-h-fit py-20 gap-x-10 md:flex-col lg:flex-row md:justify-center lg:justify-center">
-                <div className="h-[400px] w-1/3">
-                    <iframe
-                        src="https://www.youtube.com/embed/dQw4w9WgXcQ"
-                        title="YouTube video player"
-                        allowFullScreen
-                        className="w-full h-full xl:h-full md:h-full lg:h-full rounded-lg"
-                    ></iframe>
+            <div className="flex w-full bg-black p-5 flex-col">
+                {/* <div className="w-full">
+                    <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[60px]" />
+                </div> */}
+                <div className="w-full min-h-[200px] rounded-lg flex p-4 justify-center">
+                    <div className="p-1">
+                        <div className="h-[260px] w-[480px]">
+                            <iframe src="https://www.youtube.com/embed/jiDUOP6bXik" frameborder="2" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" className="h-full w-full rounded-lg" allowFullScreen></iframe>
+                        </div>
+                    </div>
+                    <div className="min-h-[260px] w-[2px] bg-white ml-5 mr-5"></div>
+                    <div className="min-h-[400px] w-full text-white">
+                        <div className="">
+                            <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[80px]" />
+                        </div>
+                        <div className="h-[2px] my-2 bg-gray-600 w-full"></div>
+                        <h1 className="font-semibold text-4xl mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, quia!</h1>
+                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit rem earum ipsa dignissimos laboriosam modi, itaque nostrum similique nobis, quidem ex officiis maiores, ullam rerum quaerat vel amet! Ratione natus totam dolores minima provident soluta consequatur nam placeat magnam officia iusto eum, nobis corporis tenetur non ex cumque iure quod? Illo placeat amet tenetur alias repellendus ipsum consequatur, consectetur mollitia aperiam eaque vero veritatis et accusamus accusantium pariatur asperiores dignissimos, excepturi iusto fugiat dolorem quia. Numquam sapiente id maiores. Similique veniam accusamus quisquam vel temporibus ut non vero dolor! Vitae excepturi nulla molestias sint, ipsum dignissimos minus id porro quae impedit officiis obcaecati quo cumque omnis? Ducimus maxime, rerum soluta asperiores pariatur mollitia illum praesentium! Accusantium rem delectus nobis eius! Saepe cum assumenda iure laborum ipsum delectus distinctio fugit enim, consequatur incidunt voluptatibus libero recusandae, exercitationem reprehenderit dolor deserunt accusantium in commodi doloribus reiciendis rem. Inventore provident nulla illum facilis, neque, exercitationem quae ut rem optio ad quia sed sapiente iure. Dolorem aliquid alias deleniti id voluptates, repellendus temporibus tenetur porro ab odio distinctio? Itaque ut ipsa ducimus asperiores at soluta voluptas alias dolores provident mollitia vitae sequi repellendus animi voluptatum quod quas, exercitationem odit id ratione tempora tenetur dignissimos!</p>
+                    </div>
                 </div>
-                <div className="flex flex-col justify-center text-white w-2/3">
-                    <h1 className="text-[30px] font-bold">Title</h1>
-                    <p className="text-[24px]">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Pariatur possimus culpa saepe, tempore unde magni ad,
-                        officiis, optio voluptatem quas dicta ipsum deleniti.
-                        Expedita libero debitis nihil quasi unde, beatae
-                        assumenda, vitae commodi reiciendis ullam corporis, ex
-                        placeat incidunt obcaecati quis eaque eos tempora
-                        dolore? Nemo omnis cum rem. Placeat.
-                    </p>
-                </div>
-                {/* <div className="text-white w-[1200px] md:w-full md:bg-red-200 lg:w-[1200px] md:mt-4">
-          <span className='text-5xl font-semibold md:text-center w-full bg-red-700'>TItle Youtube</span>
-          <div className="">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Explicabo quis numquam animi iure! Beatae pariatur similique sunt fugiat. Pariatur neque vero quod nemo harum eos, magnam dolorum similique ut eaque error, explicabo unde aperiam! Saepe, nisi eum? Obcaecati recusandae voluptas accusantium totam pariatur officia suscipit iure, nulla natus expedita non, sunt vitae aliquid atque. Eveniet, consectetur? Officia deleniti, quaerat possimus veritatis suscipit, ducimus quisquam pariatur voluptatibus minima tempora autem? Explicabo illo quasi distinctio, amet repudiandae cumque accusamus libero commodi delectus perspiciatis. Sed repellendus earum impedit maiores quasi nisi enim ipsa dolor numquam at, alias consequatur dicta exercitationem sunt. Corrupti aperiam amet omnis eius fugit explicabo, accusantium cumque, autem architecto labore beatae nesciunt earum inventore voluptatibus, distinctio quae consequuntur hic deleniti dolor laboriosam. Fugit quisquam necessitatibus enim ut perspiciatis rerum placeat quas, ipsam minus vel culpa aliquid reprehenderit? Laborum, debitis unde dolorum sit voluptate nesciunt? Corrupti eum eos maxime est omnis ipsam esse explicabo obcaecati? Hic dolorum doloribus ducimus maxime sed dignissimos. Reiciendis natus animi harum, sint veniam nesciunt esse nobis error sequi ad aliquid delectus quisquam nisi ratione exercitationem quibusdam consectetur aliquam maxime dolor expedita labore accusamus. Dicta quaerat distinctio eaque necessitatibus in optio eveniet. Odio dignissimos quam recusandae alias consectetur, soluta consequatur sint porro quisquam maxime similique culpa dolorem omnis facilis officiis at unde? Distinctio dolor repellat debitis nisi voluptatem deserunt nobis, itaque amet at delectus iusto consequatur commodi ut, fugit ullam reiciendis rem maxime veniam magni eum non consectetur perferendis! Animi ipsum modi labore saepe reiciendis quo libero quas quidem provident recusandae, inventore nesciunt consectetur nisi, neque non. Sapiente voluptatum blanditiis nisi adipisci reiciendis provident possimus iure veritatis nulla eos itaque perspiciatis veniam quidem doloremque, a ipsa nemo molestias tempore, assumenda eaque atque! Minima eius tempora impedit sit omnis molestiae, repellat quos voluptatem, ipsum non illum enim ratione.
-          </div>
-        </div> */}
             </div>
         </>
     );
@@ -233,10 +222,10 @@ const Instagram = (url) => {
             <div className="w-full p-4 flex flex-col">
                 <div className="w-full text-white p-1">
                     <div className="flex justify-center h-[60px]">
-                        <h1 className="bg-white font-extrabold text-center text-black text-5xl text-transparent bg-clip-text bg-gradient-to-r from-purple-5    00 to-pink-600">Follow Us On Instagram </h1>
+                        <h1 className="bg-white font-extrabold text-center text-black text-5xl text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-600">Follow Us On Instagram </h1>
                     </div>
                     <div className="w-full flex justify-center">
-                        <text className="w-[1000px] text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse, libero beatae, odit sint, architecto non consequuntur quaerat adipisci possimus distinctio voluptatum. Repellendus iste ab debitis amet corrupti minima et asperiores hic eos quibusdam excepturi ipsa quas saepe sint ea exercitationem velit repudiandae officiis molestiae unde ex voluptatibus neque, odit accusantium? Placeat doloribus, eligendi porro, provident accusantium unde iure sapiente modi asperiores incidunt quis numquam totam iste omnis cumque dignissimos ipsam? Voluptate nostrum officiis distinctio similique officia a optio dolore ad.</text>
+                        <h1 className="w-[1000px] text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse, libero beatae, odit sint, architecto non consequuntur quaerat adipisci possimus distinctio voluptatum. Repellendus iste ab debitis amet corrupti minima et asperiores hic eos quibusdam excepturi ipsa quas saepe sint ea exercitationem velit repudiandae officiis molestiae unde ex voluptatibus neque, odit accusantium? Placeat doloribus, eligendi porro, provident accusantium unde iure sapiente modi asperiores incidunt quis numquam totam iste omnis cumque dignissimos ipsam? Voluptate nostrum officiis distinctio similique officia a optio dolore ad.</h1>
                     </div>
                     <div className="bg-gradient-to-r from-pink-500 to-blue-500 h-[1px] w-full mt-6"></div>
                 </div>
@@ -250,7 +239,6 @@ const Instagram = (url) => {
                     <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
                     <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
                     <div className="bg-gray-800  h-80 w-80 rounded-lg"></div>
-
                 </div>
             </div>
         </div >
@@ -338,14 +326,14 @@ function Home() {
             {block ? (<Loading colSpan={5} />) :
                 (<Slider Data={slider} />)
             }
+
             <Youtube />
             <Card Data={card} />
             <About />
             <Banner />
-            <Maps />
             <AboutRevese />
+            <Maps />
             <Instagram />
-            {/* <div className="h-screen"></div> */}
         </>
     );
 }
