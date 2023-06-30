@@ -5,12 +5,33 @@ import { TbBinaryTree } from 'react-icons/tb'
 import { HiUserGroup } from 'react-icons/hi'
 import { BiNews } from 'react-icons/bi'
 import Menu from './../Components/Menu';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
+import axios from 'axios'
 
 function Dashboard({ children, className }) {
+  // * settup
+  const navigate = useNavigate()
   const [Time, setTime] = useState(null)
 
-  //functions
+  // * Api Call
+  const HandleLogout = () => {
+    axios.post('/api/logout').then(res => {
+      if (res.data.success === true) {
+        localStorage.removeItem('access_token');
+        setTimeout(() => {
+          return navigate('/');
+        }, 400);
+        localStorage.removeItem('access_token');
+      }
+    }).catch(err => {
+      setTimeout(() => {
+        localStorage.removeItem('access_token');
+        return navigate('/');
+      }, 400);
+    })
+  }
+
+  // * functions
   function DateKu() {
     var d = (new Date() + "").split(" ");
     return [d[2], d[1], d[3]].join(" ");
@@ -38,8 +59,8 @@ function Dashboard({ children, className }) {
         </div>
         {/* <div className="flex justify-center items-center text-lg font-semibold ml-4">{header}</div> */}
         <div className="flex justify-end items-center mr-2 w-full gap-x-2 font-semibold">
-          <button className='py-2 px-4 transition-color duration-300 rounded-lg hover:bg-gray-100 hover:bg-opacity-10'>Home</button>
-          <Link to={'/'} className='py-2 px-4 transition-color duration-300 rounded-lg hover:bg-gray-100 hover:bg-opacity-10'>Logout</Link>
+          <NavLink to='/' className='py-2 px-4 transition-color duration-300 rounded-lg hover:bg-gray-100 hover:bg-opacity-10'>Home</NavLink>
+          <button onClick={HandleLogout} className='py-2 px-4 transition-color duration-300 rounded-lg hover:bg-gray-100 hover:bg-opacity-10'>Logout</button>
         </div>
       </div>
       {/* Navabr end */}

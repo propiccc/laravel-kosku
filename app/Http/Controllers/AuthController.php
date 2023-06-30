@@ -66,7 +66,7 @@ class AuthController extends Controller
             $token = explode(" ", $token);
             $logout = Auth::invalidate($token[1]);
             if ($logout) {
-                return response()->json(['message' => 'Successfuly Logout!', 'sucess' => true], 200);
+                return response()->json(['message' => 'Successfuly Logout!', 'success' => true], 200);
             } else {
                 return response()->json(['auth' => 'Failde To Logout!!', 'success' => false], 400);
             }

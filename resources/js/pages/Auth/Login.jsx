@@ -35,13 +35,11 @@ function Login() {
     const formData = new FormData();
     formData.append('username', Data.username)
     formData.append('password', Data.password)
+
     axios.post('/api/login', formData, { headers }).then(res => {
       console.log(res.data.success);
       if (res.data.success === true && res.data.data.access_token != null) {
         localStorage.setItem('access_token', res.data.data.access_token);
-        setTimeout(() => {
-          return navigate('/system/user')
-        }, 2000);
       } else {
         localStorage.removeItem('access_token');
         return navigate('/')
@@ -57,6 +55,9 @@ function Login() {
       }
     }).finally(() => {
       setLoading(false)
+      setTimeout(() => {
+        return navigate('/system/user')
+      }, 400);
     })
 
   }
@@ -71,6 +72,7 @@ function Login() {
       </div>
     )
   }
+
   return (
     <div className={`bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen flex justify-center items-center `}>
       <Toaster />

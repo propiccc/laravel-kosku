@@ -1,14 +1,19 @@
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
+
+
+// ? components
 import Dashboard from '../Layouts/Dashboard'
 import Login from '../pages/Auth/Login';
 import NotFound from '../pages/Auth/NotFound';
 import PrivateRoute from '../util/PrivateRoute';
 import Guest from '../util/Guest';
+import Home from '../pages/View/Home/Home'
+import LoadingPage from '../Components/LoadingPage';
 
+// ? lazy component
 const UserIndex = lazy(() => import('../pages/System/User/Index'));
 const SliderIndex = lazy(() => import('../pages/System/Slider/Index'));
-const Home = lazy(() => import('../pages/View/Home/Home'));
 const VisiMisiIndex = lazy(() => import('../pages/System/VisiMisi/Index'));
 const SettingInadex = lazy(() => import('../pages/System/Setting/Index'));
 const DivisiIndex = lazy(() => import('../pages/System/Divisi/Index'));
@@ -34,7 +39,6 @@ function Router() {
             <Route path='divisi' element={<DivisiIndex />} exact />
           </Route>
         </Route>
-
       </Routes>
     </>
   )

@@ -5,6 +5,7 @@ import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
 import "@splidejs/react-splide/css";
 import axios from "axios";
 import Loading from '../../../Components/Loading';
+import LoadingPage from "../../../Components/LoadingPage";
 
 const Slider = ({ Data }) => {
     const [item, setItem] = useState(Data);
@@ -33,6 +34,41 @@ const Slider = ({ Data }) => {
                                 </h1>
                             </div>
                             <div className="w-full h-[300px] sm:h-[500px] md:h-[100vh] z-10 bg-black opacity-30 absolute"></div>
+                            <img
+                                className="w-full h-[300px] sm:h-[500px] md:h-[100vh] object-cover -z-10"
+                                src={card.imagedir}
+                                alt="Image 1"
+                            />
+                        </SplideSlide>
+                    ))}
+                </SplideTrack>
+            </Splide>
+        </>
+    );
+};
+const News = ({ Data }) => {
+    const [item, setItem] = useState(Data);
+    return (
+        <>
+            <div className="p-10 bg-black flex justify-between items-center">
+                <span className="font-bold text-white text-4xl">Berita Terbaru Kami</span>
+                <div className="h-[2px] w-2/3 bg-gray-200"></div>
+                <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[80px]" />
+            </div>
+            <Splide
+                options={{
+                    rewind: true,
+                    perPage: 1,
+                    pagination: true,
+                    autoplay: true,
+                    arrows: false,
+                }}
+                hasTrack={false}
+                aria-label="..."
+            >
+                <SplideTrack className="">
+                    {item?.map((card, index) => (
+                        <SplideSlide key={index}>
                             <img
                                 className="w-full h-[300px] sm:h-[500px] md:h-[100vh] object-cover -z-10"
                                 src={card.imagedir}
@@ -98,7 +134,7 @@ const Youtube = ({ url }) => {
                         <div className="">
                             <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[80px]" />
                         </div>
-                        <div className="h-[2px] my-2 bg-gray-600 w-full"></div>
+                        <div className="h-[1px] my-2 bg-white w-full"></div>
                         <h1 className="font-semibold text-4xl mb-2">Lorem ipsum dolor sit amet consectetur adipisicing elit. Natus, quia!</h1>
                         <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Sit rem earum ipsa dignissimos laboriosam modi, itaque nostrum similique nobis, quidem ex officiis maiores, ullam rerum quaerat vel amet! Ratione natus totam dolores minima provident soluta consequatur nam placeat magnam officia iusto eum, nobis corporis tenetur non ex cumque iure quod? Illo placeat amet tenetur alias repellendus ipsum consequatur, consectetur mollitia aperiam eaque vero veritatis et accusamus accusantium pariatur asperiores dignissimos, excepturi iusto fugiat dolorem quia. Numquam sapiente id maiores. Similique veniam accusamus quisquam vel temporibus ut non vero dolor! Vitae excepturi nulla molestias sint, ipsum dignissimos minus id porro quae impedit officiis obcaecati quo cumque omnis? Ducimus maxime, rerum soluta asperiores pariatur mollitia illum praesentium! Accusantium rem delectus nobis eius! Saepe cum assumenda iure laborum ipsum delectus distinctio fugit enim, consequatur incidunt voluptatibus libero recusandae, exercitationem reprehenderit dolor deserunt accusantium in commodi doloribus reiciendis rem. Inventore provident nulla illum facilis, neque, exercitationem quae ut rem optio ad quia sed sapiente iure. Dolorem aliquid alias deleniti id voluptates, repellendus temporibus tenetur porro ab odio distinctio? Itaque ut ipsa ducimus asperiores at soluta voluptas alias dolores provident mollitia vitae sequi repellendus animi voluptatum quod quas, exercitationem odit id ratione tempora tenetur dignissimos!</p>
                     </div>
@@ -111,15 +147,15 @@ const Youtube = ({ url }) => {
 const About = () => {
     return (
         <>
-            <div className="bg-gradient-to-r from-indigo-500 from-5% via-sky-500 via-30% to-indigo-700 p-10 flex justify-center gap-10 h-[570px]">
+            <div className="bg-gradient-to-r from-indigo-500 from-5% via-sky-500 via-30% to-indigo-700 p-10 flex justify-center gap-10 h-[570px] border-b-2">
 
                 <div className="w-full h-full text-white p-4">
-                    <h1 className="font-extrabold text-4xl text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
-                    <div className="flex justify-center">
+                    <h1 className="font-extrabold text-4xl text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
+                    <div className="flex justify-start">
                         <div className="bg-gradient-to-r from-black to-slate-700 h-[4px] w-[1000px] mt-6"></div>
                     </div>
-                    <p className="text-end text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
-                    <div className="mt-10 flex justify-center">
+                    <p className="text-start text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
+                    <div className="mt-10 flex justify-start">
                         <button className="p-4 border-2 border-black w-52 font-semibold rounded-md hover:bg-white hover:text-black hover:scale-105 transition-all duration-500">Watch Online</button>
                     </div>
                 </div>
@@ -134,19 +170,19 @@ const About = () => {
 const AboutRevese = () => {
     return (
         <>
-            <div className="bg-gradient-to-r from-sky-500 from-5% via-indigo-500 via-30% to-sky-700 p-10 flex justify-center gap-10 h-[570px]">
+            <div className="bg-gradient-to-r from-indigo-500 from-5% via-sky-500 via-30% to-indigo-700 p-10 flex justify-center gap-10 h-[570px] border-y-2">
 
                 <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500">
                     <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-full h-full rounded-lg" />
                 </div>
 
                 <div className="w-full h-full text-white p-4">
-                    <h1 className="font-extrabold text-4xl text-center">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
-                    <div className="flex justify-center">
+                    <h1 className="font-extrabold text-4xl text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
+                    <div className="flex justify-start">
                         <div className="bg-gradient-to-r from-black to-slate-700 h-[4px] w-[1000px] mt-6"></div>
                     </div>
                     <p className="text-start text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
-                    <div className="mt-10 flex justify-center">
+                    <div className="mt-10 flex justify-start">
                         <button className="p-4 border-2 border-black w-52 font-semibold rounded-md hover:bg-white hover:text-black hover:scale-105 transition-all duration-500">Watch Online</button>
                     </div>
                 </div>
@@ -284,18 +320,23 @@ function Home() {
 
     return (
         <>
-            <Navbar />
-            {block ? (<Loading colSpan={5} />) :
-                (<Slider Data={slider} />)
+            {block ? (<LoadingPage />) :
+
+                (
+                    <>
+                        <Navbar />
+                        <Slider Data={slider} />
+                        <Youtube />
+                        <Card Data={card} />
+                        <News Data={card} />
+                        <AboutRevese />
+                        <About />
+                        <Maps />
+                        <Instagram />
+                    </>
+                )
             }
 
-            <Youtube />
-            <Card Data={card} />
-            <AboutRevese />
-            <About />
-            <Banner />
-            <Maps />
-            <Instagram />
         </>
     );
 }
