@@ -20,9 +20,6 @@ class PageController extends Controller
                 'slider' => $slider,
                 'news' => $news,
                 'profile' => $profile
-                //     'youtube' => $profile->link_youtube,
-                //     'contact' => $profile->no_telp,
-                //     'maps' => $profile->link_maps,
             ]);
         } else {
             return response()->json(['message' => 'bad request!'], 401);

@@ -145,6 +145,11 @@ function Index() {
     return () => clearTimeout(debounce)
   }, [Paginate, page])
 
+  useEffect(() => {
+    var a = true
+    // code
+    return () => a = false
+  }, [])
 
   return (
     <>
