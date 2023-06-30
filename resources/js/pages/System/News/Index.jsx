@@ -19,7 +19,7 @@ function Index() {
   const [type, setType] = useState('create')
   const [toggle, setToggle] = useState(false)
   const [block, setBlock] = useState(true)
-  const [Slider, setSlider] = useState([])
+  const [News, setNews] = useState([])
   const [page, setPage] = useState(1)
   const [DataEdit, setDataEdit] = useState([])
   const [Paginate, setPagiante] = useState({
@@ -28,12 +28,25 @@ function Index() {
   })
 
   // * Api Call & Request
+  const IndexNews = () => {
+    setBlock(true)
+    axios.post('/api/news', Paginate).then(res => {
+      setNews(res.data);
+    }).catch(error => {
+      setNews([]);
+    }).finally(
+      setTimeout(() => {
+        setBlock(false)
+      }, 600)
+    )
+  }
+
   const SwitchPage = (url, page) => {
     setBlock(true)
     axios.post(url + page, Paginate).then(res => {
-      setSlider(res.data);
+      setNews(res.data);
     }).catch(error => {
-      setSlider([]);
+      setNews([]);
       console.log(error);
     }).finally(
       setTimeout(() => {
@@ -42,9 +55,9 @@ function Index() {
     );
   }
 
-  const GetDivisi = (uuid) => {
+  const GetNews = (uuid) => {
     setToggle(false)
-    var url = `/api/divisi/${uuid}/edit`
+    var url = `/api/news/${uuid}/edit`
     axios.post(url).then(res => {
       setType('update');
       setDataEdit(res.data.data)
@@ -54,9 +67,9 @@ function Index() {
     })
   }
 
-  // * function 
+  // * function
   const HandleDelete = (uuid) => {
-    var url = `/api/divisi/${uuid}/delete`
+    var url = `/api/news/${uuid}/delete`
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -80,7 +93,9 @@ function Index() {
               'Your file has been deleted.',
               'success'
             )
-            SwitchPage('/api/divisi?page=', page)
+            setTimeout(() => {
+              SwitchPage('/api/news?page=', page)
+            }, 300);
           }
         }).catch(error => {
           Swal.fire({
@@ -118,14 +133,14 @@ function Index() {
     setDataEdit([]);
     setToggle(false)
     setTimeout(() => {
-      SwitchPage('/api/divisi?page=', page)
+      SwitchPage('/api/news?page=', page)
     }, 400);
   }
 
-  // * Debonce Search && Paginate && Show 
+  // * Debonce Search && Paginate && Show
   useEffect(() => {
     const debounce = setTimeout(() => {
-      SwitchPage('/api/divisi?page=', page)
+      SwitchPage('/api/news?page=', page)
     }, 700);
     return () => clearTimeout(debounce)
   }, [Paginate, page])
@@ -137,7 +152,7 @@ function Index() {
       {toggle ? (<Form cancle={HandleCancel} DataEdit={DataEdit} type={type} close={HandleClose} />) : null}
       <div className="bg-white rounded-lg p-6 shadow-lg">
         <div className="flex justify-between items-center">
-          <span className='font-semibold text-xl'>Divisi Data</span>
+          <span className='font-semibold text-xl'>News Data</span>
           <Add onClick={HandleToggle} />
         </div>
         <div className="h-[2px] w-full bg-gray-300 my-3"></div>
@@ -157,9 +172,9 @@ function Index() {
             </thead>
             <tbody className=''>
               {block ? (<Loading colSpan={5} />) :
-                (Slider?.data?.map((item, index) => (
+                (News?.data?.map((item, index) => (
                   <tr className={`${index % 2 ? 'bg-gray-100' : 'bg-white'} h-14 hover:bg-gray-200`} key={item.id}>
-                    <td className='text-center px-2 font-semibold'>{index + Slider.from}</td>
+                    <td className='text-center px-2 font-semibold'>{index + News.from}</td>
                     {/* <td>{item?.imagedir}</td> */}
                     <td>
                       <div className="flex h-20">
@@ -172,14 +187,14 @@ function Index() {
                     <th className='text-center'>{DateKu(item.created_at)}</th>
                     <td>
                       <div className="flex justify-center gap-x-1">
-                        <Edit onClick={() => { GetDivisi(item.uuid) }} />
+                        <Edit onClick={() => { GetNews(item.uuid) }} />
                         <Delete onClick={() => { HandleDelete(item.uuid) }} />
                       </div>
                     </td>
                   </tr>)
                 ))
               }
-              {Slider?.data?.length == 0 && !block ? (
+              {News?.data?.length == 0 && !block ? (
                 <tr className='bg-gray-200 h-14'>
                   <td colSpan={5} className='font-semibold'><span className='ml-1'>Not Found</span></td>
                 </tr>
@@ -187,13 +202,13 @@ function Index() {
             </tbody>
           </table>
           <div className="flex justify-between mt-2">
-            <span className='font-semibold'>Page {Slider.current_page ?? null} of {Slider?.last_page ?? null}</span>
+            <span className='font-semibold'>Page {News.current_page ?? null} of {News?.last_page ?? null}</span>
             <div className="flex">
               {page != 1 ? (
                 <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => HandleSwitchPage('prev')} readOnly><MdNavigateBefore className='text-white' /></button>
               ) : null}
               <input disabled type="number" className='h-8 w-8 max-w-fit rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none border-black border-[2px] p-1 mx-1 active:scale-10' value={page} />
-              {page != Slider?.last_page ? (
+              {page != News?.last_page ? (
                 <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => HandleSwitchPage('next')}><MdOutlineNavigateNext className='text-white' /></button>
               ) : null}
             </div>

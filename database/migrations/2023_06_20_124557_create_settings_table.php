@@ -13,6 +13,7 @@ return new class extends Migration {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
+            // $table->string('logo');
             $table->string('no_telp')->nullable();
             $table->string('link_youtube')->nullable();
             $table->text('link_maps')->nullable();
@@ -20,6 +21,7 @@ return new class extends Migration {
             $table->string('link_twitter')->nullable();
             $table->string('copyright')->nullable();
             $table->timestamps();
+
         });
     }
 

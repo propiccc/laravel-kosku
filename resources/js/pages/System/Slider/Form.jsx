@@ -66,7 +66,7 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
     <div className='bg-white rounded-lg p-6 mb-2'>
       <Toaster />
       <div className="flex justify-between items-center">
-        <span className='font-semibold text-xl'>User {type == 'create' ? 'Create' : "Edit"}</span>
+        <span className='font-semibold text-xl'>Slider {type == 'create' ? 'Create' : "Edit"}</span>
         <Cancel onClick={() => { cancle() }} />
       </div>
       <div className="h-[2px] w-full bg-gray-200 my-3"></div>

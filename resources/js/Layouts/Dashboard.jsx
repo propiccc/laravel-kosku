@@ -2,6 +2,8 @@ import React, { useEffect, useState, Suspense } from 'react'
 import { FaRegSun, FaUserAlt } from 'react-icons/fa'
 import { BsImages } from 'react-icons/bs'
 import { TbBinaryTree } from 'react-icons/tb'
+import { HiUserGroup } from 'react-icons/hi'
+import { BiNews } from 'react-icons/bi'
 import Menu from './../Components/Menu';
 import { Link, Outlet } from 'react-router-dom';
 
@@ -37,7 +39,7 @@ function Dashboard({ children, className }) {
         {/* <div className="flex justify-center items-center text-lg font-semibold ml-4">{header}</div> */}
         <div className="flex justify-end items-center mr-2 w-full gap-x-2 font-semibold">
           <button className='py-2 px-4 transition-color duration-300 rounded-lg hover:bg-gray-100 hover:bg-opacity-10'>Home</button>
-          <button className='py-2 px-4 transition-color duration-300 rounded-lg hover:bg-gray-100 hover:bg-opacity-10'>Logout</button>
+          <Link to={'/'} className='py-2 px-4 transition-color duration-300 rounded-lg hover:bg-gray-100 hover:bg-opacity-10'>Logout</Link>
         </div>
       </div>
       {/* Navabr end */}
@@ -45,9 +47,10 @@ function Dashboard({ children, className }) {
         <div className="bg-[#00092b] w-full lg:w-80 flex flex-col overflow-auto">
           <div className="h-full overflow-y-auto p-2 py-1 scrollbar-none max-h-fit bg-[#00092b]">
             <Menu href='/system/user' name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/slider' name="Slider" icon={<BsImages className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/divisi' name="Divisi" icon={<HiUserGroup className={`w-[27px] h-[37px] ${"/system/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/news' name="News" icon={<BiNews className={`w-[27px] h-[37px] ${"/system/news" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/news" == window.location.pathname ? 'text-black' : "text-white"}`} />
             <Menu href='/system/visimisi' name="Visi Misi" icon={<TbBinaryTree className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/divisi' name="Divisi" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/slider' name="Slider" icon={<BsImages className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />
             <Menu href='/system/setting' name="Setting" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />
             {/* <Menu href='/system/test' name="Test" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} /> */}
           </div>

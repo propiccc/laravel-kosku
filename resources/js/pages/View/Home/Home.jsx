@@ -22,10 +22,9 @@ const Slider = ({ Data }) => {
                 aria-label="..."
             >
                 <SplideTrack className="">
-                    {item?.map((card) => (
-                        <SplideSlide key={card.index}>
+                    {item?.map((card, index) => (
+                        <SplideSlide key={index}>
                             <div className="flex flex-col h-[300px] px-3 sm:h-[500px] md:h-[100vh] absolute justify-center items-center w-full text-white z-20">
-                                {console.log('alfian', item)}
                                 <p className="text-[10px] sm:text-[20px] text-center">
                                     {card.description}
                                 </p>
@@ -88,13 +87,10 @@ const Youtube = ({ url }) => {
     return (
         <>
             <div className="flex w-full bg-black p-5 flex-col">
-                {/* <div className="w-full">
-                    <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[60px]" />
-                </div> */}
-                <div className="w-full min-h-[200px] rounded-lg flex p-4 justify-center">
+                <div className="w-full min-h-[500px] rounded-lg flex p-4 justify-center">
                     <div className="p-1">
                         <div className="h-[260px] w-[480px]">
-                            <iframe src="https://www.youtube.com/embed/jiDUOP6bXik" frameborder="2" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" className="h-full w-full rounded-lg" allowFullScreen></iframe>
+                            <iframe src="https://www.youtube.com/embed/jiDUOP6bXik" frameBorder="2" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" className="h-full w-full rounded-lg" allowFullScreen></iframe>
                         </div>
                     </div>
                     <div className="min-h-[260px] w-[2px] bg-white ml-5 mr-5"></div>
@@ -122,7 +118,7 @@ const About = () => {
                     <div className="flex justify-center">
                         <div className="bg-gradient-to-r from-black to-slate-700 h-[4px] w-[1000px] mt-6"></div>
                     </div>
-                    <p className="text-center text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
+                    <p className="text-end text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
                     <div className="mt-10 flex justify-center">
                         <button className="p-4 border-2 border-black w-52 font-semibold rounded-md hover:bg-white hover:text-black hover:scale-105 transition-all duration-500">Watch Online</button>
                     </div>
@@ -131,23 +127,6 @@ const About = () => {
                 <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500">
                     <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-full h-full rounded-lg" />
                 </div>
-
-                {/* <div className="text-white flex justify-end w-1/2">
-                    <div className="w-[500px] text-white flex flex-col gap-7 items-center">
-                        <h1 className="text-[36px]">Lorem Ipsum</h1>
-                        <p className="text-[18px] text-start w-[500px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quaerat enim aliquid iure magnam consequatur ducimus error, hic beatae tenetur, magni quos, excepturi doloribus. Libero quasi ipsum quisquam tempore aperiam.</p>
-                        <hr className="border w-[240px]" />
-                        <button className="h-[39px] w-[131px] relative">
-                            <a href="" className="w-full h-full border z-10 relative border-black bg-white text-black font-semibold py-2 px-6">
-                                Read More
-                            </a>
-                            <div className="h-[39px] w-[129px] -mt-[27px] ml-[4px] absolute bg-black"></div>
-                        </button>
-                    </div>
-                </div>
-                <div className="w-1/2 flex justify-start">
-                    <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-[315px] h-[350px]" />
-                </div> */}
             </div>
         </>
     )
@@ -166,30 +145,11 @@ const AboutRevese = () => {
                     <div className="flex justify-center">
                         <div className="bg-gradient-to-r from-black to-slate-700 h-[4px] w-[1000px] mt-6"></div>
                     </div>
-                    <p className="text-center text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
+                    <p className="text-start text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
                     <div className="mt-10 flex justify-center">
                         <button className="p-4 border-2 border-black w-52 font-semibold rounded-md hover:bg-white hover:text-black hover:scale-105 transition-all duration-500">Watch Online</button>
                     </div>
                 </div>
-
-
-
-                {/* <div className="text-white flex justify-end w-1/2">
-                    <div className="w-[500px] text-white flex flex-col gap-7 items-center">
-                        <h1 className="text-[36px]">Lorem Ipsum</h1>
-                        <p className="text-[18px] text-start w-[500px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel quaerat enim aliquid iure magnam consequatur ducimus error, hic beatae tenetur, magni quos, excepturi doloribus. Libero quasi ipsum quisquam tempore aperiam.</p>
-                        <hr className="border w-[240px]" />
-                        <button className="h-[39px] w-[131px] relative">
-                            <a href="" className="w-full h-full border z-10 relative border-black bg-white text-black font-semibold py-2 px-6">
-                                Read More
-                            </a>
-                            <div className="h-[39px] w-[129px] -mt-[27px] ml-[4px] absolute bg-black"></div>
-                        </button>
-                    </div>
-                </div>
-                <div className="w-1/2 flex justify-start">
-                    <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-[315px] h-[350px]" />
-                </div> */}
             </div>
         </>
     )
@@ -244,6 +204,8 @@ const Instagram = (url) => {
         </div >
     )
 };
+
+
 
 function Home() {
 
@@ -329,9 +291,9 @@ function Home() {
 
             <Youtube />
             <Card Data={card} />
+            <AboutRevese />
             <About />
             <Banner />
-            <AboutRevese />
             <Maps />
             <Instagram />
         </>

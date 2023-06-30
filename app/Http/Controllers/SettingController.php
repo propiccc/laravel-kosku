@@ -33,7 +33,8 @@ class SettingController extends Controller
                 'link_maps' => ['nullable', 'string'],
                 'link_facebook' => ['nullable', 'string'],
                 'link_twitter' => ['nullable', 'string'],
-                'copyright' => ['nullable', 'string']
+                'copyright' => ['nullable', 'string'],
+                // 'logo' => ['nullable', 'image', 'mimes:jpg,png']
             ]);
 
             if ($validate->fails()) {
@@ -45,7 +46,18 @@ class SettingController extends Controller
                 return RestApi::error($message, 400);
             }
 
-            $data = Setting::create($request->all());
+            $req = $request->all();
+            // if ($req['logo'] && $request->hasFile('logo')) {
+            //     $logo = $request->file('logo');
+            //     $logo_name = $logo->getClientOriginalName();
+            //     if ($logo_name != 'blob') {
+            //         $logo->storeAs('/public/asset/logo', $logo_name);
+            //         $req['logo'] = $logo_name;
+            //     } else {
+            //         unset($req['logo']);
+            //     }
+            // }
+            $data = Setting::create($req);
 
             if ($data) {
                 return RestApi::success(['Data Successfully Created'], 201);

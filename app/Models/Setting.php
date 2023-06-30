@@ -16,7 +16,9 @@ class Setting extends Model
         'link_maps',
         'link_facebook',
         'link_twitter',
-        'copyright'
+        'copyright',
+        'logo',
+        'logo_navigasi'
     ];
-    
+
 }

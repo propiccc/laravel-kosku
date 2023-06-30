@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisiMisiController;
@@ -22,11 +24,12 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::prefix('/public')->group(function () {
     Route::get('/slider', [SliderController::class, 'PublicSlider']);
+    Route::post('/home/resource', [PageController::class, 'HomeData']);
 });
 
 Route::middleware('auth')->group(function () {
+    Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/check', [AuthController::class, 'CheckUser']);
-
     Route::prefix('user')->group(function () {
         Route::post('/', [UserController::class, 'index']);
         Route::post('/store', [UserController::class, 'store']);
@@ -65,4 +68,12 @@ Route::middleware('auth')->group(function () {
         Route::post('{uuid}/update', [DivisiController::class, 'update']);
         Route::delete('{uuid}/delete', [DivisiController::class, 'delete']);
     });
+    Route::prefix('news')->group(function () {
+        Route::post('/', [NewsController::class, 'index']);
+        Route::post('/store', [NewsController::class, 'store']);
+        Route::post('{uuid}/edit', [NewsController::class, 'show']);
+        Route::post('{uuid}/update', [NewsController::class, 'update']);
+        Route::delete('{uuid}/delete', [NewsController::class, 'delete']);
+    });
+
 });

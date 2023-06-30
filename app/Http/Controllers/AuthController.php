@@ -54,6 +54,24 @@ class AuthController extends Controller
             //     return response(['auth' => false], 200);
             // }
             return response()->json(['auth' => Auth::check()]);
+        } else {
+
+        }
+    }
+
+    public function logout()
+    {
+        if (request()->wantsJson()) {
+            $token = request()->header()['authorization'][0];
+            $token = explode(" ", $token);
+            $logout = Auth::invalidate($token[1]);
+            if ($logout) {
+                return response()->json(['message' => 'Successfuly Logout!', 'sucess' => true], 200);
+            } else {
+                return response()->json(['auth' => 'Failde To Logout!!', 'success' => false], 400);
+            }
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
         }
     }
 }

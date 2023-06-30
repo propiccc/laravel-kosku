@@ -28,19 +28,6 @@ function Index() {
   })
 
   // * Api Call & Request
-  const IndexSlider = () => {
-    setBlock(true)
-    axios.post('/api/slider', Paginate).then(res => {
-      setSlider(res.data);
-    }).catch(error => {
-      setSlider([]);
-    }).finally(
-      setTimeout(() => {
-        setBlock(false)
-      }, 600)
-    )
-  }
-
   const SwitchPage = (url, page) => {
     setBlock(true)
     axios.post(url + page, Paginate).then(res => {
@@ -93,7 +80,6 @@ function Index() {
               'Your file has been deleted.',
               'success'
             )
-            SwitchPage('/api/slider?page=', page)
           }
         }).catch(error => {
           Swal.fire({
@@ -181,7 +167,6 @@ function Index() {
                         </a>
                       </div>
                     </td>
-
                     <th className='text-center'>{DateKu(item.created_at)}</th>
                     <td>
                       <div className="flex justify-center gap-x-1">

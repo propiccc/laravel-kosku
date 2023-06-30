@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import Create from './../../../Components/Button/Create';
 import Swal from 'sweetalert2';
+import ImageUpload from './../../../Components/ImageUpload';
 
 
 
@@ -12,6 +13,8 @@ function Index() {
   // * Setup 
   const [Block, setBlock] = useState(true)
   const [Type, setType] = useState()
+  const [Logo, setLogo] = useState(null);
+  const [logoNavigation, setLogoNavigation] = useState(null)
   const [DataForm, setDataForm] = useState({})
 
   // * Api Call
@@ -55,9 +58,9 @@ function Index() {
     axios.post(url, DataForm).then(res => {
       if (res.data.success === true) {
         toast.success(res.data.data);
-        setTimeout(() => {
-          SettingIndex({})
-        }, 300);
+        // setTimeout(() => {
+        //   SettingIndex({})
+        // }, 300);
       }
     }).catch(err => {
       console.log(err.response.data.data);
@@ -123,11 +126,12 @@ function Index() {
     }
     return () => { a = false }
   }, [])
+  console.log(Logo);
   return (
     <>
       <Toaster />
       <div className="bg-white pt-6 pb-2 px-6 rounded-t-lg">
-        <span className='text-xl font-semibold'>Visi Misi</span>
+        <span className='text-xl font-semibold'>Settings</span>
         <div className="h-[2px] w-full bg-gray-300 my-4"></div>
       </div>
       <div className="bg-white rounded-b-lg px-6 pb-6 shadow-lg">
@@ -161,6 +165,10 @@ function Index() {
               <label htmlFor="copyright" className='font-semibold text-lg'>Copyright :  <span className='text-red-700 font-semibold'>*</span></label>
               <input name="copyright" id="copyright" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.copyright ?? ""} onChange={HandleChange} />
             </div>
+          </div>
+          <div className="flex gap-x-2">
+            <ImageUpload name="Logo Bmc" setFiles={setLogo} files={Logo} />
+            <ImageUpload name="Logo Navigationbar" />
           </div>
         </>)}
         <div className="h-[2px] w-full bg-gray-300 my-5"></div>
