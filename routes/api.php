@@ -27,9 +27,9 @@ Route::prefix('/public')->group(function () {
     Route::post('/home/resource', [PageController::class, 'HomeData']);
 });
 
+Route::post('/check', [AuthController::class, 'CheckUser']);
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
-    Route::post('/check', [AuthController::class, 'CheckUser']);
     Route::prefix('user')->group(function () {
         Route::post('/', [UserController::class, 'index']);
         Route::post('/store', [UserController::class, 'store']);

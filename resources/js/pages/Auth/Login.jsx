@@ -36,13 +36,9 @@ function Login() {
     formData.append('username', Data.username)
     formData.append('password', Data.password)
 
-    axios.post('/api/login', formData, { headers }).then(res => {
-      console.log(res.data.success);
+    axios.post('/api/login', formData, { headers: headers }).then(res => {
       if (res.data.success === true && res.data.data.access_token != null) {
         localStorage.setItem('access_token', res.data.data.access_token);
-      } else {
-        localStorage.removeItem('access_token');
-        return navigate('/')
       }
     }).catch(err => {
       if (err.response.data.message != null) {
@@ -57,7 +53,7 @@ function Login() {
       setLoading(false)
       setTimeout(() => {
         return navigate('/system/user')
-      }, 400);
+      }, 3000);
     })
 
   }

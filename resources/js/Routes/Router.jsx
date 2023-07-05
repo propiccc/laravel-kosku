@@ -18,6 +18,8 @@ const VisiMisiIndex = lazy(() => import('../pages/System/VisiMisi/Index'));
 const SettingInadex = lazy(() => import('../pages/System/Setting/Index'));
 const DivisiIndex = lazy(() => import('../pages/System/Divisi/Index'));
 const NewsIndex = lazy(() => import('../pages/System/News/Index'));
+import Test from './../pages/test';
+import { AuthContext } from './../Context/AuthProvider';
 
 function Router() {
   return (
@@ -30,6 +32,7 @@ function Router() {
         </Route>
 
         <Route path="/system" element={<PrivateRoute />}>
+          <Route path='test' element={<Test />} />
           <Route element={<Dashboard />}>
             <Route path='user' element={<UserIndex />} />
             <Route path='slider' element={<SliderIndex />} exact />

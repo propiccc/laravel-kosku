@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../Navbar/Index";
 import "./Style.css";
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
@@ -6,6 +6,7 @@ import "@splidejs/react-splide/css";
 import axios from "axios";
 import Loading from '../../../Components/Loading';
 import LoadingPage from "../../../Components/LoadingPage";
+import { useAuthContext } from "../../../Context/AuthProvider";
 
 const Slider = ({ Data }) => {
     const [item, setItem] = useState(Data);
@@ -302,7 +303,6 @@ function Home() {
     // * Api Call & Request
     useEffect(() => {
         setBlock(true);
-
         axios
             .get('/api/public/slider')
             .then(res => {
@@ -318,23 +318,21 @@ function Home() {
             });
     }, []);
 
+    const [isLogin, test] = useAuthContext();
     return (
         <>
             {block ? (<LoadingPage />) :
-
-                (
-                    <>
-                        <Navbar />
-                        <Slider Data={slider} />
-                        <Youtube />
-                        <Card Data={card} />
-                        <News Data={card} />
-                        <AboutRevese />
-                        <About />
-                        <Maps />
-                        <Instagram />
-                    </>
-                )
+                (<>
+                    <Navbar />
+                    <Slider Data={slider} />
+                    <Youtube />
+                    <Card Data={card} />
+                    <News Data={card} />
+                    <AboutRevese />
+                    <About />
+                    <Maps />
+                    <Instagram />
+                </>)
             }
 
         </>
