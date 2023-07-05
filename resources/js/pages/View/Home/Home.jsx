@@ -6,7 +6,6 @@ import "@splidejs/react-splide/css";
 import axios from "axios";
 import Loading from '../../../Components/Loading';
 import LoadingPage from "../../../Components/LoadingPage";
-import { useAuthContext } from "../../../Context/AuthProvider";
 
 const Slider = ({ Data }) => {
     const [item, setItem] = useState(Data);
@@ -318,7 +317,6 @@ function Home() {
             });
     }, []);
 
-    const [isLogin, test] = useAuthContext();
     return (
         <>
             {block ? (<LoadingPage />) :

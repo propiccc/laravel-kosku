@@ -1,6 +1,5 @@
 import React, { useEffect, Suspense, useState, useContext } from 'react'
 import { Navigate, Outlet, redirect, useNavigate } from 'react-router-dom'
-import { useAuthContext } from '../Context/AuthProvider'
 import axios from 'axios';
 
 function PrivateRoute() {

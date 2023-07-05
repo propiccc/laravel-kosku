@@ -19,7 +19,6 @@ const SettingInadex = lazy(() => import('../pages/System/Setting/Index'));
 const DivisiIndex = lazy(() => import('../pages/System/Divisi/Index'));
 const NewsIndex = lazy(() => import('../pages/System/News/Index'));
 import Test from './../pages/test';
-import { AuthContext } from './../Context/AuthProvider';
 
 function Router() {
   return (
