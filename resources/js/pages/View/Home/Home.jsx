@@ -8,10 +8,10 @@ import Loading from '../../../Components/Loading';
 import LoadingPage from "../../../Components/LoadingPage";
 
 const Slider = ({ Data }) => {
-    const [item, setItem] = useState(Data);
+    const [Slider, setSlider] = useState(typeof Data == 'object' && Object.keys(Data).length != 0 ? Data : null);
     return (
         <>
-            <Splide
+            {Slider != null ? (<Splide
                 options={{
                     rewind: true,
                     perPage: 1,
@@ -23,98 +23,98 @@ const Slider = ({ Data }) => {
                 aria-label="..."
             >
                 <SplideTrack className="">
-                    {item?.map((card, index) => (
+                    {Slider?.map((item, index) => (
                         <SplideSlide key={index}>
                             <div className="flex flex-col h-[300px] px-3 sm:h-[500px] md:h-[100vh] absolute justify-center items-center w-full text-white z-20">
                                 <p className="text-[10px] sm:text-[20px] text-center">
-                                    {card.description}
+                                    {item.description}
                                 </p>
                                 <h1 className="text-[15px] sm:text-[40px]">
-                                    {card.title}
+                                    {item.title}
                                 </h1>
                             </div>
                             <div className="w-full h-[300px] sm:h-[500px] md:h-[100vh] z-10 bg-black opacity-30 absolute"></div>
                             <img
                                 className="w-full h-[300px] sm:h-[500px] md:h-[100vh] object-cover -z-10"
-                                src={card.imagedir}
+                                src={item.imagedir}
                                 alt="Image 1"
                             />
                         </SplideSlide>
                     ))}
                 </SplideTrack>
-            </Splide>
+            </Splide>) : null}
         </>
     );
 };
 const News = ({ Data }) => {
-    const [item, setItem] = useState(Data);
+    const [News, setNews] = useState(typeof Data == 'object' && Object.keys(Data).length != 0 ? Data : null);
     return (
         <>
-            <div className="p-10 bg-black flex justify-between items-center">
-                <span className="font-bold text-white text-4xl">Berita Terbaru Kami</span>
-                <div className="h-[2px] w-2/3 bg-gray-200"></div>
-                <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[80px]" />
-            </div>
-            <Splide
-                options={{
-                    rewind: true,
-                    perPage: 1,
-                    pagination: true,
-                    autoplay: true,
-                    arrows: false,
-                }}
-                hasTrack={false}
-                aria-label="..."
-            >
-                <SplideTrack className="">
-                    {item?.map((card, index) => (
-                        <SplideSlide key={index}>
-                            <img
-                                className="w-full h-[300px] sm:h-[500px] md:h-[100vh] object-cover -z-10"
-                                src={card.imagedir}
-                                alt="Image 1"
-                            />
-                        </SplideSlide>
-                    ))}
-                </SplideTrack>
-            </Splide>
+            {News != null ? (
+                <>
+                    <div className="p-10 bg-black flex justify-between items-center">
+                        <span className="font-bold text-white text-4xl">Berita Terbaru Kami</span>
+                        <div className="h-[2px] w-2/3 bg-gray-200"></div>
+                        <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[80px]" />
+                    </div>
+                    <Splide
+                        options={{
+                            rewind: true,
+                            perPage: 1,
+                            pagination: true,
+                            autoplay: true,
+                            arrows: false,
+                        }}
+                        hasTrack={false}
+                        aria-label="..."
+                    >
+                        <SplideTrack className="">
+                            {News?.map((item, index) => (
+                                <SplideSlide key={index}>
+                                    <img
+                                        className="w-full h-[300px] sm:h-[500px] md:h-[100vh] object-cover -z-10"
+                                        src={item.imagedir}
+                                        alt="Image 1"
+                                    />
+                                </SplideSlide>
+                            ))}
+                        </SplideTrack>
+                    </Splide>
+                </>
+            ) : null}
+
         </>
     );
 };
 
-const Card = ({ Data, ...props }) => {
-    const card = useState(Data);
+const Divisi = ({ Data, ...props }) => {
+    const [Card, setCard] = useState(typeof Data == 'object' && Object.keys(Data).length != 0 ? Data : null);
     return (
         <>
-            <section className="flex flex-col justify-center items-center py-[100px]">
+            {Card != null ? (<section className="flex flex-col justify-center items-center py-10 bg-gray-200">
                 <h1 className="text-[48px] font-bold">Our Division</h1>
                 <p className="text-[24px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quas vero nihil.</p>
-                <div className="snap-x mx-auto py-[100px] px-[100px] gap-24 snap-mandatory flex w-full overflow-x-scroll scrollbar-none">
-                    {card[0]?.map((item) => (
-                        <div key={item.id} className="snap-center flex-shrink-0 relative w-[520px] h-[320px] rounded-[35px] border-t border-slate-400 shadow-md shadow-slate-400 overflow-hidden">
-                            <div className="p-6 w-full h-full absolute">
-                                <p className="text-[26px] font-bold">
-                                    {item.title}
-                                </p>
-                            </div>
-                            <div className="absolute bottom-0 bg-[#18C3F7] w-[520px] h-[230px] rounded-tr-[40px] -z-10">
-                                <div className="w-[50px] h-[50px] absolute left-0 top-[-50px] bg-[#18C3F7]"></div>
-                                <div className="w-[50px] h-[50px] absolute left-0 top-[-50px] rounded-bl-[40px] bg-white"></div>
-                                <div className="flex items-center px-4 gap-5 w-full h-full">
-                                    <img
-                                        src={item.imagedir}
-                                        alt=""
-                                        className="w-[100px] h-[100px] object-cover rounded-sm"
-                                    />
-                                    <p className="text-white text-[18px]">
-                                        {item.description}
-                                    </p>
+
+                <div className="mx-auto p-10 gap-24 flex justify-center flex-wrap w-full">
+                    {Card?.map((item, index) => (
+                        <>
+                            <div className="h-[420px] w-max rounded-lg shadow-xl shadow-gray-500 group/edit ">
+                                <img src={item.imagedir} alt="" className="w-full h-full rounded-lg" />
+                                {/* <div className="transition-all duration-500 opacity-0  text-white group-hover/edit:opacity-100 relative -top-[400px] left-4 w-[200px]">
+                                <h1 className="text-lg font-semibold">{item.title}</h1>
+                            </div> */}
+                                <div className="transition-all duration-500 opacity-0  text-white group-hover/edit:opacity-100 relative -top-[180px] bg-gray-500 bg-opacity-70 h-[40px] left-4 w-[600px] overflow-y-scroll scrollbar-none text-ellipsis p-2 rounded-t-lg">
+                                    <h1 className="text-lg font-semibold">{item.title}</h1>
+                                </div>
+                                <div className="transition-all duration-500 opacity-0  text-white group-hover/edit:opacity-100 relative -top-[180px] bg-gray-500 bg-opacity-70 h-[130px] left-4 w-[600px] overflow-y-scroll scrollbar-none text-ellipsis p-2 rounded-b-lg">
+                                    <p className="">{item.description} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid, impedit! Rem, temporibus cumque! Doloribus alias obcaecati libero cumque, quos velit sit doloremque, iure, esse fugit quae voluptas. Pariatur facilis maxime iusto officia quia voluptatibus! Ad labore debitis sequi ratione maxime harum incidunt consequuntur iste, ex illum nulla dicta necessitatibus aspernatur dolorum ducimus molestiae architecto dolore nemo quibusdam omnis corrupti. Exercitationem inventore eligendi at assumenda deserunt delectus quaerat reprehenderit ex porro possimus, odit, error vitae incidunt non! Quasi ullam provident sunt maxime non est animi. Ut ratione est sit consequuntur cum dolorem eius hic optio laboriosam voluptate, beatae architecto tempora quasi.</p>
                                 </div>
                             </div>
-                        </div>
+                        </>
                     ))}
                 </div>
-            </section>
+            </section>) : null}
+
         </>
     );
 };
@@ -244,94 +244,55 @@ const Instagram = (url) => {
 
 
 function Home() {
+    // * setup 
+    const [DataResource, setDataResource] = useState([]);
+    const [Block, setBlock] = useState(true);
 
-    const [card, setCard] = useState([
-        {
-            id: 1,
-            title: "Lorem ipsum dolor sit amet1.",
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam non voluptatem ipsa error suscipit.",
-            imagedir:
-                "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
-        },
-        {
-            id: 2,
-            title: "Lorem ipsum dolor sit amet2.",
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam non voluptatem ipsa error suscipit.",
-            imagedir:
-                "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
-        },
-        {
-            id: 3,
-            title: "Lorem ipsum dolor sit amet3.",
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam non voluptatem ipsa error suscipit.",
-            imagedir:
-                "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
-        },
-        {
-            id: 4,
-            title: "Lorem ipsum dolor sit amet4.",
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam non voluptatem ipsa error suscipit.",
-            imagedir:
-                "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
-        },
-        {
-            id: 5,
-            title: "Lorem ipsum dolor sit amet5.",
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam non voluptatem ipsa error suscipit.",
-            imagedir:
-                "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
-        },
-        {
-            id: 6,
-            title: "Lorem ipsum dolor sit amet6.",
-            description:
-                "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magni aperiam non voluptatem ipsa error suscipit.",
-            imagedir:
-                "https://www.pcclean.io/wp-content/uploads/2020/4/ZB3uqq.jpg",
-        },
-    ]);
-
-    const [block, setBlock] = useState(true)
-    const [slider, setSlider] = useState([])
-
-    // * Api Call & Request
-    useEffect(() => {
+    // * Api Call
+    const getDataResource = () => {
+        var url = '/api/public/home/resource'
         setBlock(true);
-        axios
-            .get('/api/public/slider')
-            .then(res => {
-                setSlider(res.data);
-            })
-            .catch(error => {
-                setSlider([]);
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    setBlock(false);
-                }, 600);
-            });
-    }, []);
+        axios.post(url).then(res => {
+            setDataResource(res.data);
+        }).finally(() => {
+            setBlock(false);
+        })
+    }
 
+    // * effect
+    useEffect(() => {
+        var a = true;
+        if (a) {
+            getDataResource();
+        }
+        return () => { a = false }
+    }, []);
+    console.log(DataResource);
     return (
         <>
-            {block ? (<LoadingPage />) :
+            {Block ? (<LoadingPage />) :
                 (<>
                     <Navbar />
-                    <Slider Data={slider} />
+                    <Slider Data={DataResource.slider} />
                     <Youtube />
-                    <Card Data={card} />
-                    <News Data={card} />
+                    <Divisi Data={DataResource.divisi} />
+                    <News Data={DataResource.news} />
                     <AboutRevese />
                     <About />
                     <Maps />
                     <Instagram />
                 </>)
             }
+
+            {/* <Navbar />
+            <Slider Data={DataResource.slider} />
+            <Youtube />
+            <Divisi Data={DataResource.divisi} />
+            <News Data={DataResource} />
+            <AboutRevese />
+            <About />
+            <Maps />
+            <Instagram /> */}
 
         </>
     );
