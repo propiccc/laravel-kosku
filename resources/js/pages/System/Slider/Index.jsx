@@ -174,7 +174,8 @@ function Index() {
                         <Delete onClick={() => { HandleDelete(item.uuid) }} />
                       </div>
                     </td>
-                  </tr>)
+                  </tr>
+                )
                 ))
               }
               {Slider?.data?.length == 0 && !block ? (

@@ -6,6 +6,7 @@ import "@splidejs/react-splide/css";
 import axios from "axios";
 import Loading from '../../../Components/Loading';
 import LoadingPage from "../../../Components/LoadingPage";
+import { BsFillTelephoneFill, BsYoutube, BsTwitter, BsInstagram } from 'react-icons/bs'
 
 const Slider = ({ Data }) => {
     const [Slider, setSlider] = useState(typeof Data == 'object' && Object.keys(Data).length != 0 ? Data : null);
@@ -87,33 +88,34 @@ const News = ({ Data }) => {
     );
 };
 
-const Divisi = ({ Data, ...props }) => {
+const Divisi = ({ Data }) => {
     const [Card, setCard] = useState(typeof Data == 'object' && Object.keys(Data).length != 0 ? Data : null);
     return (
         <>
-            {Card != null ? (<section className="flex flex-col justify-center items-center py-10 bg-gray-200">
-                <h1 className="text-[48px] font-bold">Our Division</h1>
-                <p className="text-[24px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quas vero nihil.</p>
+            {Card != null ? (
+                <section className="flex flex-col justify-center items-center py-10 bg-gray-200">
+                    <h1 className="text-[48px] font-bold">Our Division</h1>
+                    <p className="text-[24px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quas vero nihil.</p>
+                    <div className="mx-auto p-10 gap-24 flex justify-center flex-wrap w-full">
+                        {Card?.map((item, index) => (
 
-                <div className="mx-auto p-10 gap-24 flex justify-center flex-wrap w-full">
-                    {Card?.map((item, index) => (
-                        <>
-                            <div className="h-[420px] w-max rounded-lg shadow-xl shadow-gray-500 group/edit ">
+                            <div key={index} className="h-[410px] w-max rounded-lg shadow-xl shadow-gray-500 group/edit ">
                                 <img src={item.imagedir} alt="" className="w-full h-full rounded-lg" />
-                                {/* <div className="transition-all duration-500 opacity-0  text-white group-hover/edit:opacity-100 relative -top-[400px] left-4 w-[200px]">
-                                <h1 className="text-lg font-semibold">{item.title}</h1>
-                            </div> */}
-                                <div className="transition-all duration-500 opacity-0  text-white group-hover/edit:opacity-100 relative -top-[180px] bg-gray-500 bg-opacity-70 h-[40px] left-4 w-[600px] overflow-y-scroll scrollbar-none text-ellipsis p-2 rounded-t-lg">
-                                    <h1 className="text-lg font-semibold">{item.title}</h1>
+                                <div className="flex h-[170px] max-w-[500px] p-2 opacity-0 text-white transition-all duration-500 rounded-lg flex-col overflow-scroll scrollbar-none relative -top-[175px] left-4 group-hover/edit:opacity-100">
+                                    <h1 className="font-semibold text-xl">{item.title}</h1>
+                                    <p>{item.description}</p>
                                 </div>
-                                <div className="transition-all duration-500 opacity-0  text-white group-hover/edit:opacity-100 relative -top-[180px] bg-gray-500 bg-opacity-70 h-[130px] left-4 w-[600px] overflow-y-scroll scrollbar-none text-ellipsis p-2 rounded-b-lg">
-                                    <p className="">{item.description} Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aliquid, impedit! Rem, temporibus cumque! Doloribus alias obcaecati libero cumque, quos velit sit doloremque, iure, esse fugit quae voluptas. Pariatur facilis maxime iusto officia quia voluptatibus! Ad labore debitis sequi ratione maxime harum incidunt consequuntur iste, ex illum nulla dicta necessitatibus aspernatur dolorum ducimus molestiae architecto dolore nemo quibusdam omnis corrupti. Exercitationem inventore eligendi at assumenda deserunt delectus quaerat reprehenderit ex porro possimus, odit, error vitae incidunt non! Quasi ullam provident sunt maxime non est animi. Ut ratione est sit consequuntur cum dolorem eius hic optio laboriosam voluptate, beatae architecto tempora quasi.</p>
+                                {/* <div className="transition-all duration-500 opacity-0  text-white group-hover/edit:opacity-100 bg-red-300 relative -top-[175px] h-[40px] left-4 w-[500px] text-ellipsis p-1 rounded-t-lg">
+                                    <h1 className="text-xl font-semibold">{item.title}</h1>
                                 </div>
+                                <div className="transition-all duration-500 opacity-0 bg-blue-400  text-white group-hover/edit:opacity-100 relative -top-[180px] h-[130px] left-4 w-[500px] overflow-y-scroll scrollbar-none text-ellipsis p-1 rounded-b-lg">
+                                    <p className="font-semibold">{item.description}</p>
+                                </div> */}
                             </div>
-                        </>
-                    ))}
-                </div>
-            </section>) : null}
+
+                        ))}
+                    </div>
+                </section>) : null}
 
         </>
     );
@@ -204,9 +206,33 @@ const Banner = () => {
 const Maps = () => {
     return (
         <>
-            <div className="flex justify-center">
-                <div className="bg-black w-1/4">test</div>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126636.3291129682!2d112.70553600000001!3d-7.310540800000009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fe9f794adb13%3A0x4da089d5c4cb9016!2sMitra%20Keluarga%20Surabaya!5e0!3m2!1sid!2sid!4v1687676442449!5m2!1sid!2sid" className='w-full h-[600px]' referrerPolicy="no-referrer-when-downgrade"></iframe>
+            <div className="flex justify-center" id="contact">
+                <div className="bg-black w-1/4 p-9 flex flex-col gap-y-5">
+                    <div className="group/location cursor-default">
+                        <span className="text-2xl text-center font-semibold transition-all duration-500 text-gray-300 group-hover/location:text-white hover:text-center">Indonesia</span>
+                        <div className="h-[4px] w-full bg-black my-2">
+                            <div className="h-[4px] w-2/6 hover:w-full transition-all duration-700 bg-white group-hover/location:w-full"></div>
+                        </div>
+                        <span className="group-hover/location:text-white transition-colors duration-500 text-gray-300 text-4xl font-extrabold mt-5">Surabaya,Lakarsantri Jl. Sumurwelut No. 1</span>
+                    </div>
+                    <div className="group/contact cursor-default">
+                        <span className="text-2xl text-center font-semibold transition-all duration-500 text-gray-300 group-hover/contact:text-white hover:text-center">Contact Us</span>
+                        <div className="h-[4px] w-full bg-black my-2">
+                            <div className="h-[4px] w-2/4 hover:w-full transition-all duration-700 bg-white group-hover/contact:w-full"></div>
+                        </div>
+                        <div className="w-full flex flex-col gap-y-2 mt-5">
+                            <div className="flex w-full justify-start group-hover/contact:text-white transition-colors duration-500 text-gray-300 text-2xl font-semibold"><span><BsFillTelephoneFill className="w-8 h-10 mr-2" /></span> : +62 88441134561</div>
+                            <div className="flex w-full justify-start group-hover/contact:text-white transition-colors duration-500 text-gray-300 text-2xl font-semibold"><span><BsYoutube className="w-8 h-10 mr-2" /></span> : Bmc Sumurwelut</div>
+                            <div className="flex w-full justify-start group-hover/contact:text-white transition-colors duration-500 text-gray-300 text-2xl font-semibold"><span><BsInstagram className="w-8 h-10 mr-2" /></span> : @BmcSumurwelut</div>
+                        </div>
+                    </div>
+                    <div className="flex justify-center mt-24">
+                        <a target="_blank" className="p-4 rounded-sm text-white text-center border-white border-2 font-semibold w-full cursor-pointer active:scale-95 hover:bg-white hover:text-black bg-opacity-40 transition-all duration-500">
+                            Go To Betany Miracle Center Location
+                        </a>
+                    </div>
+                </div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.2270483128286!2d112.67578567597108!3d-7.3283769720747785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fce7cb57abd7%3A0x46d5d79523d232a9!2sGereja%20BMC%20Sumurwelut%20(Bethany%20Miracle%20Center)!5e0!3m2!1sid!2sid!4v1689002651229!5m2!1sid!2sid" className='w-full h-[600px]' referrerPolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </>
     )
@@ -218,7 +244,7 @@ const Instagram = (url) => {
             <div className="w-full p-4 flex flex-col">
                 <div className="w-full text-white p-1">
                     <div className="flex justify-center h-[60px]">
-                        <h1 className="bg-white font-extrabold text-center text-black text-5xl text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-600">Follow Us On Instagram </h1>
+                        <h1 className="bg-white font-extrabold text-center text-black text-5xl text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-600">Follow Us On Instagram</h1>
                     </div>
                     <div className="w-full flex justify-center">
                         <h1 className="w-[1000px] text-center">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Esse, libero beatae, odit sint, architecto non consequuntur quaerat adipisci possimus distinctio voluptatum. Repellendus iste ab debitis amet corrupti minima et asperiores hic eos quibusdam excepturi ipsa quas saepe sint ea exercitationem velit repudiandae officiis molestiae unde ex voluptatibus neque, odit accusantium? Placeat doloribus, eligendi porro, provident accusantium unde iure sapiente modi asperiores incidunt quis numquam totam iste omnis cumque dignissimos ipsam? Voluptate nostrum officiis distinctio similique officia a optio dolore ad.</h1>
@@ -241,7 +267,26 @@ const Instagram = (url) => {
     )
 };
 
+const Footer = () => {
+    return (
 
+        <footer className="bg-gray-800">
+            <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+                <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 Betany Miracle Center.
+                </span>
+                <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
+                    <li>
+                        <a href="#" className="mr-4 hover:underline md:mr-6 ">About</a>
+                    </li>
+                    <li>
+                        <a href="#contact" className="hover:underline">Contact</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
+
+    )
+}
 
 function Home() {
     // * setup 
@@ -267,7 +312,6 @@ function Home() {
         }
         return () => { a = false }
     }, []);
-    console.log(DataResource);
     return (
         <>
             {Block ? (<LoadingPage />) :
@@ -276,24 +320,14 @@ function Home() {
                     <Slider Data={DataResource.slider} />
                     <Youtube />
                     <Divisi Data={DataResource.divisi} />
+                    <About />
                     <News Data={DataResource.news} />
                     <AboutRevese />
-                    <About />
                     <Maps />
                     <Instagram />
+                    <Footer />
                 </>)
             }
-
-            {/* <Navbar />
-            <Slider Data={DataResource.slider} />
-            <Youtube />
-            <Divisi Data={DataResource.divisi} />
-            <News Data={DataResource} />
-            <AboutRevese />
-            <About />
-            <Maps />
-            <Instagram /> */}
-
         </>
     );
 }

@@ -53,7 +53,7 @@ function Login() {
       setLoading(false)
       setTimeout(() => {
         return navigate('/system/user')
-      }, 3000);
+      }, 400);
     })
 
   }
