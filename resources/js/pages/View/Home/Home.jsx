@@ -26,20 +26,30 @@ const Slider = ({ Data }) => {
                 <SplideTrack className="">
                     {Slider?.map((item, index) => (
                         <SplideSlide key={index}>
-                            <div className="flex flex-col h-[300px] px-3 sm:h-[500px] md:h-[100vh] absolute justify-center items-center w-full text-white z-20">
-                                <p className="text-[10px] sm:text-[20px] text-center">
-                                    {item.description}
-                                </p>
-                                <h1 className="text-[15px] sm:text-[40px]">
-                                    {item.title}
-                                </h1>
-                            </div>
-                            <div className="w-full h-[300px] sm:h-[500px] md:h-[100vh] z-10 bg-black opacity-30 absolute"></div>
                             <img
                                 className="w-full h-[300px] sm:h-[500px] md:h-[100vh] object-cover -z-10"
                                 src={item.imagedir}
-                                alt="Image 1"
+                                alt="Image"
                             />
+                            <div className="p-1 fixed z-10 top-[400px] w-full">
+
+                                <div className="flex flex-col justify-center items-center w-full text-white gap-y-4">
+                                    <div className="w-1/2 text-center">
+                                        <h1 className="text-[15px] sm:text-[40px] font-extrabold text-4xl">
+                                            {item.title}
+                                        </h1>
+                                    </div>
+                                    <div className="w-2/3">
+                                        <p className="text-[10px] sm:text-[20px] text-center">
+                                            {item.description}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="flex justify-center gap-x-5 mt-4 text-white">
+                                    <button className="border-2 border-white px-16 py-5 text-lg hover:bg-white hover:text-black transition-all duration-500 font-semibold">Watch Online</button>
+                                    <button className="border-2 border-white px-16 py-5 text-lg hover:bg-white hover:text-black transition-all duration-500 font-semibold">Watch Online</button>
+                                </div>
+                            </div>
                         </SplideSlide>
                     ))}
                 </SplideTrack>
@@ -149,46 +159,43 @@ const Youtube = ({ url }) => {
 const About = () => {
     return (
         <>
-            <div className="bg-gradient-to-r from-indigo-500 from-5% via-sky-500 via-30% to-indigo-700 p-10 flex justify-center gap-10 h-[570px] border-b-2">
-
-                <div className="w-full h-full text-white p-4">
-                    <h1 className="font-extrabold text-4xl text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
-                    <div className="flex justify-start">
-                        <div className="bg-gradient-to-r from-black to-slate-700 h-[4px] w-[1000px] mt-6"></div>
+            <div className="p-10 flex justify-center items-center  bg-[url(https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg)] bg-cover">
+                {/* <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="-z-10 h-[600px] fixed" /> */}
+                <div className="bg-white bg-opacity-5 backdrop-blur-lg p-10 flex justify-center gap-10 h-[570px] rounded-lg">
+                    <div className="w-full h-full text-white p-4">
+                        <h1 className="font-extrabold text-4xl text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
+                        <div className="flex justify-start">
+                            <div className="bg-white/40 backdrop-blur-xl h-[4px] w-[1000px] mt-6"></div>
+                        </div>
+                        <p className="text-start text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
                     </div>
-                    <p className="text-start text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
-                    <div className="mt-10 flex justify-start">
-                        <button className="p-4 border-2 border-black w-52 font-semibold rounded-md hover:bg-white hover:text-black hover:scale-105 transition-all duration-500">Watch Online</button>
+
+                    <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500">
+                        <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-full h-full rounded-lg" />
                     </div>
                 </div>
-
-                <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500">
-                    <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-full h-full rounded-lg" />
-                </div>
-            </div>
+            </div >
         </>
     )
 }
 const AboutRevese = () => {
     return (
         <>
-            <div className="bg-gradient-to-r from-indigo-500 from-5% via-sky-500 via-30% to-indigo-700 p-10 flex justify-center gap-10 h-[570px] border-y-2">
-
-                <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500">
-                    <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-full h-full rounded-lg" />
-                </div>
-
-                <div className="w-full h-full text-white p-4">
-                    <h1 className="font-extrabold text-4xl text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
-                    <div className="flex justify-start">
-                        <div className="bg-gradient-to-r from-black to-slate-700 h-[4px] w-[1000px] mt-6"></div>
+            <div className="p-10 flex justify-center items-center  bg-[url(https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg)] bg-cover">
+                {/* <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="-z-10 h-[600px] fixed" /> */}
+                <div className="bg-white bg-opacity-5 backdrop-blur-lg p-10 flex justify-center gap-10 h-[570px] rounded-lg">
+                    <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500">
+                        <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-full h-full rounded-lg" />
                     </div>
-                    <p className="text-start text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
-                    <div className="mt-10 flex justify-start">
-                        <button className="p-4 border-2 border-black w-52 font-semibold rounded-md hover:bg-white hover:text-black hover:scale-105 transition-all duration-500">Watch Online</button>
+                    <div className="w-full h-full text-white p-4">
+                        <h1 className="font-extrabold text-4xl text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
+                        <div className="flex justify-start">
+                            <div className="bg-white/40 backdrop-blur-xl h-[4px] w-[1000px] mt-6"></div>
+                        </div>
+                        <p className="text-start text-lg mt-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio architecto veniam, soluta minima officiis ut nesciunt! Quaerat reiciendis vero esse officia ab amet nostrum consequuntur hic, eius sunt illo animi dolorem perferendis corporis minus rerum. Doloribus non eaque, natus labore, vero quasi nihil necessitatibus voluptate reiciendis deserunt iste asperiores ratione qui laborum, odio assumenda quisquam! Itaque, quidem unde? Fugiat omnis eveniet mollitia repellendus at laboriosam perspiciatis non rem veniam. Placeat soluta similique, doloremque corporis vitae sequi temporibus ipsum consequatur quo! Error officia recusandae distinctio veritatis deleniti culpa tempore, porro cum voluptate ipsa! Harum voluptatibus necessitatibus omnis laudantium voluptas praesentium minima?</p>
                     </div>
                 </div>
-            </div>
+            </div >
         </>
     )
 }
