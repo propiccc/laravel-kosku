@@ -21,4 +21,10 @@ class Setting extends Model
         'logo_navigasi'
     ];
 
+    protected $appends = ['logodir'];
+
+    public function getLogodirAttribute()
+    {
+        return asset('storage/asset/logo/' . $this->logo);
+    }
 }

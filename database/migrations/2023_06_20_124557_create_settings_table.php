@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('link_youtube')->nullable();
             $table->text('link_maps')->nullable();
             $table->string('link_facebook')->nullable();
-            $table->string('link_twitter')->nullable();
+            // $table->string('link_twitter')->nullable();
             $table->string('copyright')->nullable();
             $table->timestamps();
         });

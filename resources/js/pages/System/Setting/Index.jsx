@@ -12,16 +12,19 @@ import ImageUpload from './../../../Components/ImageUpload';
 function Index() {
   // * Setup 
   const [Block, setBlock] = useState(true)
+  const [DataForm, setDataForm] = useState({})
   const [Type, setType] = useState()
   const [Logo, setLogo] = useState(null);
   const [logoNavigation, setLogoNavigation] = useState(null)
-  const [DataForm, setDataForm] = useState({})
 
   // * Api Call
   const SettingIndex = () => {
     setBlock(true);
     axios.post('/api/setting').then(res => {
       setDataForm(res.data);
+      if (res.data.logodir != null) {
+        setLogo(res.data.logodir);
+      }
       setType('update');
     }).catch(err => {
       if (err.response.data.message != null) {
@@ -55,15 +58,25 @@ function Index() {
       url = `/api/setting/${DataForm?.uuid}/update`
     }
 
-    axios.post(url, DataForm).then(res => {
+    const headers = {
+      'Content-Type': 'multipart/form-data',
+    };
+    const formData = new FormData();
+    formData.append('no_telp', DataForm.no_telp)
+    formData.append('link_youtube', DataForm.link_youtube)
+    formData.append('link_maps', DataForm.link_maps)
+    formData.append('link_facebook', DataForm.link_facebook)
+    formData.append('copyright', DataForm.copyright)
+
+    if (typeof Logo == 'object' && Logo?.file?.name != 'blob') {
+      formData.append('logo', Logo[0]?.file)
+    }
+
+    axios.post(url, formData).then(res => {
       if (res.data.success === true) {
         toast.success(res.data.data);
-        // setTimeout(() => {
-        //   SettingIndex({})
-        // }, 300);
       }
     }).catch(err => {
-      console.log(err.response.data.data);
       if (err.response.data.message != null) {
         toast.error(err.response.data.message)
       } else {
@@ -71,8 +84,8 @@ function Index() {
           toast.error(el)
         });
       }
-      SettingIndex()
     }).finally(() => {
+      SettingIndex()
       setBlock(false)
     })
   }
@@ -127,6 +140,8 @@ function Index() {
     return () => { a = false }
   }, [])
   console.log(Logo);
+  console.log('Data', DataForm);
+  console.log(typeof Logo == 'object' && Logo?.file?.name != 'blob' && Logo != null);
   return (
     <>
       <Toaster />
@@ -190,3 +205,7 @@ function Index() {
 }
 
 export default Index
+
+
+
+

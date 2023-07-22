@@ -7,6 +7,9 @@ import axios from "axios";
 import Loading from '../../../Components/Loading';
 import LoadingPage from "../../../Components/LoadingPage";
 import { BsFillTelephoneFill, BsYoutube, BsTwitter, BsInstagram } from 'react-icons/bs'
+import AOS from "aos";
+import 'aos/dist/aos.css';
+
 
 const Slider = ({ Data }) => {
     const [Slider, setSlider] = useState(typeof Data == 'object' && Object.keys(Data).length != 0 ? Data : null);
@@ -31,11 +34,11 @@ const Slider = ({ Data }) => {
                                 src={item.imagedir}
                                 alt="Image"
                             />
-                            <div className="p-1 fixed z-10 top-[400px] w-full">
+                            <div className="p-1 fixed z-10 top-[300px] w-full" data-aos="zoom-in">
 
                                 <div className="flex flex-col justify-center items-center w-full text-white gap-y-4">
                                     <div className="w-1/2 text-center">
-                                        <h1 className="text-[15px] sm:text-[40px] font-extrabold text-4xl">
+                                        <h1 className="text-[15px] sm:text-[40px] font-semibold text-4xl">
                                             {item.title}
                                         </h1>
                                     </div>
@@ -46,8 +49,8 @@ const Slider = ({ Data }) => {
                                     </div>
                                 </div>
                                 <div className="flex justify-center gap-x-5 mt-4 text-white">
-                                    <button className="border-2 border-white px-16 py-5 text-lg hover:bg-white hover:text-black transition-all duration-500 font-semibold">Watch Online</button>
-                                    <button className="border-2 border-white px-16 py-5 text-lg hover:bg-white hover:text-black transition-all duration-500 font-semibold">Watch Online</button>
+                                    <button className="border-2 border-white px-16 py-4 text-lg hover:bg-white hover:text-black transition-all duration-500 font-semibold">Watch Online</button>
+                                    <button className="border-2 border-white px-16 py-4 text-lg hover:bg-white hover:text-black transition-all duration-500 font-semibold">Follow Us</button>
                                 </div>
                             </div>
                         </SplideSlide>
@@ -63,34 +66,36 @@ const News = ({ Data }) => {
         <>
             {News != null ? (
                 <>
-                    <div className="p-10 bg-black flex justify-between items-center">
-                        <span className="font-bold text-white text-4xl">Berita Terbaru Kami</span>
+                    <div className="p-10 bg-black flex justify-between items-center" >
+                        <span className="font-bold text-white text-4xl" data-aos="fade-right">Berita Terbaru Kami</span>
                         <div className="h-[2px] w-2/3 bg-gray-200"></div>
-                        <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[80px]" />
+                        <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[80px]" data-aos="fade-left" />
                     </div>
-                    <Splide
-                        options={{
-                            rewind: true,
-                            perPage: 1,
-                            pagination: true,
-                            autoplay: true,
-                            arrows: false,
-                        }}
-                        hasTrack={false}
-                        aria-label="..."
-                    >
-                        <SplideTrack className="">
-                            {News?.map((item, index) => (
-                                <SplideSlide key={index}>
-                                    <img
-                                        className="w-full h-[300px] sm:h-[500px] md:h-[100vh] object-cover -z-10"
-                                        src={item.imagedir}
-                                        alt="Image 1"
-                                    />
-                                </SplideSlide>
-                            ))}
-                        </SplideTrack>
-                    </Splide>
+                    <div className="w-screen">
+                        <Splide
+                            options={{
+                                rewind: true,
+                                perPage: 1,
+                                pagination: true,
+                                autoplay: true,
+                                arrows: false,
+                            }}
+                            hasTrack={false}
+                            aria-label="..."
+                        >
+                            <SplideTrack className="">
+                                {News?.map((item, index) => (
+                                    <SplideSlide key={index}>
+                                        <img
+                                            className="w-full h-[300px] sm:h-[500px] md:h-[100vh] object-cover -z-10"
+                                            src={item.imagedir}
+                                            alt="Image 1"
+                                        />
+                                    </SplideSlide>
+                                ))}
+                            </SplideTrack>
+                        </Splide>
+                    </div>
                 </>
             ) : null}
 
@@ -103,10 +108,10 @@ const Divisi = ({ Data }) => {
     return (
         <>
             {Card != null ? (
-                <section className="flex flex-col justify-center items-center py-10 bg-gray-200">
+                <section className="flex flex-col justify-center items-center py-10 bg-gray-200" id='divisi'>
                     <h1 className="text-[48px] font-bold">Our Division</h1>
                     <p className="text-[24px]">Lorem ipsum dolor sit amet consectetur adipisicing elit. Non quas vero nihil.</p>
-                    <div className="mx-auto p-10 gap-24 flex justify-center flex-wrap w-full">
+                    <div className="mx-auto p-10 gap-24 flex justify-center flex-wrap w-full" data-aos="zoom-in-up" data-aos-duration="1000">
                         {Card?.map((item, index) => (
 
                             <div key={index} className="h-[410px] w-max rounded-lg shadow-xl shadow-gray-500 group/edit ">
@@ -115,12 +120,6 @@ const Divisi = ({ Data }) => {
                                     <h1 className="font-semibold text-xl">{item.title}</h1>
                                     <p>{item.description}</p>
                                 </div>
-                                {/* <div className="transition-all duration-500 opacity-0  text-white group-hover/edit:opacity-100 bg-red-300 relative -top-[175px] h-[40px] left-4 w-[500px] text-ellipsis p-1 rounded-t-lg">
-                                    <h1 className="text-xl font-semibold">{item.title}</h1>
-                                </div>
-                                <div className="transition-all duration-500 opacity-0 bg-blue-400  text-white group-hover/edit:opacity-100 relative -top-[180px] h-[130px] left-4 w-[500px] overflow-y-scroll scrollbar-none text-ellipsis p-1 rounded-b-lg">
-                                    <p className="font-semibold">{item.description}</p>
-                                </div> */}
                             </div>
 
                         ))}
@@ -137,12 +136,12 @@ const Youtube = ({ url }) => {
             <div className="flex w-full bg-black p-5 flex-col">
                 <div className="w-full min-h-[500px] rounded-lg flex p-4 justify-center">
                     <div className="p-1">
-                        <div className="h-[260px] w-[480px]">
+                        <div className="h-[260px] w-[480px]" data-aos="fade-right" data-aos-duration="1000">
                             <iframe src="https://www.youtube.com/embed/jiDUOP6bXik" frameBorder="2" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture" className="h-full w-full rounded-lg" allowFullScreen></iframe>
                         </div>
                     </div>
                     <div className="min-h-[260px] w-[2px] bg-white ml-5 mr-5"></div>
-                    <div className="min-h-[400px] w-full text-white">
+                    <div className="min-h-[400px] w-full text-white" data-aos="fade-left" data-aos-duration="1000">
                         <div className="">
                             <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo bmc" className="h-[80px]" />
                         </div>
@@ -162,7 +161,7 @@ const About = () => {
             <div className="p-10 flex justify-center items-center  bg-[url(https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg)] bg-cover">
                 {/* <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="-z-10 h-[600px] fixed" /> */}
                 <div className="bg-white bg-opacity-5 backdrop-blur-lg p-10 flex justify-center gap-10 h-[570px] rounded-lg">
-                    <div className="w-full h-full text-white p-4">
+                    <div className="w-full h-full text-white p-4" data-aos="fade-right" data-aos-duration="1000">
                         <h1 className="font-extrabold text-4xl text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
                         <div className="flex justify-start">
                             <div className="bg-white/40 backdrop-blur-xl h-[4px] w-[1000px] mt-6"></div>
@@ -187,7 +186,7 @@ const AboutRevese = () => {
                     <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500">
                         <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="w-full h-full rounded-lg" />
                     </div>
-                    <div className="w-full h-full text-white p-4">
+                    <div className="w-full h-full text-white p-4" data-aos="fade-left" data-aos-duration="1000">
                         <h1 className="font-extrabold text-4xl text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
                         <div className="flex justify-start">
                             <div className="bg-white/40 backdrop-blur-xl h-[4px] w-[1000px] mt-6"></div>
@@ -215,14 +214,14 @@ const Maps = () => {
         <>
             <div className="flex justify-center" id="contact">
                 <div className="bg-black w-1/4 p-9 flex flex-col gap-y-5">
-                    <div className="group/location cursor-default">
+                    <div className="group/location cursor-default" data-aos="fade-right" data-aos-duration="800">
                         <span className="text-2xl text-center font-semibold transition-all duration-500 text-gray-300 group-hover/location:text-white hover:text-center">Indonesia</span>
                         <div className="h-[4px] w-full bg-black my-2">
                             <div className="h-[4px] w-2/6 hover:w-full transition-all duration-700 bg-white group-hover/location:w-full"></div>
                         </div>
                         <span className="group-hover/location:text-white transition-colors duration-500 text-gray-300 text-4xl font-extrabold mt-5">Surabaya,Lakarsantri Jl. Sumurwelut No. 1</span>
                     </div>
-                    <div className="group/contact cursor-default">
+                    <div className="group/contact cursor-default" data-aos="fade-right" data-aos-duration="1200">
                         <span className="text-2xl text-center font-semibold transition-all duration-500 text-gray-300 group-hover/contact:text-white hover:text-center">Contact Us</span>
                         <div className="h-[4px] w-full bg-black my-2">
                             <div className="h-[4px] w-2/4 hover:w-full transition-all duration-700 bg-white group-hover/contact:w-full"></div>
@@ -233,7 +232,7 @@ const Maps = () => {
                             <div className="flex w-full justify-start group-hover/contact:text-white transition-colors duration-500 text-gray-300 text-2xl font-semibold"><span><BsInstagram className="w-8 h-10 mr-2" /></span> : @BmcSumurwelut</div>
                         </div>
                     </div>
-                    <div className="flex justify-center mt-24">
+                    <div className="flex justify-center mt-24" data-aos="fade-up" data-aos-duration="1000">
                         <a target="_blank" className="p-4 rounded-sm text-white text-center border-white border-2 font-semibold w-full cursor-pointer active:scale-95 hover:bg-white hover:text-black bg-opacity-40 transition-all duration-500">
                             Go To Betany Miracle Center Location
                         </a>
@@ -277,18 +276,22 @@ const Instagram = (url) => {
 const Footer = () => {
     return (
 
-        <footer className="bg-gray-800">
-            <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-between">
+        <footer className="bg-gray-800 p-4">
+            <div className="w-full flex justify-center">
+                <img src="http://localhost:8000/storage/asset/LogoDashboard.png" alt="Logo Bmc" className="aspect-auto h-[60px]" />
+            </div>
+            <div className="flex justify-center mt-2">
+                <div className="h-[2px] w-1/2 bg-gray-500"></div>
+            </div>
+            <div className="w-full flex justify-center">
+                <div className="gap-x-5 flex p-1">
+                    <BsYoutube className="h-[80px] w-[30px] text-gray-500 hover:text-white" />
+                    <BsInstagram className="h-[80px] w-[30px] text-gray-500 hover:text-white" />
+                </div>
+            </div>
+            <div className="w-full mx-auto max-w-screen-xl p-4 md:flex md:items-center md:justify-center">
                 <span className="text-sm text-gray-500 sm:text-center dark:text-gray-400">© 2023 Betany Miracle Center.
                 </span>
-                <ul className="flex flex-wrap items-center mt-3 text-sm font-medium text-gray-500 dark:text-gray-400 sm:mt-0">
-                    <li>
-                        <a href="#" className="mr-4 hover:underline md:mr-6 ">About</a>
-                    </li>
-                    <li>
-                        <a href="#contact" className="hover:underline">Contact</a>
-                    </li>
-                </ul>
             </div>
         </footer>
 
@@ -296,6 +299,7 @@ const Footer = () => {
 }
 
 function Home() {
+
     // * setup 
     const [DataResource, setDataResource] = useState([]);
     const [Block, setBlock] = useState(true);
@@ -315,6 +319,7 @@ function Home() {
     useEffect(() => {
         var a = true;
         if (a) {
+            AOS.init();
             getDataResource();
         }
         return () => { a = false }
@@ -327,8 +332,8 @@ function Home() {
                     <Slider Data={DataResource.slider} />
                     <Youtube />
                     <Divisi Data={DataResource.divisi} />
-                    <About />
                     <News Data={DataResource.news} />
+                    <About />
                     <AboutRevese />
                     <Maps />
                     <Instagram />

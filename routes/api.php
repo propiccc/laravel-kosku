@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DivisiController;
+use App\Http\Controllers\InstagramController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SliderController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\VisiMisiController;
 use App\Http\Controllers\SettingController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -21,7 +23,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::post('/login', [AuthController::class, 'login']);
-
 Route::prefix('/public')->group(function () {
     Route::get('/slider', [SliderController::class, 'PublicSlider']);
     Route::post('/home/resource', [PageController::class, 'HomeData']);
@@ -74,6 +75,13 @@ Route::middleware('auth')->group(function () {
         Route::post('{uuid}/edit', [NewsController::class, 'show']);
         Route::post('{uuid}/update', [NewsController::class, 'update']);
         Route::delete('{uuid}/delete', [NewsController::class, 'delete']);
+    });
+    Route::prefix('instagram')->group(function () {
+        Route::post('/', [InstagramController::class, 'index']);
+        Route::post('/store', [InstagramController::class, 'store']);
+        Route::post('{uuid}/edit', [InstagramController::class, 'show']);
+        Route::post('{uuid}/update', [InstagramController::class, 'update']);
+        Route::delete('{uuid}/delete', [InstagramController::class, 'delete']);
     });
 
 });

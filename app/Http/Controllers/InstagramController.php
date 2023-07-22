@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\News;
 use App\Helpers\RestApi;
+use App\Models\Instagram;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
-class NewsController extends Controller
+class InstagramController extends Controller
 {
     //
     public function index(Request $request)
@@ -19,20 +18,10 @@ class NewsController extends Controller
                 'tampilkan' => ['nullable', 'string']
             ]);
 
-            $data = News::paginate(isset($request->tampilkan) ? $request->tampilkan : 10);
+            $data = Instagram::paginate(isset($request->tampilkan) ? $request->tampilkan : 10);
 
             return response()->json($data, 200);
 
-        } else {
-            return response()->json(['message' => 'bad request!'], 401);
-        }
-    }
-
-    public function PublicNews()
-    {
-        if (request()->wantsJson()) {
-            $data = News::all();
-            return response()->json($data, 200);
         } else {
             return response()->json(['message' => 'bad request!'], 401);
         }
@@ -42,7 +31,9 @@ class NewsController extends Controller
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'image' => ['required', 'image', 'mimes:jpg,png'],
+                'post_id' => ['required', 'integer'],
+                'post_url' => ['required', 'string'],
+                'username' => ['required', 'string'],
             ]);
             if ($validate->fails()) {
                 $message = [];
@@ -53,22 +44,11 @@ class NewsController extends Controller
                 return RestApi::error($message, 400);
             }
 
-            $req = $request->all();
-
-            if ($req['image'] && $request->hasFile('image')) {
-                $image = $request->file('image');
-                $image_name = $image->getClientOriginalName();
-
-                if ($image_name != 'blob') {
-                    $image_name = date('Y-M-y') . '-' . $image_name;
-                    $image->storeAs('/public/NewsImage', $image_name);
-                    $req['image'] = $image_name;
-                } else {
-                    unset($req['image']);
-                }
-            }
-
-            $data = News::create($req);
+            $data = Instagram::create([
+                'post_id' => $request->post_id,
+                'post_url' => $request->post_url,
+                'username' => $request->username
+            ]);
 
             if ($data) {
                 return RestApi::success(['Data Successfully Created'], 201);
@@ -83,7 +63,7 @@ class NewsController extends Controller
     public function show($uuid)
     {
         if (request()->wantsJson()) {
-            $data = News::where('uuid', $uuid)->first();
+            $data = Instagram::where('uuid', $uuid)->first();
             if (!isset($data)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
@@ -97,7 +77,9 @@ class NewsController extends Controller
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'image' => ['nullable', 'image', 'mimes:jpg,png'],
+                'post_id' => ['required', 'integer'],
+                'post_url' => ['required', 'string'],
+                'username' => ['required', 'string'],
             ]);
 
             if ($validate->fails()) {
@@ -109,27 +91,17 @@ class NewsController extends Controller
                 return RestApi::error($message, 400);
             }
 
-            $News = News::where('uuid', $uuid)->first();
-            if (!isset($News)) {
+            $Instagram = Instagram::where('uuid', $uuid)->first();
+            if (!isset($Instagram)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
 
-            $req = $request->all();
-            if ($req['image'] && $request->hasFile('image')) {
-                $image = $request->file('image');
-                $image_name = $image->getClientOriginalName();
-                if ($image_name != 'blob') {
-                    Storage::delete("/public/NewsImage/" . $News->image);
-                    $image_name = date('Y-M-y') . '-' . $image_name;
-                    $image->storeAs('/public/NewsImage', $image_name);
-                    $req['image'] = $image_name;
-                } else {
-                    unset($req['image']);
-                }
-            }
-
-            $News = $News->update($req);
-            if ($News) {
+            $Instagram = $Instagram->update([
+                'post_id' => $request->post_id,
+                'post_url' => $request->post_url,
+                'username' => $request->username
+            ]);
+            if ($Instagram) {
                 return RestApi::success(['Data Successfully Update'], 200);
             } else {
                 return RestApi::error(['Data Failed To Update'], 400);
@@ -143,18 +115,17 @@ class NewsController extends Controller
     {
         if (request()->wantsJson()) {
 
-            $News = News::where('uuid', $uuid)->first();
-
-            if (!isset($News)) {
+            $Instagram = Instagram::where('uuid', $uuid)->first();
+            if (!isset($Instagram)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-            Storage::delete("/public/NewsImage/" . $News->image);
-            $News->delete();
-            if ($News) {
+            $Instagram->delete();
+            if ($Instagram) {
                 return RestApi::success(['Data Successfully Deleted'], 200);
             }
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }
     }
+
 }

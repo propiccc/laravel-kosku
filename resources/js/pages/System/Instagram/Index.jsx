@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import Add from '../../../Components/Button/Add';
-import Form from './Form';
 import Loading from '../../../Components/Loading';
 import axios from 'axios';
 import Delete from '../../../Components/Button/Delete';
@@ -8,6 +7,7 @@ import Swal from 'sweetalert2';
 import Edit from '../../../Components/Button/Edit';
 import toast, { Toaster } from 'react-hot-toast';
 import { MdOutlineNavigateNext, MdNavigateBefore } from 'react-icons/md'
+import InstagramComponets from './Instagram';
 
 function DateKu() {
   var d = (new Date() + "").split(" ");
@@ -19,7 +19,7 @@ function Index() {
   const [type, setType] = useState('create')
   const [toggle, setToggle] = useState(false)
   const [block, setBlock] = useState(true)
-  const [Slider, setSlider] = useState([])
+  const [Instagram, setInstagram] = useState([])
   const [page, setPage] = useState(1)
   const [DataEdit, setDataEdit] = useState([])
   const [Paginate, setPagiante] = useState({
@@ -31,9 +31,9 @@ function Index() {
   const SwitchPage = (url, page) => {
     setBlock(true)
     axios.post(url + page, Paginate).then(res => {
-      setSlider(res.data);
+      setInstagram(res.data);
     }).catch(error => {
-      setSlider([]);
+      setInstagram([]);
       console.log(error);
     }).finally(
       setTimeout(() => {
@@ -42,9 +42,9 @@ function Index() {
     );
   }
 
-  const GetSlider = (uuid) => {
+  const GetDivisi = (uuid) => {
     setToggle(false)
-    var url = `/api/slider/${uuid}/edit`
+    var url = `/api/instagram/${uuid}/edit`
     axios.post(url).then(res => {
       setType('update');
       setDataEdit(res.data.data)
@@ -54,9 +54,9 @@ function Index() {
     })
   }
 
-  // * function
+  // * function 
   const HandleDelete = (uuid) => {
-    var url = `/api/slider/${uuid}/delete`
+    var url = `/api/divisi/${uuid}/delete`
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -80,7 +80,7 @@ function Index() {
               'Your file has been deleted.',
               'success'
             )
-            SwitchPage('/api/slider?page=', page)
+            SwitchPage('/api/divisi?page=', page)
           }
         }).catch(error => {
           Swal.fire({
@@ -118,14 +118,14 @@ function Index() {
     setDataEdit([]);
     setToggle(false)
     setTimeout(() => {
-      SwitchPage('/api/slider?page=', page)
+      SwitchPage('/api/divisi?page=', page)
     }, 400);
   }
 
   // * Debonce Search && Paginate && Show 
   useEffect(() => {
     const debounce = setTimeout(() => {
-      SwitchPage('/api/slider?page=', page)
+      SwitchPage('/api/instagram?page=', page)
     }, 700);
     return () => clearTimeout(debounce)
   }, [Paginate, page])
@@ -134,10 +134,10 @@ function Index() {
   return (
     <>
       <Toaster />
-      {toggle ? (<Form cancle={HandleCancel} DataEdit={DataEdit} type={type} close={HandleClose} />) : null}
+      {toggle ? (<InstagramComponets cancle={HandleCancel} DataEdit={DataEdit} type={type} close={HandleClose} />) : null}
       <div className="bg-white rounded-lg p-6 shadow-lg">
         <div className="flex justify-between items-center">
-          <span className='font-semibold text-xl'>Slider Data</span>
+          <span className='font-semibold text-xl'>Divisi Data</span>
           <Add onClick={HandleToggle} />
         </div>
         <div className="h-[2px] w-full bg-gray-300 my-3"></div>
@@ -151,35 +151,40 @@ function Index() {
               <tr className='rounded-lg'>
                 <th className='text-start px-2 w-10'>No.</th>
                 <th className='text-center w-60'>Image</th>
-                <th className='text-center'>Tgl Dibuat</th>
+                <th className='text-center'>Username</th>
+                <th className='text-center'>Status</th>
                 <th className='text-center'>Action</th>
               </tr>
             </thead>
             <tbody className=''>
               {block ? (<Loading colSpan={5} />) :
-                (Slider?.data?.map((item, index) => (
+                (Instagram?.data?.map((item, index) => (
                   <tr className={`${index % 2 ? 'bg-gray-100' : 'bg-white'} h-14 hover:bg-gray-200`} key={item.id}>
-                    <td className='text-center px-2 font-semibold'>{index + Slider.from}</td>
+                    <td className='text-center px-2 font-semibold'>{index + Instagram.from}</td>
                     {/* <td>{item?.imagedir}</td> */}
                     <td>
                       <div className="flex h-20">
-                        <a href={item?.imagedir} target="_blank" className="flex h-20 w-full justify-center p-2">
-                          <img src={item?.imagedir} alt="Image" className='rounded-md w-28' />
+                        <a href={item?.post_url} target="_blank" className="flex h-20 w-full justify-center p-2">
+                          <img src={item?.post_url} alt="Image" className='rounded-md w-28' loading='lazy' />
                         </a>
                       </div>
                     </td>
-                    <th className='text-center'>{DateKu(item.created_at)}</th>
+
+                    <th className='text-center'>{item.username}</th>
+                    <th className='text-center'>{item.active ? (
+                      <span className='bg-green-300 text-green-500  rounded-lg px-3 p-1 text-sm'>Active</span>
+                    ) : (<span className='bg-red-300 text-red-500 rounded-lg px-3 p-1 text-sm'>Disable</span>
+                    )}</th>
                     <td>
                       <div className="flex justify-center gap-x-1">
-                        <Edit onClick={() => { GetSlider(item.uuid) }} />
-                        <Delete onClick={() => { HandleDelete(item.uuid) }} />
+                        {item.active ? (<button className='p-2 bg-red-500 text-white rounded-lg font-semibold active:scale-95 transition-all duration-300'>Disable</button>) : (<button className='p-2 bg-green-500 text-white rounded-lg font-semibold active:scale-95 duration-300'>Actived</button>)}
+                        <Delete onClick={() => { HandleDelete() }} />
                       </div>
                     </td>
-                  </tr>
-                )
+                  </tr>)
                 ))
               }
-              {Slider?.data?.length == 0 && !block ? (
+              {Instagram?.data?.length == 0 && !block ? (
                 <tr className='bg-gray-200 h-14'>
                   <td colSpan={5} className='font-semibold'><span className='ml-1'>Not Found</span></td>
                 </tr>
@@ -187,13 +192,13 @@ function Index() {
             </tbody>
           </table>
           <div className="flex justify-between mt-2">
-            <span className='font-semibold'>Page {Slider.current_page ?? null} of {Slider?.last_page ?? null}</span>
+            <span className='font-semibold'>Page {Instagram.current_page ?? null} of {Instagram?.last_page ?? null}</span>
             <div className="flex">
               {page != 1 ? (
                 <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => HandleSwitchPage('prev')} readOnly><MdNavigateBefore className='text-white' /></button>
               ) : null}
               <input disabled type="number" className='h-8 w-8 max-w-fit rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none border-black border-[2px] p-1 mx-1 active:scale-10' value={page} />
-              {page != Slider?.last_page ? (
+              {page != Instagram?.last_page ? (
                 <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => HandleSwitchPage('next')}><MdOutlineNavigateNext className='text-white' /></button>
               ) : null}
             </div>

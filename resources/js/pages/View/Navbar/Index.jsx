@@ -5,8 +5,8 @@ function Index({ auth }) {
     const [open, setOpen] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [Menu, setMenu] = useState([
-        { name: 'Home', link: '/' },
-        { name: 'Divisi', link: '/' },
+        { name: 'Home', link: '#' },
+        { name: 'Divisi', link: '#divisi' },
         { name: 'About', link: '/' },
         { name: 'Contact', link: '/' }
     ]);

@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Setting;
 use App\Helpers\RestApi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class SettingController extends Controller
 {
@@ -32,11 +33,9 @@ class SettingController extends Controller
                 'link_youtube' => ['nullable', 'string'],
                 'link_maps' => ['nullable', 'string'],
                 'link_facebook' => ['nullable', 'string'],
-                'link_twitter' => ['nullable', 'string'],
                 'copyright' => ['nullable', 'string'],
-                // 'logo' => ['nullable', 'image', 'mimes:jpg,png']
+                'logo' => ['nullable', 'image', 'mimes:jpg,png']
             ]);
-
             if ($validate->fails()) {
                 $message = [];
                 $errors = $validate->errors();
@@ -47,16 +46,18 @@ class SettingController extends Controller
             }
 
             $req = $request->all();
-            // if ($req['logo'] && $request->hasFile('logo')) {
-            //     $logo = $request->file('logo');
-            //     $logo_name = $logo->getClientOriginalName();
-            //     if ($logo_name != 'blob') {
-            //         $logo->storeAs('/public/asset/logo', $logo_name);
-            //         $req['logo'] = $logo_name;
-            //     } else {
-            //         unset($req['logo']);
-            //     }
-            // }
+            if ($req['logo'] && $request->hasFile('logo')) {
+                $logo = $request->file('logo');
+                $logo_name = $logo->getClientOriginalName();
+                if ($logo_name != 'blob') {
+                    $logo_name = date('Y-M-y') . '-' . $logo_name;
+                    $logo->storeAs('/public/asset/logo', $logo_name);
+                    $req['logo'] = $logo_name;
+                } else {
+                    unset($req['logo']);
+                }
+            }
+
             $data = Setting::create($req);
 
             if ($data) {
@@ -92,9 +93,22 @@ class SettingController extends Controller
             }
 
             $req = $request->all();
+
             $setting = Setting::where('uuid', $uuid)->first();
             if (!isset($setting)) {
                 return RestApi::error(['Data Not Found!'], 404);
+            }
+            if ($req['logo'] && $request->hasFile('logo')) {
+                $logo = $request->file('logo');
+                $logo_name = $logo->getClientOriginalName();
+                if ($logo_name != 'blob') {
+                    $logo_name = date('Y-M-y') . '-' . $logo_name;
+                    Storage::delete("/public/asset/logo/" . $setting->logo);
+                    $logo->storeAs('/public/asset/logo', $logo_name);
+                    $req['logo'] = $logo_name;
+                } else {
+                    unset($req['logo']);
+                }
             }
             $setting = $setting->update($req);
             if ($setting) {
@@ -112,6 +126,8 @@ class SettingController extends Controller
         if (request()->wantsJson()) {
 
             $setting = Setting::where('uuid', $uuid)->first();
+            Storage::delete("/public/asset/logo/" . $setting->logo);
+
             if (!isset($setting)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }

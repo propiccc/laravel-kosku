@@ -10,9 +10,9 @@
     @vite(['resources/js/app.jsx', 'resources/css/app.css'])
 </head>
 
-<body class="">
+<body class="w-screen overflow-x-hidden scroll-smooth">
     {{-- <h1>{{ asset('storage/asset/LogoBmc.png') }}</h1> --}}
-    <div id="app"></div>
+    <div id="app" class=""></div>
 </body>
 
 </html>

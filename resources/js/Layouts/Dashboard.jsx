@@ -1,6 +1,6 @@
 import React, { useEffect, useState, Suspense } from 'react'
 import { FaRegSun, FaUserAlt } from 'react-icons/fa'
-import { BsImages } from 'react-icons/bs'
+import { BsImages, BsInstagram } from 'react-icons/bs'
 import { TbBinaryTree } from 'react-icons/tb'
 import { HiUserGroup } from 'react-icons/hi'
 import { BiNews } from 'react-icons/bi'
@@ -73,6 +73,7 @@ function Dashboard({ children, className }) {
             <Menu href='/system/visimisi' name="Visi Misi" icon={<TbBinaryTree className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
             <Menu href='/system/slider' name="Slider" icon={<BsImages className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />
             <Menu href='/system/setting' name="Setting" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu href='/system/instagram' name="Instagram" icon={<BsInstagram className={`w-[27px] h-[37px] ${"/system/instagram" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/instagram" == window.location.pathname ? 'text-black' : "text-white"}`} />
             {/* <Menu href='/system/test' name="Test" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} /> */}
           </div>
         </div>

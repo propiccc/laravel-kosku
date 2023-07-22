@@ -63,6 +63,7 @@ class DivisiController extends Controller
                 $image_name = $image->getClientOriginalName();
 
                 if ($image_name != 'blob') {
+                    $image_name = date('Y-M-y') . '-' . $image_name;
                     $image->storeAs('/public/DivisiImage', $image_name);
                     $req['image'] = $image_name;
                 } else {
@@ -123,6 +124,7 @@ class DivisiController extends Controller
                 $image_name = $image->getClientOriginalName();
                 if ($image_name != 'blob') {
                     Storage::delete("/public/DivisiImage/" . $Divisi->image);
+                    $image_name = date('Y-M-y') . '-' . $image_name;
                     $image->storeAs('/public/DivisiImage', $image_name);
                     $req['image'] = $image_name;
                 } else {
