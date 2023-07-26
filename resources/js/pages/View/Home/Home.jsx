@@ -125,7 +125,6 @@ const Divisi = ({ Data }) => {
                         ))}
                     </div>
                 </section>) : null}
-
         </>
     );
 };
@@ -273,6 +272,44 @@ const Instagram = (url) => {
     )
 };
 
+const ProfileCom = () => {
+    return (
+        <div className="bg-black w-full flex flex-col p-14">
+            <span className="text-white text-4xl text-center font-extrabold ">Greja Kami Dipimpin Oleh Pemimpin Hebat</span>
+            <div className="mt-10 min-h-[400px] flex justify-center flex-wrap gap-x-20 p-5">
+                <div className="text-white flex flex-col">
+                    <div className="bg-transparent h-60 w-60 rounded-lg">
+                        <img className="w-full h-full object-cover rounded-lg" src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" />
+                    </div>
+                    <span className="text-center font-semibold text-2xl mt-2">Lorem, ipsum</span>
+                    <span className="text-center">Lorem, ipsum</span>
+                </div>
+                <div className="text-white flex flex-col">
+                    <div className="bg-transparent h-60 w-60 rounded-lg">
+                        <img className="w-full h-full object-cover rounded-lg" src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" />
+                    </div>
+                    <span className="text-center font-semibold text-2xl mt-2">Lorem, ipsum</span>
+                    <span className="text-center">Lorem, ipsum</span>
+                </div>
+                <div className="text-white flex flex-col">
+                    <div className="bg-transparent h-60 w-60 rounded-lg">
+                        <img className="w-full h-full object-cover rounded-lg" src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" />
+                    </div>
+                    <span className="text-center font-semibold text-2xl mt-2">Lorem, ipsum</span>
+                    <span className="text-center">Lorem, ipsum</span>
+                </div>
+                <div className="text-white flex flex-col">
+                    <div className="bg-transparent h-60 w-60 rounded-lg">
+                        <img className="w-full h-full object-cover rounded-lg" src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" />
+                    </div>
+                    <span className="text-center font-semibold text-2xl mt-2">Lorem, ipsum</span>
+                    <span className="text-center">Lorem, ipsum</span>
+                </div>
+            </div>
+        </div>
+    )
+}
+
 const Footer = () => {
     return (
 
@@ -335,6 +372,7 @@ function Home() {
                     <News Data={DataResource.news} />
                     <About />
                     <AboutRevese />
+                    <ProfileCom />
                     <Maps />
                     <Instagram />
                     <Footer />

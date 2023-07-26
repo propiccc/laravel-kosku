@@ -139,9 +139,7 @@ function Index() {
     }
     return () => { a = false }
   }, [])
-  console.log(Logo);
-  console.log('Data', DataForm);
-  console.log(typeof Logo == 'object' && Logo?.file?.name != 'blob' && Logo != null);
+
   return (
     <>
       <Toaster />
@@ -155,10 +153,6 @@ function Index() {
         </div>) : (<>
           <div className="flex gap-x-2">
             <div className="w-full">
-              <label htmlFor="link_twitter" className='font-semibold text-lg'>Link Twiter :  <span className='text-red-700 font-semibold' >*</span></label>
-              <input name="link_twitter" id="link_twitter" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.link_twitter ?? ""} onChange={HandleChange} />
-            </div>
-            <div className="w-full">
               <label htmlFor="link_youtube" className='font-semibold text-lg'>Link Youtube :  <span className='text-red-700 font-semibold'>*</span></label>
               <input name="link_youtube" id="link_youtube" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.link_youtube ?? ""} onChange={HandleChange} />
             </div>
@@ -166,12 +160,12 @@ function Index() {
               <label htmlFor="link_facebook" className='font-semibold text-lg'>Link Facebook :  <span className='text-red-700 font-semibold'>*</span></label>
               <input name="link_facebook" id="link_facebook" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.link_facebook ?? ""} onChange={HandleChange} />
             </div>
-          </div>
-          <div className="flex gap-x-2 mt-4">
             <div className="w-full">
               <label htmlFor="link_maps" className='font-semibold text-lg'>Link Google Maps :  <span className='text-red-700 font-semibold'>*</span></label>
               <input name="link_maps" id="link_maps" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.link_maps ?? ""} onChange={HandleChange} />
             </div>
+          </div>
+          <div className="flex gap-x-2 mt-4">
             <div className="w-full">
               <label htmlFor="no_telp" className='font-semibold text-lg'>No Telp :  <span className='text-red-700 font-semibold'>*</span></label>
               <input name="no_telp" id="no_telp" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.no_telp ?? ""} onChange={HandleChange} />

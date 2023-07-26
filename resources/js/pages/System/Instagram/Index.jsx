@@ -34,7 +34,6 @@ function Index() {
       setInstagram(res.data);
     }).catch(error => {
       setInstagram([]);
-      console.log(error);
     }).finally(
       setTimeout(() => {
         setBlock(false)
@@ -115,11 +114,7 @@ function Index() {
   }
 
   const HandleClose = () => {
-    setDataEdit([]);
     setToggle(false)
-    setTimeout(() => {
-      SwitchPage('/api/divisi?page=', page)
-    }, 400);
   }
 
   // * Debonce Search && Paginate && Show 
