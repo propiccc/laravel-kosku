@@ -67,9 +67,10 @@ function Index() {
     formData.append('link_maps', DataForm.link_maps)
     formData.append('link_facebook', DataForm.link_facebook)
     formData.append('copyright', DataForm.copyright)
+    formData.append('copyright', DataForm.address)
 
     if (typeof Logo == 'object' && Logo?.file?.name != 'blob') {
-      formData.append('logo', Logo[0]?.file)
+      formData.append('logo', Logo[0]?.file || null)
     }
 
     axios.post(url, formData).then(res => {
@@ -161,11 +162,16 @@ function Index() {
               <input name="link_facebook" id="link_facebook" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.link_facebook ?? ""} onChange={HandleChange} />
             </div>
             <div className="w-full">
+              <label htmlFor="address" className='font-semibold text-lg'>Link Facebook :  <span className='text-red-700 font-semibold'>*</span></label>
+              <input name="address" id="address" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.address ?? ""} onChange={HandleChange} />
+            </div>
+
+          </div>
+          <div className="flex gap-x-2 mt-4">
+            <div className="w-full">
               <label htmlFor="link_maps" className='font-semibold text-lg'>Link Google Maps :  <span className='text-red-700 font-semibold'>*</span></label>
               <input name="link_maps" id="link_maps" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.link_maps ?? ""} onChange={HandleChange} />
             </div>
-          </div>
-          <div className="flex gap-x-2 mt-4">
             <div className="w-full">
               <label htmlFor="no_telp" className='font-semibold text-lg'>No Telp :  <span className='text-red-700 font-semibold'>*</span></label>
               <input name="no_telp" id="no_telp" className='w-full border-[1px] border-black items-center rounded-lg p-2' value={DataForm?.no_telp ?? ""} onChange={HandleChange} />

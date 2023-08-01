@@ -70,9 +70,9 @@ function Login() {
   }
 
   return (
-    <div className={`bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 h-screen flex justify-center items-center `}>
+    <div className={`bg-gradient-to-r from-pink-500 to-blue-500 h-screen flex justify-center items-center `}>
       <Toaster />
-      <section className="bg-opacity-10 bg-white p-6 text-center w-[600px] shadow-md rounded-xl max-h-fit border-[1px] border-white backdrop-blur-sm animate-background ">
+      <section className="bg-white/5 backdrop-blur-lg p-6 text-center w-[600px] shadow-md rounded-xl max-h-fit border-[1px] border-white animate-background ">
 
         <div className='h-20 w-full flex justify-center mb-5'>
           <img src="/storage/asset/LogoBmc.png" alt="Logo Bmc" className='w-20 h-20 bg-white rounded-[50%]' />

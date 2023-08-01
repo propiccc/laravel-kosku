@@ -15,10 +15,9 @@ class Setting extends Model
         'link_youtube',
         'link_maps',
         'link_facebook',
-        'link_twitter',
         'copyright',
         'logo',
-        'logo_navigasi'
+        'address'
     ];
 
     protected $appends = ['logodir'];

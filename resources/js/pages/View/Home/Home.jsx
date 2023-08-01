@@ -114,12 +114,12 @@ const Divisi = ({ Data }) => {
                     <div className="mx-auto p-10 gap-24 flex justify-center flex-wrap w-full" data-aos="zoom-in-up" data-aos-duration="1000">
                         {Card?.map((item, index) => (
 
-                            <div key={index} className="h-[410px] w-max rounded-lg shadow-xl shadow-gray-500 group/edit ">
-                                <img src={item.imagedir} alt="" className="w-full h-full rounded-lg" />
-                                <div className="flex h-[170px] max-w-[500px] p-2 opacity-0 text-white transition-all duration-500 rounded-lg flex-col overflow-scroll scrollbar-none relative -top-[175px] left-4 group-hover/edit:opacity-100">
-                                    <h1 className="font-semibold text-xl">{item.title}</h1>
-                                    <p>{item.description}</p>
+                            <div className="text-black flex flex-col" key={index}>
+                                <div className="bg-transparent h-60 w-60 rounded-lg hover:scale-105 transition-all duration-300">
+                                    <img className="w-full h-full object-cover rounded-lg" src={item.imagedir} alt="" />
                                 </div>
+                                <span className="text-center font-semibold text-2xl mt-2">{item.title}</span>
+                                <span className="text-center">{item.description}</span>
                             </div>
 
                         ))}
@@ -158,7 +158,6 @@ const About = () => {
     return (
         <>
             <div className="p-10 flex justify-center items-center  bg-[url(https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg)] bg-cover">
-                {/* <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="-z-10 h-[600px] fixed" /> */}
                 <div className="bg-white bg-opacity-5 backdrop-blur-lg p-10 flex justify-center gap-10 h-[570px] rounded-lg">
                     <div className="w-full h-full text-white p-4" data-aos="fade-right" data-aos-duration="1000">
                         <h1 className="font-extrabold text-4xl text-start">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Distinctio, maiores!</h1>
@@ -243,7 +242,9 @@ const Maps = () => {
     )
 }
 
-const Instagram = (url) => {
+const Instagram = ({ Data }) => {
+    const [DataInstagram, setDataInstagram] = useState(typeof Data == 'object' && Object.keys(Data).length != 0 ? Data : null);
+
     return (
         <div className="flex bg-black max-h-fit p-2 justify-center border-2 border-purple-500">
             <div className="w-full p-4 flex flex-col">
@@ -272,41 +273,33 @@ const Instagram = (url) => {
     )
 };
 
-const ProfileCom = () => {
+const ProfileCom = ({ Data }) => {
+    const [DataProfile, setDataProfile] = useState(typeof Data == 'object' && Object.keys(Data).length != 0 ? Data : null);
+
+
     return (
-        <div className="bg-black w-full flex flex-col p-14">
-            <span className="text-white text-4xl text-center font-extrabold ">Greja Kami Dipimpin Oleh Pemimpin Hebat</span>
-            <div className="mt-10 min-h-[400px] flex justify-center flex-wrap gap-x-20 p-5">
-                <div className="text-white flex flex-col">
-                    <div className="bg-transparent h-60 w-60 rounded-lg">
-                        <img className="w-full h-full object-cover rounded-lg" src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" />
-                    </div>
-                    <span className="text-center font-semibold text-2xl mt-2">Lorem, ipsum</span>
-                    <span className="text-center">Lorem, ipsum</span>
+        <>
+            {DataProfile != null ? (<div className="bg-black w-full flex flex-col p-14 justify-center">
+                <span className="text-white text-4xl text-center font-extrabold ">Greja Kami Dipimpin Oleh Pemimpin Hebat</span>
+                <div className="flex justify-center text-center mt-3">
+                    <p className="text-center text-white w-[1200px] font-semibold">Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam odit ad molestias iste quas iure, illum ab quasi commodi voluptatem veritatis earum eum dolore veniam autem corrupti deleniti deserunt impedit quidem suscipit accusamus. Nesciunt omnis laborum qui, expedita vitae sunt, doloribus minima, error cum voluptatibus tempora molestiae libero maxime ullam?</p>
                 </div>
-                <div className="text-white flex flex-col">
-                    <div className="bg-transparent h-60 w-60 rounded-lg">
-                        <img className="w-full h-full object-cover rounded-lg" src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" />
-                    </div>
-                    <span className="text-center font-semibold text-2xl mt-2">Lorem, ipsum</span>
-                    <span className="text-center">Lorem, ipsum</span>
+                <div className="flex justify-center">
+                    <div className="h-[1px] w-4/5 mt-10 bg-white"></div>
                 </div>
-                <div className="text-white flex flex-col">
-                    <div className="bg-transparent h-60 w-60 rounded-lg">
-                        <img className="w-full h-full object-cover rounded-lg" src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" />
-                    </div>
-                    <span className="text-center font-semibold text-2xl mt-2">Lorem, ipsum</span>
-                    <span className="text-center">Lorem, ipsum</span>
+                <div className="mt-10 min-h-[400px] flex justify-center flex-wrap gap-x-20 px-5 py-3">
+                    {DataProfile?.map((item, index) => (
+                        <div className="text-white flex flex-col" key={index}>
+                            <div className="bg-transparent h-60 w-60 rounded-lg hover:scale-105 transition-all duration-300">
+                                <img className="w-full h-full object-cover rounded-lg" src={item.imagedir} alt="" />
+                            </div>
+                            <span className="text-center font-semibold text-2xl mt-2">{item.name}</span>
+                            <span className="text-center">{item.jabatan}</span>
+                        </div>
+                    ))}
                 </div>
-                <div className="text-white flex flex-col">
-                    <div className="bg-transparent h-60 w-60 rounded-lg">
-                        <img className="w-full h-full object-cover rounded-lg" src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" />
-                    </div>
-                    <span className="text-center font-semibold text-2xl mt-2">Lorem, ipsum</span>
-                    <span className="text-center">Lorem, ipsum</span>
-                </div>
-            </div>
-        </div>
+            </div>) : null}
+        </>
     )
 }
 
@@ -361,6 +354,7 @@ function Home() {
         }
         return () => { a = false }
     }, []);
+    console.log(DataResource);
     return (
         <>
             {Block ? (<LoadingPage />) :
@@ -370,9 +364,9 @@ function Home() {
                     <Youtube />
                     <Divisi Data={DataResource.divisi} />
                     <News Data={DataResource.news} />
-                    <About />
+                    <ProfileCom Data={DataResource.leader} />
                     <AboutRevese />
-                    <ProfileCom />
+                    <About />
                     <Maps />
                     <Instagram />
                     <Footer />

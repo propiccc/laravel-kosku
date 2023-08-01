@@ -34,6 +34,7 @@ class SettingController extends Controller
                 'link_maps' => ['nullable', 'string'],
                 'link_facebook' => ['nullable', 'string'],
                 'copyright' => ['nullable', 'string'],
+                'address' => ['nullable', 'string'],
                 'logo' => ['nullable', 'image', 'mimes:jpg,png']
             ]);
             if ($validate->fails()) {
@@ -79,8 +80,9 @@ class SettingController extends Controller
                 'link_youtube' => ['nullable', 'string'],
                 'link_maps' => ['nullable', 'string'],
                 'link_facebook' => ['nullable', 'string'],
-                'link_twitter' => ['nullable', 'string'],
-                'copyright' => ['nullable', 'string']
+                'copyright' => ['nullable', 'string'],
+                'address' => ['nullable', 'string'],
+                'logo' => ['nullable', 'image', 'mimes:jpg,png']
             ]);
 
             if ($validate->fails()) {

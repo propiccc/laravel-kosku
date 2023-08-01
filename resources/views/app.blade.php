@@ -7,6 +7,7 @@
     <title>Betany Miracle Center</title>
     <link href={{ asset('storage/asset/LogoBmc.png') }} rel="icon" class="bg-white" />
     @viteReactRefresh
+    {{-- @vite(['public/build/assets/app-cc5e8bdc.js', 'resources/css/app.css']) --}}
     @vite(['resources/js/app.jsx', 'resources/css/app.css'])
 </head>
 

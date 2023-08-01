@@ -19,8 +19,8 @@ const SettingInadex = lazy(() => import('../pages/System/Setting/Index'));
 const DivisiIndex = lazy(() => import('../pages/System/Divisi/Index'));
 const NewsIndex = lazy(() => import('../pages/System/News/Index'));
 const InstagramIndex = lazy(() => import('../pages/System/Instagram/Index'));
-import Test from './../pages/test';
-
+const JabatanIndex = lazy(() => import('../pages/System/Jabatan/Index'));
+const ContentIndex = lazy(() => import('../pages/System/Content/Index'));
 function Router() {
   return (
     <>
@@ -32,7 +32,6 @@ function Router() {
         </Route>
 
         <Route path="/system" element={<PrivateRoute />}>
-          <Route path='test' element={<Test />} />
           <Route element={<Dashboard />}>
             <Route path='user' element={<UserIndex />} />
             <Route path='slider' element={<SliderIndex />} exact />
@@ -41,6 +40,8 @@ function Router() {
             <Route path='setting' element={<SettingInadex />} exact />
             <Route path='divisi' element={<DivisiIndex />} exact />
             <Route path='instagram' element={<InstagramIndex />} exact />
+            <Route path='jabatan' element={<JabatanIndex />} exact />
+            <Route path='content' element={<ContentIndex />} exact />
           </Route>
         </Route>
       </Routes>

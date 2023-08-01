@@ -19,7 +19,7 @@ function Index() {
   const [type, setType] = useState('create')
   const [toggle, setToggle] = useState(false)
   const [block, setBlock] = useState(true)
-  const [User, setUser] = useState([])
+  const [jabatan, setjabatan] = useState([])
   const [page, setPage] = useState(1)
   const [DataEdit, setDataEdit] = useState([])
   const [Paginate, setPagiante] = useState({
@@ -28,12 +28,25 @@ function Index() {
   })
 
   // * Api Call & Request
+  const Indexjabatan = () => {
+    setBlock(true)
+    axios.post('/api/jabatan', Paginate).then(res => {
+      setjabatan(res.data);
+    }).catch(error => {
+      setjabatan([]);
+    }).finally(
+      setTimeout(() => {
+        setBlock(false)
+      }, 600)
+    )
+  }
+
   const SwitchPage = (url, page) => {
     setBlock(true)
     axios.post(url + page, Paginate).then(res => {
-      setUser(res.data);
+      setjabatan(res.data);
     }).catch(error => {
-      setUser([]);
+      setjabatan([]);
       console.log(error);
     }).finally(
       setTimeout(() => {
@@ -42,9 +55,9 @@ function Index() {
     );
   }
 
-  const GetUser = (uuid) => {
+  const Getjabatan = (uuid) => {
     setToggle(false)
-    var url = `/api/user/${uuid}/edit`
+    var url = `/api/jabatan/${uuid}/edit`
     axios.post(url).then(res => {
       setType('update');
       setDataEdit(res.data.data)
@@ -56,7 +69,7 @@ function Index() {
 
   // * function
   const HandleDelete = (uuid) => {
-    var url = `/api/user/${uuid}/delete`
+    var url = `/api/jabatan/${uuid}/delete`
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -69,10 +82,11 @@ function Index() {
       if (result.isConfirmed) {
         Swal.fire({
           title: 'Please Wait !',
-          html: 'Loading...',// add html attribute if you want or remove
+          html: 'Loading...',
           allowOutsideClick: false,
           showConfirmButton: false
         });
+
         axios.delete(url).then(res => {
           if (res.data.success === true) {
             Swal.fire(
@@ -80,7 +94,9 @@ function Index() {
               'Your file has been deleted.',
               'success'
             )
-            SwitchPage('/api/user?page=', page)
+            setTimeout(() => {
+              SwitchPage('/api/jabatan?page=', page)
+            }, 300);
           }
         }).catch(error => {
           Swal.fire({
@@ -118,77 +134,90 @@ function Index() {
     setDataEdit([]);
     setToggle(false)
     setTimeout(() => {
-      SwitchPage('/api/user?page=', page)
+      SwitchPage('/api/jabatan?page=', page)
     }, 400);
   }
 
   // * Debonce Search && Paginate && Show
   useEffect(() => {
     const debounce = setTimeout(() => {
-      SwitchPage('/api/user?page=', page)
+      SwitchPage('/api/jabatan?page=', page)
     }, 700);
     return () => clearTimeout(debounce)
   }, [Paginate, page])
 
+  useEffect(() => {
+    var a = true
+    // code
+    return () => a = false
+  }, [])
 
   return (
     <>
       <Toaster />
       {toggle ? (<Form cancle={HandleCancel} DataEdit={DataEdit} type={type} close={HandleClose} />) : null}
-      <div className="bg-white rounded-lg p-6 shadow-lg transition-all duration-1000">
+      <div className="bg-white rounded-lg p-6 shadow-lg">
         <div className="flex justify-between items-center">
-          <span className='font-semibold text-xl'>User Data</span>
+          <span className='font-semibold text-xl'>Jabatan Data</span>
           <Add onClick={HandleToggle} />
         </div>
         <div className="h-[2px] w-full bg-gray-300 my-3"></div>
         <div className="flex justify-between items-center mb-4">
           <input type="number" className='p-2 border-[1px] border-gray-400 rounded-md w-[80px] [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none' value={Paginate.tampilkan} onChange={(e) => setPagiante({ ...Paginate, tampilkan: e.target.value })} />
-          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md' placeholder='Search' value={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.target.value })} />
+          <input type="text" className='p-2 border-[1px] border-gray-400 rounded-md cursor-not-allowed' placeholder='Search' value={Paginate.search} onChange={(e) => setPagiante({ ...Paginate, search: e.target.value })} disabled />
         </div>
         <div className="overflow-y-auto">
           <table className='w-full'>
             <thead className='h-10 bg-gray-300 rounded-lg text-start'>
               <tr className='rounded-lg'>
-                <th className='text-start px-2'>No.</th>
-                <th className='text-start'>Name</th>
-                <th className='text-start'>Email</th>
-                <th className='text-start'>Tgl Dibuat</th>
+                <th className='text-start px-2 w-10'>No.</th>
+                <th className='text-center w-60'>Image</th>
+                <th className='text-center w-60'>Nama</th>
+                <th className='text-center w-60'>Jabatan</th>
+                <th className='text-center'>Tgl Dibuat</th>
                 <th className='text-center'>Action</th>
               </tr>
             </thead>
             <tbody className=''>
-              {block ? (<Loading colSpan={5} />) :
-                (User?.data?.map((item, index) => (
+              {block ? (<Loading colSpan={6} />) :
+                (jabatan?.data?.map((item, index) => (
                   <tr className={`${index % 2 ? 'bg-gray-100' : 'bg-white'} h-14 hover:bg-gray-200`} key={item.id}>
-                    <td className='text-start px-2 font-semibold'>{index + User.from}</td>
-                    <td>{item?.name}</td>
-                    <td>{item?.email}</td>
-                    <td>{DateKu(item.created_at)}</td>
+                    <td className='text-center px-2 font-semibold'>{index + jabatan.from}</td>
+                    <td>
+                      <div className="flex h-20">
+                        <a href={item?.imagedir} target="_blank" className="flex h-20 w-full justify-center p-2">
+                          <img src={item?.imagedir} alt="Image" className='rounded-md w-28' />
+                        </a>
+                      </div>
+                    </td>
+
+                    <th className='text-center font-normal'>{item?.name ?? 'nama tidak ada'}</th>
+                    <th className='text-center font-normal'>{item?.jabatan ?? 'jabatan tidak ada'}</th>
+                    <th className='text-center font-normal'>{DateKu(item.created_at)}</th>
                     <td>
                       <div className="flex justify-center gap-x-1">
-                        <Edit onClick={() => { GetUser(item.uuid) }} />
+                        <Edit onClick={() => { Getjabatan(item.uuid) }} />
                         <Delete onClick={() => { HandleDelete(item.uuid) }} />
                       </div>
                     </td>
                   </tr>)
                 ))
               }
-              {User?.data?.length == 0 && !block ? (
+              {jabatan?.data?.length == 0 && !block ? (
                 <tr className='bg-gray-200 h-14'>
-                  <td colSpan={5} className='font-semibold'><span className='ml-1'>Not Found</span></td>
+                  <td colSpan={6} className='font-semibold'><span className='ml-1'>Not Found</span></td>
                 </tr>
               ) : null}
             </tbody>
           </table>
           <div className="flex justify-between mt-2">
-            <span className='font-semibold'>Page {User.current_page ?? null} of {User?.last_page ?? null}</span>
+            <span className='font-semibold'>Page {jabatan.current_page ?? null} of {jabatan?.last_page ?? null}</span>
             <div className="flex">
               {page != 1 ? (
                 <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => HandleSwitchPage('prev')} readOnly><MdNavigateBefore className='text-white' /></button>
               ) : null}
-
               <input disabled type="number" className='h-8 w-8 max-w-fit rounded-md [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none border-black border-[2px] p-1 mx-1 active:scale-10' value={page} />
-              {page != User?.last_page ? (
+              {page != jabatan?.last_page ? (
                 <button className='bg-blue-600 p-1 rounded-md active:scale-95 transition-transform duration-200' onClick={() => HandleSwitchPage('next')}><MdOutlineNavigateNext className='text-white' /></button>
               ) : null}
             </div>

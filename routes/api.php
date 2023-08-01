@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ContentController;
 use App\Http\Controllers\DivisiController;
 use App\Http\Controllers\InstagramController;
+use App\Http\Controllers\JabatanController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\SliderController;
@@ -24,7 +26,6 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/login', [AuthController::class, 'login']);
 Route::prefix('/public')->group(function () {
-    Route::get('/slider', [SliderController::class, 'PublicSlider']);
     Route::post('/home/resource', [PageController::class, 'HomeData']);
 });
 
@@ -54,6 +55,13 @@ Route::middleware('auth')->group(function () {
         Route::post('{uuid}/update', [SliderController::class, 'update']);
         Route::delete('{uuid}/delete', [SliderController::class, 'delete']);
     });
+    Route::prefix('jabatan')->group(function () {
+        Route::post('/', [JabatanController::class, 'index']);
+        Route::post('/store', [JabatanController::class, 'store']);
+        Route::post('{uuid}/edit', [JabatanController::class, 'show']);
+        Route::post('{uuid}/update', [JabatanController::class, 'update']);
+        Route::delete('{uuid}/delete', [JabatanController::class, 'delete']);
+    });
 
     Route::prefix('setting')->group(function () {
         Route::post('/', [SettingController::class, 'index']);
@@ -75,6 +83,13 @@ Route::middleware('auth')->group(function () {
         Route::post('{uuid}/edit', [NewsController::class, 'show']);
         Route::post('{uuid}/update', [NewsController::class, 'update']);
         Route::delete('{uuid}/delete', [NewsController::class, 'delete']);
+    });
+    Route::prefix('content')->group(function () {
+        Route::post('/', [ContentController::class, 'index']);
+        Route::post('/store', [ContentController::class, 'store']);
+        Route::post('{uuid}/edit', [ContentController::class, 'show']);
+        Route::post('{uuid}/update', [ContentController::class, 'update']);
+        Route::delete('{uuid}/delete', [ContentController::class, 'delete']);
     });
     Route::prefix('instagram')->group(function () {
         Route::post('/', [InstagramController::class, 'index']);
