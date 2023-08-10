@@ -1,9 +1,9 @@
 import React, { useEffect, useState, Suspense } from 'react'
-import { FaRegSun, FaUserAlt } from 'react-icons/fa'
-import { BsImages, BsInstagram } from 'react-icons/bs'
-import { TbBinaryTree } from 'react-icons/tb'
-import { HiUserGroup } from 'react-icons/hi'
-import { BiNews } from 'react-icons/bi'
+import { FaRegSun, FaUserAlt, FaUsers } from 'react-icons/fa'
+import { BsImages, BsInstagram, BsFillDiagram3Fill } from 'react-icons/bs'
+import { BiNews, BiNotepad } from 'react-icons/bi'
+import { GiHamburgerMenu} from 'react-icons/gi'
+
 import Menu from './../Components/Menu';
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom';
 import axios from 'axios'
@@ -12,6 +12,7 @@ function Dashboard({ children, className }) {
   // * settup
   const navigate = useNavigate()
   const [Time, setTime] = useState(null)
+  const [toggle, setToggle] = useState(true)
 
   // * Api Call
   const HandleLogout = () => {
@@ -65,18 +66,19 @@ function Dashboard({ children, className }) {
       </div>
       {/* Navabr end */}
       <div className="flex w-full bg-gray-300 h-screen flex-col lg:flex-row" >
-        <div className="bg-[#00092b] w-full lg:w-80 flex flex-col overflow-auto">
+        <div className={`bg-[#00092b] ${toggle ? 'w-80' : 'w-16'} flex flex-col overflow-auto transition-all duration-300`}>
+        <div className={`flex p-4  ${toggle ? 'justify-end' : 'justify-center'} transition-all duration-300`}>
+          <GiHamburgerMenu className='scale-125 text-white cursor-pointer' onClick={() => {setToggle(e => !e)}}/>
+          </div>
           <div className="h-full overflow-y-auto p-2 py-1 scrollbar-none max-h-fit bg-[#00092b]">
-            <Menu href='/system/user' name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/divisi' name="Divisi" icon={<HiUserGroup className={`w-[27px] h-[37px] ${"/system/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/news' name="News" icon={<BiNews className={`w-[27px] h-[37px] ${"/system/news" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/news" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/visimisi' name="Visi Misi" icon={<TbBinaryTree className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/visimisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/slider' name="Slider" icon={<BsImages className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/setting' name="Setting" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/instagram' name="Instagram" icon={<BsInstagram className={`w-[27px] h-[37px] ${"/system/instagram" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/instagram" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/jabatan' name="jabatan" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/jabatan" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/jabatan" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            <Menu href='/system/content' name="content" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/content" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/content" == window.location.pathname ? 'text-black' : "text-white"}`} />
-            {/* <Menu href='/system/test' name="Test" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/test" == window.location.pathname ? 'text-black' : "text-white"}`} /> */}
+            <Menu toggle={toggle} href='/system/user' name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu toggle={toggle} href='/system/slider' name="Slider" icon={<BsImages className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/slider" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu toggle={toggle} href='/system/divisi' name="Divisi" icon={<BsFillDiagram3Fill className={`w-[27px] h-[37px] ${"/system/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/divisi" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu toggle={toggle} href='/system/news' name="News" icon={<BiNews className={`w-[27px] h-[37px] ${"/system/news" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/news" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu toggle={toggle} href='/system/content' name="content" icon={<BiNotepad className={`w-[27px] h-[37px] ${"/system/content" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/content" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu toggle={toggle} href='/system/jabatan' name="Jabatan" icon={<FaUsers className={`w-[27px] h-[37px] ${"/system/jabatan" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/jabatan" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu toggle={toggle} href='/system/instagram' name="Instagram" icon={<BsInstagram className={`w-[27px] h-[37px] ${"/system/instagram" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/instagram" == window.location.pathname ? 'text-black' : "text-white"}`} />
+            <Menu toggle={toggle} href='/system/setting' name="Setting" icon={<FaRegSun className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />} className={`w-[27px] h-[37px] ${"/system/setting" == window.location.pathname ? 'text-black' : "text-white"}`} />
           </div>
         </div>
         <div className="w-full overflow-y-auto scrollbar-none">
