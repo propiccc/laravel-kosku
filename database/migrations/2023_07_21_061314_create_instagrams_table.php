@@ -13,8 +13,8 @@ return new class extends Migration {
         Schema::create('instagrams', function (Blueprint $table) {
             $table->id();
             $table->uuid()->unique();
-            $table->bigInteger('post_id');
-            $table->text('post_url');
+            $table->string('post_id');
+            $table->text('media_url');
             $table->string('username');
             $table->boolean('active')->default(false);
             $table->timestamps();

@@ -31,8 +31,8 @@ class InstagramController extends Controller
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'post_id' => ['required', 'integer'],
-                'post_url' => ['required', 'string'],
+                'id' => ['required', 'integer'],
+                'media_url' => ['required', 'string'],
                 'username' => ['required', 'string'],
             ]);
             if ($validate->fails()) {
@@ -43,10 +43,9 @@ class InstagramController extends Controller
                 }
                 return RestApi::error($message, 400);
             }
-
             $data = Instagram::create([
-                'post_id' => $request->post_id,
-                'post_url' => $request->post_url,
+                'post_id' => $request->id,
+                'media_url' => $request->media_url,
                 'username' => $request->username
             ]);
 
@@ -105,6 +104,24 @@ class InstagramController extends Controller
                 return RestApi::success(['Data Successfully Update'], 200);
             } else {
                 return RestApi::error(['Data Failed To Update'], 400);
+            }
+        } else {
+            return RestApi::error(['Bad Request!'], 400);
+        }
+    }
+
+    public function status($uuid){
+        
+        if (request()->wantsJson()) {
+
+            $Instagram = Instagram::where('uuid', $uuid)->first();
+            if (!isset($Instagram)) {
+                return RestApi::error(['Data Not Found!'], 404);
+            }
+            $Instagram->active = !$Instagram->active;
+            $Instagram->save();
+            if ($Instagram) {
+                return RestApi::success(['Data Successfully Updatet'], 200);
             }
         } else {
             return RestApi::error(['Bad Request!'], 400);

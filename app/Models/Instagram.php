@@ -10,7 +10,7 @@ class Instagram extends Model
 {
     use HasFactory, Uuid;
 
-    protected $fillable = ['post_id', ' ', 'username', 'active'];
+    protected $fillable = ['post_id','media_url', 'username', 'active'];
 
 
 

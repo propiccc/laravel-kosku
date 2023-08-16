@@ -41,21 +41,9 @@ function Index() {
     );
   }
 
-  const GetDivisi = (uuid) => {
-    setToggle(false)
-    var url = `/api/instagram/${uuid}/edit`
-    axios.post(url).then(res => {
-      setType('update');
-      setDataEdit(res.data.data)
-      setToggle(true)
-    }).catch(error => {
-      toast.error(error.response.data.message);
-    })
-  }
-
   // * function 
   const HandleDelete = (uuid) => {
-    var url = `/api/divisi/${uuid}/delete`
+    var url = `/api/instagram/${uuid}/delete`
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -79,7 +67,7 @@ function Index() {
               'Your file has been deleted.',
               'success'
             )
-            SwitchPage('/api/divisi?page=', page)
+            SwitchPage('/api/instagram?page=', page)
           }
         }).catch(error => {
           Swal.fire({
@@ -91,6 +79,41 @@ function Index() {
       }
     })
   }
+
+  const HandleChangeStatus = (uuid) => {
+    var url =  `/api/instagram/${uuid}/status`;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to Delete this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+          axios.post(url).then(res => {
+              Swal.fire({
+                  icon:'success',
+                  title: 'Success',
+                  text: 'Data Success Fully Created'
+                });
+                setTimeout(() => {
+                  SwitchPage('/api/instagram?page=', page);
+                }, 500);
+          }).catch(err => {
+              console.log(err);
+              var ResError = {
+                  icon: 'error',
+                  title: 'Oops...',
+                  text:  err.response.data.message
+              }
+              Swal.fire(ResError);
+          })
+      }
+    })
+      
+  };
 
   const HandleSwitchPage = (type) => {
     switch (type) {
@@ -129,10 +152,10 @@ function Index() {
   return (
     <>
       <Toaster />
-      {toggle ? (<InstagramComponets cancle={HandleCancel} DataEdit={DataEdit} type={type} close={HandleClose} />) : null}
+      {toggle ? (<InstagramComponets cancle={HandleCancel} DataEdit={DataEdit} type={type} close={HandleClose} HandleSwitchPage={ () => SwitchPage('/api/instagram?page=', page)}/>) : null}
       <div className="bg-white rounded-lg p-6 shadow-lg">
         <div className="flex justify-between items-center">
-          <span className='font-semibold text-xl'>Divisi Data</span>
+          <span className='font-semibold text-xl'>Instagram Data</span>
           <Add onClick={HandleToggle} />
         </div>
         <div className="h-[2px] w-full bg-gray-300 my-3"></div>
@@ -159,21 +182,21 @@ function Index() {
                     {/* <td>{item?.imagedir}</td> */}
                     <td>
                       <div className="flex h-20">
-                        <a href={item?.post_url} target="_blank" className="flex h-20 w-full justify-center p-2">
-                          <img src={item?.post_url} alt="Image" className='rounded-md w-28' loading='lazy' />
+                        <a href={item?.media_url} target="_blank" className="flex h-20 w-full justify-center p-2">
+                          <img src={item?.media_url} alt="Image" className='rounded-md w-28' loading='lazy' />
                         </a>
                       </div>
                     </td>
 
                     <th className='text-center'>{item.username}</th>
                     <th className='text-center'>{item.active ? (
-                      <span className='bg-green-300 text-green-500  rounded-lg px-3 p-1 text-sm'>Active</span>
+                      <span className='bg-green-300 text-green-700 rounded-lg px-3 p-1 text-sm'>Active</span>
                     ) : (<span className='bg-red-300 text-red-500 rounded-lg px-3 p-1 text-sm'>Disable</span>
                     )}</th>
                     <td>
                       <div className="flex justify-center gap-x-1">
-                        {item.active ? (<button className='p-2 bg-red-500 text-white rounded-lg font-semibold active:scale-95 transition-all duration-300'>Disable</button>) : (<button className='p-2 bg-green-500 text-white rounded-lg font-semibold active:scale-95 duration-300'>Actived</button>)}
-                        <Delete onClick={() => { HandleDelete() }} />
+                        {item.active ? (<button onClick={() => HandleChangeStatus(item.uuid)} className='p-2 bg-red-500 text-white rounded-lg font-semibold active:scale-95 transition-all duration-300'>Disable</button>) : (<button onClick={() => HandleChangeStatus(item.uuid)} className='p-2 bg-green-500 text-white rounded-lg font-semibold active:scale-95 duration-300'>Actived</button>)}
+                        <Delete onClick={() => { HandleDelete(item.uuid) }} />
                       </div>
                     </td>
                   </tr>)

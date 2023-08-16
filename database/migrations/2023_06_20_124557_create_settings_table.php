@@ -13,10 +13,10 @@ return new class extends Migration {
             $table->string('logo');
             $table->string('no_telp')->nullable();
             $table->string('link_youtube')->nullable();
+            $table->string('link_google_maps');
             $table->text('link_maps')->nullable();
             $table->string('link_facebook')->nullable();
             $table->text('address')->nullable();
-            $table->string('copyright')->nullable();
             $table->timestamps();
         });
     }

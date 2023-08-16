@@ -93,6 +93,8 @@ Route::middleware('auth')->group(function () {
     });
     Route::prefix('instagram')->group(function () {
         Route::post('/', [InstagramController::class, 'index']);
+    Route::post('{uuid}/status', [InstagramController::class, 'status']);
+
         Route::post('/store', [InstagramController::class, 'store']);
         Route::post('{uuid}/edit', [InstagramController::class, 'show']);
         Route::post('{uuid}/update', [InstagramController::class, 'update']);

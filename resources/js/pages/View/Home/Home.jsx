@@ -1,27 +1,22 @@
 import React, { useState, useEffect, useContext } from "react";
 import Navbar from "../Navbar/Index";
-import {
-    BsFillTelephoneFill,
-    BsYoutube,
-    BsTwitter,
-    BsInstagram,
-} from "react-icons/bs";
 import "./Style.css";
 import "@splidejs/react-splide/css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
-// * components 
+// * components
 import Slider from "../HomeComponents/Slider";
 import News from "../HomeComponents/News";
 import Divisi from "../HomeComponents/Divisi";
 import LoadingPage from "../../../Components/LoadingPage";
 import Youtube from "../HomeComponents/Youtube";
-import Maps from "../HomeComponents/Maps"
-import Instagram from "../HomeComponents/Instagram"
-import Content from "../HomeComponents/Content"
-import Leader from "../HomeComponents/Leader"
-import Footer from "../HomeComponents/Footer"
+import Maps from "../HomeComponents/Maps";
+import Instagram from "../HomeComponents/Instagram";
+import Content from "../HomeComponents/Content";
+import Leader from "../HomeComponents/Leader";
+import Footer from "../HomeComponents/Footer";
+
 function Home() {
     // * setup
     const [DataResource, setDataResource] = useState([]);
@@ -52,7 +47,6 @@ function Home() {
             a = false;
         };
     }, []);
-    console.log(DataResource);
     return (
         <>
             {Block ? (

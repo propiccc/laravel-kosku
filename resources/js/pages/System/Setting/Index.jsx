@@ -6,6 +6,7 @@ import { Toaster, toast } from 'react-hot-toast';
 import Create from './../../../Components/Button/Create';
 import Swal from 'sweetalert2';
 import ImageUpload from './../../../Components/ImageUpload';
+import axios from 'axios';
 
 
 
@@ -140,7 +141,7 @@ function Index() {
     }
     return () => { a = false }
   }, [])
-
+  console.log(Logo);
   return (
     <>
       <Toaster />
@@ -183,7 +184,6 @@ function Index() {
           </div>
           <div className="flex gap-x-2">
             <ImageUpload name="Logo Bmc" setFiles={setLogo} files={Logo} />
-            <ImageUpload name="Logo Navigationbar" />
           </div>
         </>)}
         <div className="h-[2px] w-full bg-gray-300 my-5"></div>
@@ -205,7 +205,4 @@ function Index() {
 }
 
 export default Index
-
-
-
 
