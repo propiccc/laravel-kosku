@@ -1,11 +1,13 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import AOS from "aos";
+import "aos/dist/aos.css";  
 
 const About = () => {
     return (
         <>
-            <div className="p-10 flex justify-center items-center bg-[url(https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg)] bg-cover">
-                {/* <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="-z-10 h-[600px] fixed" /> */}
-                <div className="bg-white bg-opacity-5 backdrop-blur-lg p-10 flex justify-between gap-10 min-h-[570px] rounded-lg">
+            <div className="p-10 flex justify-center items-center bg-transparent bg-cover">
+                <img src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg" alt="" className="-z-10 h-[600px] absolute w-full object-cover" />
+                <div className="bg-white w-full bg-opacity-5 backdrop-blur-lg p-10 flex lg:flex-col xl:flex-row justify-between gap-10 min-h-[570px] rounded-lg">
                     <div
                         className="w-full h-full text-white p-4"
                         data-aos="fade-right"
@@ -18,7 +20,7 @@ const About = () => {
                         <div className="flex justify-start">
                             <div className="bg-white/40 backdrop-blur-xl h-[4px] w-[1000px] mt-6"></div>
                         </div>
-                        <p className="text-start text-lg mt-4">
+                        <p className="text-start text-lg mt-4 max-w-[1000px]">
                             Lorem ipsum dolor sit amet consectetur adipisicing
                             elit. Odio architecto veniam, soluta minima officiis
                             ut nesciunt! Quaerat reiciendis vero esse officia ab
@@ -38,11 +40,11 @@ const About = () => {
                         </p>
                     </div>
 
-                    <div className="bg-black w-1/2 h-full rounded-lg p-2 hover:p-0 transition-all duration-500 ">
+                    <div className="bg-transparent w-1/2 rounded-lg p-1 hidden lg:flex">
                         <img
                             src="https://www.freecodecamp.org/news/content/images/2022/09/jonatan-pie-3l3RwQdHRHg-unsplash.jpg"
                             alt=""
-                            className="w-full h-full rounded-lg"
+                            className="h-full rounded-lg"
                         />
                     </div>
                 </div>
@@ -101,10 +103,16 @@ const AboutRevese = () => {
 };
 
 function Content() {
+    useEffect(() => {
+        var a = true
+        if(a){
+            AOS.init();
+        }
+        return () => a = false
+    },[])
   return (
     <>
     <About />
-    <AboutRevese />
     </>
   )
 }

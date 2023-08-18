@@ -1,6 +1,8 @@
 import React, { lazy, Suspense } from 'react'
 import { Routes, Route } from 'react-router-dom'
 
+// ? Test Component
+import Test from '../pages/View/HomeComponents/Content'
 
 // ? components
 import Dashboard from '../Layouts/Dashboard'
@@ -9,7 +11,6 @@ import NotFound from '../pages/Auth/NotFound';
 import PrivateRoute from '../util/PrivateRoute';
 import Guest from '../util/Guest';
 import Home from '../pages/View/Home/Home'
-import LoadingPage from '../Components/LoadingPage';
 
 // ? lazy component
 const UserIndex = lazy(() => import('../pages/System/User/Index'));
@@ -27,6 +28,7 @@ function Router() {
       <Routes>
         <Route path='/*' element={<NotFound />} />
         <Route path='/' element={<Home />} />
+        <Route path='/test' element={<Test />} />
         <Route element={<Guest />}>
           <Route path='/@System@bmc' element={<Login />} />
         </Route>
