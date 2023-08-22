@@ -1,22 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import Navbar from "../Navbar/Index";
 import "./Style.css";
 import "@splidejs/react-splide/css";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import axios from "axios";
 // * components
-import Slider from "../HomeComponents/Slider";
-import News from "../HomeComponents/News";
-import Divisi from "../HomeComponents/Divisi";
+import Navbar from "../Navbar/Index";
 import LoadingPage from "../../../Components/LoadingPage";
-import Youtube from "../HomeComponents/Youtube";
-import Maps from "../HomeComponents/Maps";
-import Instagram from "../HomeComponents/Instagram";
-import Content from "../HomeComponents/Content";
-import Leader from "../HomeComponents/Leader";
-import Footer from "../HomeComponents/Footer";
-
 function Home() {
     // * setup
     const [DataResource, setDataResource] = useState([]);
@@ -54,15 +44,7 @@ function Home() {
             ) : (
                 <>
                     <Navbar />
-                    <Slider Data={DataResource.slider} />
-                    <Youtube />
-                    <Divisi Data={DataResource.divisi} />
-                    <News Data={DataResource.news} />
-                    <Leader Data={DataResource.leader} />
-                    <Content />
-                    <Maps />
-                    <Instagram />
-                    <Footer />
+                    <div className="bg-black text-white">Hello World</div>
                 </>
             )}
         </>
