@@ -1,7 +1,8 @@
 import React from "react";
 import { useState } from "react";
+import { NavLink } from "react-router-dom";
 
-function Index({ auth }) {
+function Index({ Auth, Role }) {
     const [open, setOpen] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
     const [Menu, setMenu] = useState([
@@ -22,15 +23,20 @@ function Index({ auth }) {
                 </span>
             </div>
             <div className="flex p-1 gap-x-3 mr-3 items-center">
-                <div className="font-semibold hover:text-blue-800 cursor-pointer text-lg">
+                <NavLink to="/" className="font-semibold hover:text-blue-800 cursor-pointer text-lg">
                     Home
-                </div>
-                <div className="font-semibold hover:text-blue-800 cursor-pointer text-lg">
-                    Login
-                </div>
-                <div className="font-semibold hover:text-blue-800 cursor-pointer text-lg">
-                    Contact
-                </div>
+                </NavLink>
+               
+                
+                {!Auth ? (
+                    <NavLink to={'/login'}  className="font-semibold hover:text-blue-800 cursor-pointer text-lg">
+                        Login
+                    </NavLink >
+                ) : (
+                    <NavLink to={Role == 'user' ? '/dashboard/property' : '/system/user'} className="font-semibold hover:text-blue-800 cursor-pointer text-lg">
+                        Dashboard
+                    </NavLink>
+                )}
             </div>
         </div>
     );

@@ -48,12 +48,8 @@ class AuthController extends Controller
     public function CheckUser()
     {
         if (request()->wantsJson()) {
-            // if (Auth::check()) {
-            //     return response(['auth' => true], 200);
-            // } else {
-            //     return response(['auth' => false], 200);
-            // }
-            return response()->json(['auth' => Auth::check()]);
+          
+            return response()->json(['auth' => Auth::check(), 'user' => Auth::user()]);
         } else {
 
         }
@@ -70,6 +66,30 @@ class AuthController extends Controller
             } else {
                 return response()->json(['auth' => 'Failde To Logout!!', 'success' => false], 400);
             }
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
+        }
+    }  
+    public function register(Request $request){
+        if (request()->wantsJson()) {
+            $validate = Validator::make($request->all(), [
+                'username' => ['required', 'min:2'],
+                'email' => ['required', 'email'],
+                'password' => ['required', 'min:4', 'confirmed'],
+            ]);
+            
+            if ($validate->fails()) {
+                $message = [];
+                $errors = $validate->errors();
+                foreach ($errors->messages() as $err) {
+                    $message[] = $err[0];
+                }
+                return RestApi::error($message, 400);
+            }
+            
+
+
+
         } else {
             return response()->json(['message' => 'bad request!'], 401);
         }

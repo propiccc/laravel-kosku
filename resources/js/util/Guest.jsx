@@ -29,9 +29,9 @@ function Guest() {
       <span className='text-2xl font-semibold'>Loading...</span>
     </div>)
   }
-
-  if (authenticated) {
-    return <Navigate to="/system/user" />;
+  console.log(authenticated);
+  if (authenticated.auth) {
+    return <Navigate to="/system/user"/>;
   } else {
     return <Outlet />;
   }

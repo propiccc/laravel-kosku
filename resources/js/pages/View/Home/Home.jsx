@@ -19,6 +19,7 @@ function Home() {
     // * setup
     const [DataResource, setDataResource] = useState([]);
     const [Block, setBlock] = useState(true);
+    const [Auth, setAuth] = useState(false);
 
     // * Api Call
     const getDataResource = () => {
@@ -34,12 +35,23 @@ function Home() {
             });
     };
 
+    const CheckAuth  = () => {
+        var url = '/api/check'
+        setBlock(true);
+        axios.post(url).then(res => {
+            setAuth(res.data);
+        }).finally(() => {a
+            setBlock(false);
+        })
+    }
+
     // * effect
     useEffect(() => {
         var a = true;
         if (a) {
             AOS.init();
             getDataResource();
+            CheckAuth();
         }
         return () => {
             a = false;
@@ -47,12 +59,13 @@ function Home() {
     }, []);
     return (
         <>
-            <Navbar />
+        
+            <Navbar Auth={Auth.auth} Role={Auth?.user?.role} />
             <SerachCOm />
             <div className="bg-white text-white h-screen flex flex-col justify-center p-2">
                 <div className="my-4">
                     <div className="w-full text-black text-4xl text-center font-extrabold">
-                        Cari Kosmu Disini
+                        Cari Kosmu Disini {Auth.auth ? 'true' : 'false'}
                     </div>
                     <div className="w-full h-[4px] flex justify-center mt-3">
                         <div className="h-[2px] w-[1200px] bg-black"></div>

@@ -10,8 +10,7 @@ import axios from "axios";
 function ResPonsiveMenu({ toggle, setToggle }) {
     return (
         <div
-            className={`bg-[#000000] absolute w-full z-20 flex flex-col overflow-auto transition-all duration-300`}
-        >
+            className={`bg-[#000000] absolute w-full z-20 flex flex-col overflow-auto transition-all duration-300`}>
             <div className="h-full overflow-y-auto p-2 py-1 scrollbar-none flex flex-col lg:hidden  max-h-fit bg-[#000000]">
             <Menu toggle={toggle} href="/system/user"name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname? "text-black": "text-white"}`} />
             <Menu toggle={toggle} href="/system/pemilik"name="pemilik" icon={<FaUsers className={`w-[27px] h-[37px] ${"/system/pemilik" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/pemilik" == window.location.pathname? "text-black": "text-white"}`} />
@@ -20,7 +19,7 @@ function ResPonsiveMenu({ toggle, setToggle }) {
     );
 }
 
-function Dashboard({ children, className }) {
+function Dashboard({className }) {
     // * settup
     const navigate = useNavigate();
     const [Time, setTime] = useState(null);

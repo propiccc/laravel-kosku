@@ -2,7 +2,7 @@ import React, { useEffect, Suspense, useState, useContext } from 'react'
 import { Navigate, Outlet, redirect, useNavigate } from 'react-router-dom'
 import axios from 'axios';
 
-function PrivateRoute() {
+const PrivateRoute = ({ Acc }) => {
   const [authenticated, setAuthenticated] = useState({});
   const [loading, setLoading] = useState(true);
   const Redirec = useNavigate()
@@ -25,12 +25,10 @@ function PrivateRoute() {
       <span className='text-2xl font-semibold'>Loading...</span>
     </div>)
   }
-
-  if (authenticated.auth == true && authenticated.auth != false && authenticated.user.role === 'admin'  && !loading) {
+  
+  if (authenticated.auth == true && authenticated.auth != false && authenticated.user.role === Acc && !loading) {
     return <Outlet />
-  }  else if(authenticated.auth == true && authenticated.auth != false && authenticated.user.role === 'user'  && !loading){
-    return Redirec('/');
-    }  else  {
+  }  else  {
     return Redirec('/');
   }
 
