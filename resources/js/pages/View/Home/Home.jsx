@@ -8,10 +8,10 @@ import axios from "axios";
 import Navbar from "../Navbar/Index";
 import LoadingPage from "../../../Components/LoadingPage";
 
-function SerachCOm() {
+function SerachCom() {
     return (
-        <div className={`h-[300px] bg-blue-400 flex justify-center`}>
-            <div className="bg-red-500 w-[1200px]"></div>
+        <div className={`h-[300px] bg-white-400 flex justify-center mt-4`}>
+            <div className=" w-[1200px]"><img src="https://png.pngtree.com/png-vector/20230531/ourlarge/pngtree-houses-coloring-pages-and-city-coloring-sheet-for-kids-vector-png-image_6780150.png" alt="Vector" className="w-full h-full object-cover"/></div>
         </div>
     );
 }
@@ -40,7 +40,7 @@ function Home() {
         setBlock(true);
         axios.post(url).then(res => {
             setAuth(res.data);
-        }).finally(() => {a
+        }).finally(() => {
             setBlock(false);
         })
     }
@@ -61,11 +61,11 @@ function Home() {
         <>
         
             <Navbar Auth={Auth.auth} Role={Auth?.user?.role} />
-            <SerachCOm />
+            <SerachCom />
             <div className="bg-white text-white h-screen flex flex-col justify-center p-2">
                 <div className="my-4">
                     <div className="w-full text-black text-4xl text-center font-extrabold">
-                        Cari Kosmu Disini {Auth.auth ? 'true' : 'false'}
+                        Cari Kosmu Disini
                     </div>
                     <div className="w-full h-[4px] flex justify-center mt-3">
                         <div className="h-[2px] w-[1200px] bg-black"></div>

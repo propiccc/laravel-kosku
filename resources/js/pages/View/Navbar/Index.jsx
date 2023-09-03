@@ -1,10 +1,12 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
 function Index({ Auth, Role }) {
+    // * Data
     const [open, setOpen] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
+
     const [Menu, setMenu] = useState([
         { name: "Home", link: "#" },
         { name: "Divisi", link: "#divisi" },
@@ -12,8 +14,21 @@ function Index({ Auth, Role }) {
         { name: "Contact", link: "/" },
     ]);
 
+    // * Function
+    const handleScroll = () => {
+        const position = window.pageYOffset;
+        setScrollPosition(position);
+    };
+    
+    useEffect(() => {
+        window.addEventListener('scroll', handleScroll, { passive: true });
+    
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
     return (
-        <div className="bg-gray-100 flex">
+        <div className={`${scrollPosition > 300 ? 'bg-transparent' : 'bg-gray-100'} flex ${scrollPosition > 30 ? 'sticky top-0 transition-all duration-500' : null} `}>
             <div className="text-black flex items-center w-full justify-between">
                 <span className="font-semibold text-4xl text-balck py-5 px-20 ">
                     KOS

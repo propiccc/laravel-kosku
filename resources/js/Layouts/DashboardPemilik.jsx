@@ -1,6 +1,7 @@
 import React, { Suspense } from 'react'
 import PemilikNav from '../pages/View/Navbar/PemilikNav'
 import { Outlet } from 'react-router-dom'
+import './Scroll.css'
 function Loading() {
   return (
       <>
@@ -14,11 +15,11 @@ function DashboardPemilik() {
   return (
     <>
     <PemilikNav />
-    <div className="w-full">
-    <Suspense fallback={<Loading />}>
-        <Outlet />
-    </Suspense>
-    </div>
+        <div className="w-full bg-white  p-10 h-[calc(100vh-72px)] overflow-scroll scrollbar-none">
+            <Suspense fallback={<Loading />}>
+                <Outlet />
+            </Suspense>
+        </div>
     </>
     )
 }

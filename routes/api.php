@@ -1,16 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\ContentController;
-use App\Http\Controllers\DivisiController;
-use App\Http\Controllers\InstagramController;
-use App\Http\Controllers\JabatanController;
-use App\Http\Controllers\NewsController;
-use App\Http\Controllers\PageController;
-use App\Http\Controllers\SliderController;
+
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\VisiMisiController;
-use App\Http\Controllers\SettingController;
+use App\Http\Controllers\PropertyController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -37,5 +30,13 @@ Route::middleware('auth')->group(function () {
         Route::post('{uuid}/edit', [UserController::class, 'show']);
         Route::post('{uuid}/update', [UserController::class, 'update']);
         Route::delete('{uuid}/delete', [UserController::class, 'delete']);
+    });
+    
+    Route::prefix('property')->group(function () {
+        Route::post('/', [PropertyController::class, 'index']);
+    Route::post('/store', [PropertyController::class, 'store']);
+        Route::post('{uuid}/edit', [PropertyController::class, 'show']);
+        Route::post('{uuid}/update', [PropertyController::class, 'update']);
+        Route::delete('{uuid}/delete', [PropertyController::class, 'delete']);
     });
 });

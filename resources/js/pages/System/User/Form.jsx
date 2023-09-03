@@ -11,7 +11,7 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
   const [Data, setData] = useState({
     name: edit?.name ?? "",
     email: edit?.email ?? "",
-    password: edit?.password ?? "",
+    password: edit?.password ?? "",   
   })
 
 
@@ -29,7 +29,7 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
     if (type == 'update') {
       url = `/api/user/${edit?.uuid}/update`
     }
-
+    
     axios.post(url, Data).then(res => {
       if (res.data.success === true) {
         toast.success(res.data.data);

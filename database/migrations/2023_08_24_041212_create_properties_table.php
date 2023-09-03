@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('color');
             $table->integer('panjang');
             $table->integer('lebar');
             $table->enum('khusus', ['Putra', 'Putri', 'Campur'])->default('Campur');
