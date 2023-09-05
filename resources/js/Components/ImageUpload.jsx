@@ -8,19 +8,19 @@ import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 registerPlugin(FilePondPluginImageExifOrientation, FilePondPluginImagePreview)
 
 
-function ImageUpload({ className, name = 'Image', files, setFiles }) {
+function ImageUpload({ name = 'Image', files, setFiles }) {
   const [Image, setImage] = useState();
   useEffect(() => {
     if (typeof files != 'string') {
       setImage(files)
     }
-  }, [files, Image])
+  }, [files, Image]);
 
   return (
     <div className='w-full'>
       <label className='font-semibold'>{name} : <span className='text-red-600 font-semibold'>*</span></label>
       <FilePond
-        files={files}
+        files={Image}
         onupdatefiles={setFiles}
         allowMultiple={false}
         name="files"

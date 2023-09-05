@@ -3,15 +3,14 @@ import  Cancel  from '../../../Components/Button/Cancel'
 import axios from 'axios';
 import  MultyImageUpload  from '../../../Components/MultyImageUpload'
 import CurrencyInput from 'react-currency-input-field';
-import { stringify } from 'postcss';
+import { toast, Toaster } from 'react-hot-toast';
 
-function Form({ Close, DataEdit }) {
+
+function Form({ Close, DataEdit, GetProperty }) {
     
 // * Data
     const [edit, setEdit] = useState(DataEdit);
-    const [Images, setImages] = useState([
-      
-    ]);
+    const [ImageFile, setImageFile] = useState([]);
     const [DataForm, setDataForm] = useState({
       lebar: edit?.lebar ?? "", 
       panjang: edit?.panjang ?? "", 
@@ -20,7 +19,6 @@ function Form({ Close, DataEdit }) {
       description: edit?.description ?? "",
       lokasi: edit?.lokasi ?? "",
     });
-    console.log(DataForm);
 
   // * Function 
   const HandleChange = (e) => {
@@ -32,42 +30,61 @@ function Form({ Close, DataEdit }) {
     }))
   }
 
-
+ 
   const HandleSubmit = (e) => {
       e.preventDefault();
         var url = '/api/property/store'
         // if (type == 'update') {
         //   url = `/api/property/${edit?.uuid}/update`
-      if(Object.keys(Images).length != 0){
-        const ImageFormat = Images.map((item) => ({
-            filename: item.file.name,
-            data: item.getFileEncodeBase64String()
-        }));
 
-        setDataForm( e => ({ ...e, image: ImageFormat}))
+        const headers = {
+          'Content-Type': 'multipart/form-data',
+        };
+    
+
+      const formData = new FormData();
+      if (typeof ImageFile == 'object' && ImageFile?.file?.name != 'blob') {
+        
+        formData.append('harga', DataForm.harga)
+        formData.append('panjang', DataForm.panjang)
+        formData.append('lebar', DataForm.lebar)
+        formData.append('khusus', DataForm.khusus)
+        formData.append('description', DataForm.description)
+        formData.append('lokasi', DataForm.lokasi)
+
+        for (let index = 0; index < ImageFile.length; index++) {
+          formData.append('images[]', ImageFile[index]?.file)
+        }
       }
-
-      
-        axios.post(url, DataForm ).then(res => {
+  
+      axios.post(url, formData, { headers }).then(res => {
           if (res.data.success === true) {
             toast.success(res.data.data);
             setTimeout(() => {
-              close()
-            }, 300);
+              GetProperty();
+              Close();
+            }, 700);
+          }
+        }).catch(err => {
+          if (err.response.data.message != null) {
+            toast.error(err.response.data.message)
+          } else {
+            err.response.data.data.forEach(el => {
+              toast.error(el)
+            });
           }
         })
   }
-  
-      console.log(Object.keys(Images).length);
   return (
     <>
+    <Toaster />
     <div className='bg-gray-500 border-t-[3px] border-b-[2px] border-gray-500 font-semibold rounded-t-lg py-2 px-6 flex justify-between items-center text-white'>
         Add Property
         <Cancel onClick={() => Close()} />
     </div>
     <div className='bg-gray-800 border-b-[3px] border-gray-300 rounded-b-lg p-6'> 
         <div className="bg-full flex p-4 text-white">
-            <MultyImageUpload setFiles={setImages} files={Images} />
+            <MultyImageUpload setFiles={setImageFile} files={ImageFile} />
         </div>
 
         <form method='POST' onSubmit={HandleSubmit} className='bg-full flex flex-wrap gap-2 w-full p-4 text-white'>
@@ -88,22 +105,22 @@ function Form({ Close, DataEdit }) {
                     />
                 </div>
                 <div className="flex flex-col w-[calc(50%-10px)]">
-                    <label htmlFor="mation" className='font-semibold'>Lokasi : <span className='text-red-600 font-semibold'>*</span></label>
-                    <input id='test' type="text" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black'  name='lokasi' value={DataForm.lokasi} onChange={HandleChange} placeholder='Input the Location' autoComplete='off' required/>
+                    <label htmlFor="location" className='font-semibold'>Lokasi : <span className='text-red-600 font-semibold'>*</span></label>
+                    <input id='location' type="text" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black'  name='lokasi' value={DataForm.lokasi} onChange={HandleChange} placeholder='Input the Location' autoComplete='off' required/>
                 </div>
                 <div className="flex w-[calc(50%-10px)] gap-x-1">
                   <div className="flex flex-col w-full">
-                      <label htmlFor="mation" className='font-semibold'>Panjang(m) : <span className='text-red-600 font-semibold'>*</span></label>
-                      <input id='test' type="number" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black' name='panjang' value={DataForm.panjang} onChange={HandleChange} placeholder='Input Panjang' autoComplete='off' required/>
+                      <label htmlFor="panjang" className='font-semibold'>Panjang(m) : <span className='text-red-600 font-semibold'>*</span></label>
+                      <input id='panjang' type="number" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black' name='panjang' value={DataForm.panjang} onChange={HandleChange} placeholder='Input Panjang' autoComplete='off' required/>
                   </div>
                   <div className="flex flex-col w-full">
-                      <label htmlFor="mation" className='font-semibold'>Lebar(m) : <span className='text-red-600 font-semibold'>*</span></label>
-                      <input id='test' type="number" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black'  name='lebar' value={DataForm.lebar} onChange={HandleChange} placeholder='Input Lebar' autoComplete='off' required/>
+                      <label htmlFor="lebar" className='font-semibold'>Lebar(m) : <span className='text-red-600 font-semibold'>*</span></label>
+                      <input id='lebar' type="number" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black'  name='lebar' value={DataForm.lebar} onChange={HandleChange} placeholder='Input Lebar' autoComplete='off' required/>
                   </div>
                 </div>
                 <div className="flex flex-col w-[calc(50%-10px)]">
-                    <label  className='font-semibold'>Tipe : <span className='text-red-600 font-semibold'>*</span></label>
-                    <select id="" className='p-1 border-[1px] border-black rounded-lg focus:outline-blue-500 text-black' name='khusus' value={DataForm.khusus} onChange={HandleChange} required>
+                    <label htmlFor='op'  className='font-semibold'>Tipe : <span className='text-red-600 font-semibold'>*</span></label>
+                    <select id="op" className='p-1 border-[1px] border-black rounded-lg focus:outline-blue-500 text-black' name='khusus' value={DataForm.khusus} onChange={HandleChange} required>
                         <option value={null} className='p-10 text-xl'>
                             Pilih
                         </option>
@@ -118,13 +135,15 @@ function Form({ Close, DataEdit }) {
                         </option>
                     </select>
                 </div>
+
                 {/* <div className="flex flex-col w-[calc(50%-10px)]">
                     <label htmlFor="deskripsi" className='font-semibold'>Alamat : <span className='text-red-600 font-semibold'>*</span></label>
                     <input id='deskripsi' type="text" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black'  placeholder='Input The Description'  autoComplete='off' required/>
                 </div> */}
+
                 <div className="flex flex-col w-[calc(50%-10px)]">
-                    <label htmlFor="deskripsi" className='font-semibold'>Deskripsi : <span className='text-red-600 font-semibold'>*</span></label>
-                    <textarea id='deskripsi' type="text" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black'  name='description' value={DataForm.description} onChange={HandleChange}  placeholder='Input The Description'  autoComplete='off' required/>
+                    <label htmlFor="description" className='font-semibold'>Deskripsi : <span className='text-red-600 font-semibold'>*</span></label>
+                    <textarea id='description' type="text" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black'  name='description' value={DataForm.description} onChange={HandleChange}  placeholder='Input The Description'  autoComplete='off' required/>
                 </div>
                 <div className="p-1 w-full">
                     <button type='submit' className='mt-5 px-4 py-2 rounded-lg bg-blue-700 font-semibold text-white'>Submit</button>

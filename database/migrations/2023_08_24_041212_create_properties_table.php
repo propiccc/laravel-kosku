@@ -14,10 +14,11 @@ return new class extends Migration
         Schema::create('properties', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
+          
             $table->integer('panjang');
             $table->integer('lebar');
             $table->enum('khusus', ['Putra', 'Putri', 'Campur'])->default('Campur');
-            $table->string('hero_image');
+
             $table->text('description');
             $table->text('lokasi');
             $table->integer('harga');

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Helpers\RestApi;
 use App\Models\Property;
 use Illuminate\Http\Request;
+use App\Models\ChildImgProperty;
 use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
@@ -12,15 +13,8 @@ class PropertyController extends Controller
     public function index(Request $request)
     {
         if (request()->wantsJson()) {
-            $request->validate([
-                'search' => ['nullable', 'string'],
-                'tampilkan' => ['nullable', 'string']
-            ]);
-
-            $data = User::where('name', 'LIKE', "%" . $request->search . "%")
-                ->orWhere('email', 'LIKE', "%" . $request->search . "%")
-                ->paginate(isset($request->tampilkan) ? $request->tampilkan : 10);
-
+            
+            $data = Property::with('ChildImg')->latest()->get();            
             return response()->json($data, 200);
 
         } else {
@@ -31,7 +25,7 @@ class PropertyController extends Controller
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'image.*' => ['required','mimes:png,jpg'],
+                'images.*' => ['required','mimes:png,jpg'],
                 'panjang' => ['required'],
                 'lebar' => ['required'],
                 'lokasi' => ['required'],
@@ -39,8 +33,7 @@ class PropertyController extends Controller
                 'khusus' => ['required'],
                 'harga' => ['required'],
             ]);
-
-
+            
             if ($validate->fails()) {
                 $message = [];
                 $errors = $validate->errors();
@@ -50,42 +43,59 @@ class PropertyController extends Controller
                 return RestApi::error($message, 400);
             }
 
+            $req = $request->all();
 
-
-            if($request->has('image') && count($request['image']) != 0){
-                $Image = $request->image;
-
-              
-                
-                $ImageCol = $Image->map(function($item) {									
-                    return [
-                            'image' => $item->filename,
-                        ];
-                    });
-
-                dd($ImageCol);
-                // $ChildImage = ChildImgProperty::create([
-                    
-                // ])
-                // $data = Property::create([
-                //     'panjang' => ['required'],
-                //     'lebar' => ['required'],
-                //     'lokasi' => ['required'],
-                //     'description' => ['required'],
-                //     'khusus' => ['required'],
-                //     'harga' => ['required'],
-                // ]);
-            }
+            $data = Property::create([
+                'lebar' => $req['lebar'],
+                'panjang' => $req['panjang'],
+                'lokasi' => $req['lokasi'],
+                'description' => $req['description'],
+                'harga' => $req['harga'],
+                'khusus' => $req['khusus'],
+            ]);
 
             
-            if ($data) {
-                return RestApi::success(['Data Successfully Created'], 201);
-            } else {
-                return RestApi::error(['Data Failed To Created'], 400);
+            $ImagesCol = [];
+            if($request->has('images') && count($request['images']) != 0){                
+                $uploadedImages = [];
+                foreach ($request->file('images') as $image) {
+
+                    $image_name = $image->getClientOriginalName();
+                    
+                    if ($image_name != 'blob') {
+
+                        $image_name = date('Y-M-y') . '-' . $image_name;
+                        $image->storeAs('/public/ChildImgProperty', $image_name);
+
+                        $ChildImage = ChildImgProperty::create([
+                            'property_id' => $data->id,
+                            'image' => $image_name
+                        ]);
+                    
+                    } else {
+                    
+                        return RestApi::error(['Data Failed To Created'], 400);
+                    
+                    }
+                    
+                }
+                
+                if ($data) {
+                    return RestApi::success(['Data Successfully Created'], 201);
+                } else {
+                    return RestApi::error(['Data Failed To Created'], 400);
+                }
+              
             }
+
+              
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }
+    }
+
+    public function getProperty(){
+        return response()->file();
     }
 
 }

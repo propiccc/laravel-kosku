@@ -34,7 +34,7 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('property')->group(function () {
         Route::post('/', [PropertyController::class, 'index']);
-    Route::post('/store', [PropertyController::class, 'store']);
+        Route::post('/store', [PropertyController::class, 'store']);
         Route::post('{uuid}/edit', [PropertyController::class, 'show']);
         Route::post('{uuid}/update', [PropertyController::class, 'update']);
         Route::delete('{uuid}/delete', [PropertyController::class, 'delete']);
