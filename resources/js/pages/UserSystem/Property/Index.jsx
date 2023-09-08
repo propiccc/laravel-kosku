@@ -61,6 +61,17 @@ const Getproperty = (uuid) => {
      })
 }
 
+const GetParentProperty = (uuid) => {
+    var url =  `/api/property/${uuid}/edit`
+    setisOpen(false);
+    axios.post(url).then(res => {
+        setDataEdit(res.data)
+        setTimeout(() => {
+            setisOpen(true);
+        }, 500);
+    })
+}
+
 //  Effect
 useEffect(() => {
     var a = true;
@@ -74,7 +85,7 @@ useEffect(() => {
   return (
     <>
      <Toaster />
-    {isOpen ? ( <Form Close={HandleClose} GetProperty={Property} DataEdit={DataEdit} type={type} />) : null}
+    {isOpen ? ( <Form Close={HandleClose} GetProperty={Property} GetParentProperty={GetParentProperty} DataEdit={DataEdit} type={type} />) : null}
 
     {!isOpen ? (
         <div className="flex p-1 justify-end">
@@ -96,7 +107,7 @@ useEffect(() => {
                                 className="w-full rounded-t-md object-fill"
                             />
                         </div>
-                        <div className="text-black bg-white hover:bg-gray-50 rounded-b-md p-4 h-[246px] w-full flex flex-col">
+                        <div className="text-black bg-whites hover:bg-gray-50 rounded-b-md p-4 h-[246px] w-full flex flex-col">
                             <div className="text-black font-semibold text-lg mb-1">
                                 Rp{item.harga}/Bulan
                             </div>
@@ -106,7 +117,9 @@ useEffect(() => {
                                 </div>
                             </div>
                             <div className="text-black font-semibold">
-                                {item.lokasi}
+                                <p className="h-[50px] overflow-hidden after:content-['...']">
+                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Mollitia nam ex illo enim alias neque accusantium magni omnis fugit ab, natus cupiditate? Quibusdam, veniam provident magnam mollitia aliquid perferendis officia fugit cum nihil sequi doloremque vitae maiores omnis eaque nam, in delectus pariatur nemo dignissimos, id reiciendis voluptatum! Officia numquam quia commodi temporibus perferendis, magni assumenda ad fuga velit, repellendus ex maxime nesciunt eaque ducimus sapiente a id. Molestias odio atque quos officia aspernatur praesentium error placeat dolores fuga, consectetur, laborum eum, ipsam necessitatibus laudantium? Voluptatum, quasi. Recusandae laborum earum, quisquam sequi maiores et incidunt, excepturi cupiditate vero, ratione eligendi.
+                                </p>
                             </div>
                             <div className="h-[80px] max-w-[300px]">
                                 <p className="text-black max-h-[80px] text-ellipsis text-sm overflow-hidden after:content-['...']">

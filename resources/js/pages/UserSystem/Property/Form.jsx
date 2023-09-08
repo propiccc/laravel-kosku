@@ -4,8 +4,10 @@ import axios from 'axios';
 import  MultyImageUpload  from '../../../Components/MultyImageUpload'
 import CurrencyInput from 'react-currency-input-field';
 import { toast, Toaster } from 'react-hot-toast';
+import Swal from 'sweetalert2';
 
-function Form({ Close, DataEdit, GetProperty, type }) {
+
+function Form({ Close, DataEdit, GetProperty, GetParentProperty, type }) {
     
 // * Data
   const [edit, setEdit] = useState(DataEdit);
@@ -20,6 +22,9 @@ function Form({ Close, DataEdit, GetProperty, type }) {
   });
 
   // * Function 
+
+
+
   const HandleChange = (e) => {
     var key = e.target.name;
     var val = e.target.value;
@@ -28,11 +33,51 @@ function Form({ Close, DataEdit, GetProperty, type }) {
       [key]: val
     }))
   }
+  
+  const HandleDeleteChildImg = (uuid) => {
+    var url = `/api/property/childimgproperty/${uuid}/delete`;
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: 'Please Wait !',
+          html: 'Loading...',// add html attribute if you want or remove
+          allowOutsideClick: false,
+          showConfirmButton: false
+        });
+        axios.post(url).then(res => {
+          if (res.data.success === true) {
+            GetParentProperty(edit.uuid);
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+              )
+          }
+        }).catch(error => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Data Failed To Delete!',
+            text: 'Something went wrong!',
+          })
+        });
+      }
+    })
+    
+  }
 
- 
   const HandleSubmit = (e) => {
       e.preventDefault();
+
       var url = '/api/property/store'
+      
       if (type == 'update') {
         url = `/api/property/${edit?.uuid}/update`
       }
@@ -79,9 +124,8 @@ function Form({ Close, DataEdit, GetProperty, type }) {
   return (
     <>
     <Toaster />
-    <div className='bg-gray-700 border-t-[3px] border-b-[2px] border-gray-700 font-semibold rounded-t-lg py-2 px-6 flex justify-between items-center text-white'>
+    <div className='bg-gray-700 border-t-[3px] border-b-[2px] border-gray-700 font-semibold rounded-t-lg py-2 px-6 flex justify-start items-center text-white'>
         Add Property
-        <Cancel onClick={() => Close()} />
     </div>
     <div className='bg-gray-800 border-b-[3px] border-gray-300 rounded-b-lg p-6'> 
 
@@ -100,7 +144,7 @@ function Form({ Close, DataEdit, GetProperty, type }) {
                   <a href={item.imagedir} target='_blank'>
                     <img src={item.imagedir} alt="" className='h-[90px]' key={index}/>
                   </a>
-                  <button className='text-center text-white flex justify-center mt-1 items-center bg-red-500 rounded-sm active:scale-95 transition-all duration-300 '>
+                  <button onClick={() => HandleDeleteChildImg(item.uuid)} className='text-center text-white flex justify-center mt-1 items-center bg-red-500 rounded-sm active:scale-95 transition-all duration-300 '>
                     Delete
                   </button>
                 </div>
@@ -163,8 +207,13 @@ function Form({ Close, DataEdit, GetProperty, type }) {
                     <label htmlFor="description" className='font-semibold'>Deskripsi : <span className='text-red-600 font-semibold'>*</span></label>
                     <textarea id='description' type="text" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black'  name='description' value={DataForm.description} onChange={HandleChange}  placeholder='Input The Description'  autoComplete='off' required/>
                 </div>
-                <div className="p-1 w-full">
+                <div className="p-1 flex w-full gap-x-1">
+                  {type != 'update' ? (
                     <button type='submit' className='mt-5 px-4 py-2 rounded-lg bg-blue-700 font-semibold text-white'>Submit</button>
+                  ): (
+                    <button type='submit' className='mt-5 px-4 py-2 rounded-lg bg-green-600 font-semibold text-white'>Update</button>
+                  )}
+                  <button onClick={() => Close()} className='mt-5 px-4 py-2 rounded-lg bg-red-600 font-semibold text-white'>Cancel</button>
                 </div>
         </form>
         

@@ -58,9 +58,11 @@ class AuthController extends Controller
     public function logout()
     {
         if (request()->wantsJson()) {
+            
             $token = request()->header()['authorization'][0];
             $token = explode(" ", $token);
             $logout = Auth::invalidate($token[1]);
+
             if ($logout) {
                 return response()->json(['message' => 'Successfuly Logout!', 'success' => true], 200);
             } else {
@@ -70,6 +72,7 @@ class AuthController extends Controller
             return response()->json(['message' => 'bad request!'], 401);
         }
     }  
+     
     public function register(Request $request){
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
@@ -87,8 +90,6 @@ class AuthController extends Controller
                 return RestApi::error($message, 400);
             }
             
-
-
 
         } else {
             return response()->json(['message' => 'bad request!'], 401);

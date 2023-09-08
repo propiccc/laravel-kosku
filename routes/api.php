@@ -21,13 +21,6 @@ use App\Http\Controllers\PropertyController;
 */
 Route::post('/login', [AuthController::class, 'login']);
 
-Route::post('/test', function(){
-
-    $data = Property::all();
-
-    return response()->json($data, 200);
-});
-
 Route::post('/check', [AuthController::class, 'CheckUser']);
 
 Route::middleware('auth')->group(function () {
@@ -37,7 +30,7 @@ Route::middleware('auth')->group(function () {
 
     Route::prefix('user')->group(function () {
         Route::post('/', [UserController::class, 'index']);
-        Route::post('/store', [UserController::class, 'store']);
+        Route::post('store', [UserController::class, 'store']);
         Route::post('{uuid}/edit', [UserController::class, 'show']);
         Route::post('{uuid}/update', [UserController::class, 'update']);
         Route::delete('{uuid}/delete', [UserController::class, 'delete']);
@@ -45,9 +38,10 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('property')->group(function () {
         Route::post('/', [PropertyController::class, 'index']);
-        Route::post('/store', [PropertyController::class, 'store']);
+        Route::post('store', [PropertyController::class, 'store']);
         Route::post('{uuid}/edit', [PropertyController::class, 'show']);
         Route::post('{uuid}/update', [PropertyController::class, 'update']);
+        Route::post('childimgproperty/{uuid}/delete', [PropertyController::class, 'DeleteImage']);
         Route::delete('{uuid}/delete', [PropertyController::class, 'delete']);
     });
 });
