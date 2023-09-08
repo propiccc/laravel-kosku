@@ -5,20 +5,19 @@ import  MultyImageUpload  from '../../../Components/MultyImageUpload'
 import CurrencyInput from 'react-currency-input-field';
 import { toast, Toaster } from 'react-hot-toast';
 
-
-function Form({ Close, DataEdit, GetProperty }) {
+function Form({ Close, DataEdit, GetProperty, type }) {
     
 // * Data
-    const [edit, setEdit] = useState(DataEdit);
-    const [ImageFile, setImageFile] = useState([]);
-    const [DataForm, setDataForm] = useState({
-      lebar: edit?.lebar ?? "", 
-      panjang: edit?.panjang ?? "", 
-      khusus:  edit?.khusus ?? "",
-      harga:  edit?.harga ?? 0,
-      description: edit?.description ?? "",
-      lokasi: edit?.lokasi ?? "",
-    });
+  const [edit, setEdit] = useState(DataEdit);
+  const [ImageFile, setImageFile] = useState([]);
+  const [DataForm, setDataForm] = useState({
+    lebar: edit?.lebar ?? "", 
+    panjang: edit?.panjang ?? "", 
+    khusus:  edit?.khusus ?? "",
+    harga:  edit?.harga ?? 0,
+    description: edit?.description ?? "",
+    lokasi: edit?.lokasi ?? "",
+  });
 
   // * Function 
   const HandleChange = (e) => {
@@ -33,15 +32,15 @@ function Form({ Close, DataEdit, GetProperty }) {
  
   const HandleSubmit = (e) => {
       e.preventDefault();
-        var url = '/api/property/store'
-        // if (type == 'update') {
-        //   url = `/api/property/${edit?.uuid}/update`
+      var url = '/api/property/store'
+      if (type == 'update') {
+        url = `/api/property/${edit?.uuid}/update`
+      }
 
-        const headers = {
-          'Content-Type': 'multipart/form-data',
-        };
+      const headers = {
+        'Content-Type': 'multipart/form-data',
+      };
     
-
       const formData = new FormData();
       if (typeof ImageFile == 'object' && ImageFile?.file?.name != 'blob') {
         
@@ -75,17 +74,41 @@ function Form({ Close, DataEdit, GetProperty }) {
           }
         })
   }
+  
+
   return (
     <>
     <Toaster />
-    <div className='bg-gray-500 border-t-[3px] border-b-[2px] border-gray-500 font-semibold rounded-t-lg py-2 px-6 flex justify-between items-center text-white'>
+    <div className='bg-gray-700 border-t-[3px] border-b-[2px] border-gray-700 font-semibold rounded-t-lg py-2 px-6 flex justify-between items-center text-white'>
         Add Property
         <Cancel onClick={() => Close()} />
     </div>
     <div className='bg-gray-800 border-b-[3px] border-gray-300 rounded-b-lg p-6'> 
+
         <div className="bg-full flex p-4 text-white">
-            <MultyImageUpload setFiles={setImageFile} files={ImageFile} />
+            <MultyImageUpload setFiles={setImageFile} files={ImageFile} name={type === 'update' ? 'Tambah Image' : 'Image'} />
         </div>
+
+        {type === "update" && edit != null ? (
+        <div className='p-4'>
+          <span className='font-semibold text-white'>Edit Image : </span>
+          <span className='font-normal text-sm text-gray-400'>Click Image Jika Ingin Melihat Detail Image</span>
+          <div className="flex gap-x-2 mt-1">
+            {edit?.child_img.map((item, index) => (
+              <>
+                <div className=" flex flex-col">
+                  <a href={item.imagedir} target='_blank'>
+                    <img src={item.imagedir} alt="" className='h-[90px]' key={index}/>
+                  </a>
+                  <button className='text-center text-white flex justify-center mt-1 items-center bg-red-500 rounded-sm active:scale-95 transition-all duration-300 '>
+                    Delete
+                  </button>
+                </div>
+              </>
+              ))}
+          </div>
+        </div>
+        ) : null}
 
         <form method='POST' onSubmit={HandleSubmit} className='bg-full flex flex-wrap gap-2 w-full p-4 text-white'>
                 <div className="flex flex-col w-[calc(50%-10px)]">
@@ -135,11 +158,6 @@ function Form({ Close, DataEdit, GetProperty }) {
                         </option>
                     </select>
                 </div>
-
-                {/* <div className="flex flex-col w-[calc(50%-10px)]">
-                    <label htmlFor="deskripsi" className='font-semibold'>Alamat : <span className='text-red-600 font-semibold'>*</span></label>
-                    <input id='deskripsi' type="text" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1 text-black'  placeholder='Input The Description'  autoComplete='off' required/>
-                </div> */}
 
                 <div className="flex flex-col w-[calc(50%-10px)]">
                     <label htmlFor="description" className='font-semibold'>Deskripsi : <span className='text-red-600 font-semibold'>*</span></label>

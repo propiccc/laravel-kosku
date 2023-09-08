@@ -1,11 +1,13 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Models\Property;
 
+use App\Models\ChildImgProperty;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PropertyController;
-use Illuminate\Support\Facades\Artisan;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,11 +21,20 @@ use Illuminate\Support\Facades\Route;
 */
 Route::post('/login', [AuthController::class, 'login']);
 
+Route::post('/test', function(){
+
+    $data = Property::all();
+
+    return response()->json($data, 200);
+});
+
 Route::post('/check', [AuthController::class, 'CheckUser']);
 
 Route::middleware('auth')->group(function () {
+    
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'register']);
+
     Route::prefix('user')->group(function () {
         Route::post('/', [UserController::class, 'index']);
         Route::post('/store', [UserController::class, 'store']);

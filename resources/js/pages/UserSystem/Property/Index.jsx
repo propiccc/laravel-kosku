@@ -3,12 +3,15 @@ import Form from './Form'
 import axios from 'axios';
 import {BsFillTrashFill, BsFillPencilFill} from 'react-icons/bs'
 import { CgNotes } from 'react-icons/cg'
+import { toast, Toaster } from 'react-hot-toast';
 
 function Index() {
 // * Data
 const [isOpen, setisOpen] = useState(false);
-const [Dataproperty, setDataproperty] = useState(false);
+const [Dataproperty, setDataproperty] = useState([]);
+const [DataEdit, setDataEdit] = useState(null);
 const [Block, setBlock] = useState(true);
+const [type, setType] = useState('create');
 
 
 // * Function && Components
@@ -26,7 +29,7 @@ const LoadingCom  = () => {
 const HandleClose = () => {
     setisOpen(false);
 }
-const GetProperty = () => {
+const Property = () => {
     setBlock(true)
     axios.post('/api/property').then(res => {
       setDataproperty(res.data);
@@ -37,32 +40,51 @@ const GetProperty = () => {
     })
 }
 
-const GetPropertyDetail = () => {
-    
+const Getproperty = (uuid) => {
+    setisOpen(false);
+    var url =  `/api/property/${uuid}/edit`
+    axios.post(url).then(res => {
+        setDataEdit(res.data)
+        setType('update');
+        setTimeout(() => {
+            setisOpen(true);
+        }, 500);
+    }).catch(err => {
+        setDataEdit(null)
+        if (err.response.data.message != null) {
+            toast.error(err.response.data.message);
+        } else {
+          err.response.data.data.forEach(el => {
+            toast.error(el);
+          });
+        }
+     })
 }
+
 //  Effect
 useEffect(() => {
     var a = true;
     if(a){
-        GetProperty();
+        Property();
     }
     return () => a = false;
 
 },[])
+
   return (
     <>
-    {isOpen ? (
-      <Form Close={HandleClose} GetProperty={GetProperty} />
-    ) : null}
+     <Toaster />
+    {isOpen ? ( <Form Close={HandleClose} GetProperty={Property} DataEdit={DataEdit} type={type} />) : null}
+
     {!isOpen ? (
-    
         <div className="flex p-1 justify-end">
             <button onClick={() => {setisOpen(e => !e)}} className='px-10 py-2 bg-blue-800 text-white font-semibold rounded-lg hover:opacity-95 active:scale-90 transition-all duration-300'>Add Property</button>
         </div>
     ) : null}
+
     {Block ? ( <LoadingCom />) : (
     <div className="w-full flex flex-wrap justify-center overflow-scroll gap-2 scrollbar-none mt-4 bg-white">
-                    {/* Card Product Start */}
+        {/* Card Product Start */}
         {Dataproperty.length != 0 ? (
             <>
                 {Dataproperty.map((item, index) => (
@@ -93,9 +115,9 @@ useEffect(() => {
                             </div>
                             <div className="flex h-full items-end">
                                 <button className="px-5 rounded-lg py-2 border-[1px] font-semibold bg-[#691fab] text-white active:scale-95 transition-all duration-600">
-                                <CgNotes className='' />
+                                <CgNotes className=''/>
                                 </button>
-                                <button className="px-5 rounded-lg py-2 border-[1px] font-semibold bg-yellow-500 text-black active:scale-95 transition-all duration-600">
+                                <button className="px-5 rounded-lg py-2 border-[1px] font-semibold bg-yellow-500 text-black active:scale-95 transition-all duration-600" onClick={() => Getproperty(item.uuid)}>
                                 <BsFillPencilFill className='text-white'/>
                                 </button>
                                 <button className="px-5 rounded-lg py-2 border-[1px] font-semibold bg-red-500 text-white active:scale-95 transition-all duration-600">

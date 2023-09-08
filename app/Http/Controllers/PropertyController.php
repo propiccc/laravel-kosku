@@ -6,6 +6,7 @@ use App\Helpers\RestApi;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Models\ChildImgProperty;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class PropertyController extends Controller
@@ -36,7 +37,7 @@ class PropertyController extends Controller
             
             if ($validate->fails()) {
                 $message = [];
-                $errors = $validate->errors();
+                $errors = $validate ->errors();
                 foreach ($errors->messages() as $err) {
                     $message[] = $err[0];
                 }   
@@ -54,7 +55,6 @@ class PropertyController extends Controller
                 'khusus' => $req['khusus'],
             ]);
 
-            
             $ImagesCol = [];
             if($request->has('images') && count($request['images']) != 0){                
                 $uploadedImages = [];
@@ -73,9 +73,7 @@ class PropertyController extends Controller
                         ]);
                     
                     } else {
-                    
                         return RestApi::error(['Data Failed To Created'], 400);
-                    
                     }
                     
                 }
@@ -85,17 +83,23 @@ class PropertyController extends Controller
                 } else {
                     return RestApi::error(['Data Failed To Created'], 400);
                 }
-              
             }
 
-              
         } else {
             return RestApi::error(['Bad Request!'], 400);
         }
     }
-
-    public function getProperty(){
-        return response()->file();
+    
+    public function show($uuid){
+        if (request()->wantsJson()) {
+            $data = Property::where('uuid', $uuid)->with('ChildImg')->first();  
+            if(!isset($data)){
+                return RestApi::error(['Data Not Found'], 400);
+            }
+            return response()->json($data, 200);
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
+        }
     }
 
 }
