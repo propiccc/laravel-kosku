@@ -37,6 +37,7 @@ class UserController extends Controller
             $validate = Validator::make($request->all(), [
                 'name' => ['required', 'string', 'min:4', 'unique:users,name'],
                 'email' => ['required', 'string', 'email', 'unique:users,email'],
+                'role' => ['required'],
                 'password' => ['required', 'confirmed']
             ]);
 
@@ -82,8 +83,9 @@ class UserController extends Controller
     {
         if (request()->wantsJson()) {
             $validate = Validator::make($request->all(), [
-                'name' => ['required', 'string', 'min:4', 'unique:users,name'],
+                'name' => ['required', 'string', 'min:4'],
                 'email' => ['required', 'string', 'email'],
+                'role' => ['required', 'string'],
                 'password' => ['nullable', 'confirmed'],
             ]);
 
@@ -104,12 +106,13 @@ class UserController extends Controller
             }
 
             $user = User::where('uuid', $uuid)->first();
+
             if (!isset($user)) {
                 return RestApi::error(['Data Not Found!'], 404);
             }
-
+            
             $user = $user->update($req);
-
+            
             if ($user) {
                 return RestApi::success(['Data Successfully Update'], 200);
             } else {

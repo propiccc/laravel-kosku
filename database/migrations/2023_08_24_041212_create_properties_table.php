@@ -26,6 +26,11 @@ return new class extends Migration
             // * Relations Properties To users 
             $table->unsignedBiginteger('penyewa_id')->nullable();
             $table->foreign('penyewa_id')->references('id')->on('users')->onDelete('restrict');
+            
+            // * Relations Properties To users 
+            $table->unsignedBiginteger('pemilik_id');
+            $table->foreign('pemilik_id')->references('id')->on('users')->onDelete('restrict');
+
             $table->timestamps();
         });
     }
@@ -37,4 +42,6 @@ return new class extends Migration
     {
         Schema::dropIfExists('properties');
     }
+
 };
+

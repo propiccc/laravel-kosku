@@ -20,8 +20,11 @@ use App\Http\Controllers\PropertyController;
 |
 */
 Route::post('/login', [AuthController::class, 'login']);
-
 Route::post('/check', [AuthController::class, 'CheckUser']);
+
+Route::prefix('public')->group(function(){
+    Route::post('/resource', [PropertyController::class, 'GetProperty']);
+});
 
 Route::middleware('auth')->group(function () {
     

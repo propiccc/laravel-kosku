@@ -12,6 +12,7 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
     name: edit?.name ?? "",
     email: edit?.email ?? "",
     password: edit?.password ?? "",   
+    role: edit?.role ?? "",   
   })
 
 
@@ -72,6 +73,13 @@ function Form({ DataEdit, type, setToggle, cancle, close }) {
         <div className="flex flex-col w-full">
           <label htmlFor="password_confirmation" className='font-semibold'>Password Confirmation : <span className='text-red-600 font-semibold'>*</span></label>
           <input id='password_confirmation' type="password" className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1' name='password_confirmation' value={edit?.password_confirmation} onChange={HandleChange} />
+        </div>
+        <div className="flex flex-col w-full">
+          <label htmlFor="role" className='font-semibold'>Role : <span className='text-red-600 font-semibold'>*</span></label>
+          <select id='role' className='border-[1px] border-solid rounded-md border-black focus:outline-blue-500 px-2 py-1' name='role' value={Data.role} onChange={(a) => setData(e => ({...e, role: a.target.value}))}>
+            <option value="admin">Admin</option>
+            <option value="user">User</option>
+          </select>
         </div>
         <div className="h-[2px] w-full bg-gray-200 my-3"></div>
         <div className="flex justify-end w-full">

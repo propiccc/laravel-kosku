@@ -152,17 +152,19 @@ function Index() {
                 <th className='text-start px-2'>No.</th>
                 <th className='text-start'>Name</th>
                 <th className='text-start'>Email</th>
+                <th className='text-start'>Role</th>
                 <th className='text-start'>Tgl Dibuat</th>
                 <th className='text-center'>Action</th>
               </tr>
             </thead>
             <tbody className=''>
-              {block ? (<Loading colSpan={5} />) :
+              {block ? (<Loading colSpan={6} />) :
                 (User?.data?.map((item, index) => (
                   <tr className={`${index % 2 ? 'bg-gray-100' : 'bg-white'} h-14 hover:bg-gray-200`} key={item.id}>
                     <td className='text-start px-2 font-semibold'>{index + User.from}</td>
                     <td>{item?.name}</td>
                     <td>{item?.email}</td>
+                    <td>{item?.role}</td>
                     <td>{DateKu(item.created_at)}</td>
                     <td>
                       <div className="flex justify-center gap-x-1">
@@ -175,7 +177,7 @@ function Index() {
               }
               {User?.data?.length == 0 && !block ? (
                 <tr className='bg-gray-200 h-14'>
-                  <td colSpan={5} className='font-semibold'><span className='ml-1'>Not Found</span></td>
+                  <td colSpan={6} className='font-semibold'><span className='ml-1'>Not Found</span></td>
                 </tr>
               ) : null}
             </tbody>

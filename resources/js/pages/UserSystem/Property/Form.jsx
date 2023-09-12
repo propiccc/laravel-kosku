@@ -76,6 +76,13 @@ function Form({ Close, DataEdit, GetProperty, GetParentProperty, type }) {
   const HandleSubmit = (e) => {
       e.preventDefault();
 
+      Swal.fire({
+        title: 'Please Wait !',
+        html: 'Loading...',
+        allowOutsideClick: false,
+        showConfirmButton: false
+      });
+
       var url = '/api/property/store'
       
       if (type == 'update') {
@@ -85,7 +92,7 @@ function Form({ Close, DataEdit, GetProperty, GetParentProperty, type }) {
       const headers = {
         'Content-Type': 'multipart/form-data',
       };
-    
+      
       const formData = new FormData();
       if (typeof ImageFile == 'object' && ImageFile?.file?.name != 'blob') {
         
@@ -103,15 +110,29 @@ function Form({ Close, DataEdit, GetProperty, GetParentProperty, type }) {
   
       axios.post(url, formData, { headers }).then(res => {
           if (res.data.success === true) {
-            toast.success(res.data.data);
+            if(type === 'create'){
+              Swal.fire(
+                'Success',
+                'Your file has been Created.',
+                'success')
+            } else {
+              Swal.fire(
+                'Success',
+                'Your file has been Update.',
+                'success')
+            }
             setTimeout(() => {
               GetProperty();
               Close();
             }, 700);
           }
         }).catch(err => {
+          Swal.fire(
+            'Error',
+            'Data Failed To Create',
+            'error')
           if (err.response.data.message != null) {
-            toast.error(err.response.data.message)
+            toast.error(err.response.data.message);
           } else {
             err.response.data.data.forEach(el => {
               toast.error(el)
@@ -137,11 +158,11 @@ function Form({ Close, DataEdit, GetProperty, GetParentProperty, type }) {
         <div className='p-4'>
           <span className='font-semibold text-white'>Edit Image : </span>
           <span className='font-normal text-sm text-gray-400'>Click Image Jika Ingin Melihat Detail Image</span>
-          <div className="flex gap-x-2 mt-1">
+          <div className="flex w-full flex-wrap gap-x-2 mt-1">
             {edit?.child_img.map((item, index) => (
               <>
                 <div className=" flex flex-col">
-                  <a href={item.imagedir} target='_blank'>
+                  <a href={item.imagedir} target='_blank' className='flex' key={index}>
                     <img src={item.imagedir} alt="" className='h-[90px]' key={index}/>
                   </a>
                   <button onClick={() => HandleDeleteChildImg(item.uuid)} className='text-center text-white flex justify-center mt-1 items-center bg-red-500 rounded-sm active:scale-95 transition-all duration-300 '>

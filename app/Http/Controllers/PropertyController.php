@@ -6,6 +6,7 @@ use App\Helpers\RestApi;
 use App\Models\Property;
 use Illuminate\Http\Request;
 use App\Models\ChildImgProperty;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,13 +16,25 @@ class PropertyController extends Controller
     {
         if (request()->wantsJson()) {
             
-            $data = Property::with('ChildImg')->latest()->get();            
+            $data = Property::where('pemilik_id', Auth::guard('api')->user()->id)->with('ChildImg')->get();    
             return response()->json($data, 200);
 
         } else {
             return response()->json(['message' => 'bad request!'], 401);
         }
     }
+    public function GetProperty()
+    {
+        if (request()->wantsJson()) {
+            
+            $data = Property::with('ChildImg')->get();    
+            return response()->json($data, 200);
+
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
+        }
+    }
+
     public function store(Request $request)
     {
         if (request()->wantsJson()) {
@@ -45,7 +58,8 @@ class PropertyController extends Controller
             }
 
             $req = $request->all();
-
+            $pemilik_id = Auth::guard('api')->user()->id;
+            
             $data = Property::create([
                 'lebar' => $req['lebar'],
                 'panjang' => $req['panjang'],
@@ -53,6 +67,7 @@ class PropertyController extends Controller
                 'description' => $req['description'],
                 'harga' => $req['harga'],
                 'khusus' => $req['khusus'],
+                'pemilik_id' => $pemilik_id
             ]);
 
             $ImagesCol = [];
@@ -64,7 +79,7 @@ class PropertyController extends Controller
                     
                     if ($image_name != 'blob') {
 
-                        $image_name = date('Y-M-y') . '-' . $image_name;
+                        $image_name = date('Y-M-D-h-s') . '-' . $image_name;
                         $image->storeAs('/public/ChildImgProperty', $image_name);
 
                         $ChildImage = ChildImgProperty::create([
@@ -78,11 +93,11 @@ class PropertyController extends Controller
                     
                 }
                 
-                if ($data) {
-                    return RestApi::success(['Data Successfully Created'], 201);
-                } else {
-                    return RestApi::error(['Data Failed To Created'], 400);
-                }
+            }
+            if ($data) {
+                return RestApi::success(['Data Successfully Created'], 201);
+            } else {
+                return RestApi::error(['Data Failed To Created'], 400);
             }
 
         } else {
@@ -162,7 +177,7 @@ class PropertyController extends Controller
                 'description' => $req['description'],
                 'harga' => $req['harga'],
                 'khusus' => $req['khusus'],
-            ]);
+            ]);                                     
 
             $ImagesCol = [];
             if($request->has('images') && count($request['images']) != 0){                
@@ -173,7 +188,7 @@ class PropertyController extends Controller
                     
                     if ($image_name != 'blob') {
 
-                        $image_name = date('Y-M-y') . '-' . $image_name;
+                        $image_name = date('Y-M-D-h-s') . '-' . $image_name;
                         $image->storeAs('/public/ChildImgProperty', $image_name);
 
                         $ChildImage = ChildImgProperty::create([
@@ -184,18 +199,41 @@ class PropertyController extends Controller
                     } else {
                         return RestApi::error(['Data Failed To Created'], 400);
                     }
-                    
-                }
-                
-                if ($data) {
-                    return RestApi::success(['Data Successfully Created'], 201);
-                } else {
-                    return RestApi::error(['Data Failed To Created'], 400);
-                }
+                }  
+            }
+            
+            if ($data) {
+                return RestApi::success(['Data Successfully Created'], 201);
+            } else {
+                return RestApi::error(['Data Failed To Created'], 400);
             }
 
         } else {
             return RestApi::error(['Bad Request!'], 400);
+        }
+    }
+
+    public function delete($uuid){
+        if (request()->wantsJson()) {
+            
+            $data = Property::where('uuid', $uuid)->with('ChildImg')->first();
+
+            if (!isset($data)) {
+                return RestApi::error(['Data Not Found!'], 404);
+            }
+
+            $child_img = $data->ChildImg;
+            foreach ($child_img as $item) {
+                Storage::delete("/public/ChildImgProperty/" . $item->image);
+            }
+            $data->delete();
+
+            if ($data) {
+                return RestApi::success(['Data Successfully Deleted'], 200);
+            }
+
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
         }
     }
 
