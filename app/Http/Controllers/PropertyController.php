@@ -28,6 +28,22 @@ class PropertyController extends Controller
         if (request()->wantsJson()) {
             
             $data = Property::with('ChildImg')->get();    
+            
+            return response()->json($data, 200);
+
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
+        }
+    }
+
+    public function detail($uuid)
+    {
+        if (request()->wantsJson()) {
+            
+            $data = Property::where('uuid', $uuid)->with('ChildImg')->first();  
+            if(!isset($data)){
+                return response()->json(['message' => 'No Data Found!'], 401);
+            }
             return response()->json($data, 200);
 
         } else {

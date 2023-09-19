@@ -142,33 +142,48 @@ function Index() {
     }
 
     const HandleDelete = (uuid) => {
-        Swal.fire({
-            title: 'Please Wait !',
-            html: 'Loading...',
-            allowOutsideClick: false,
-            showConfirmButton: false
-          });
-
+        
         var url = `/api/property/${uuid}/delete`;
-        axios.delete(url).then(res => {
-
-            if(res.data.success){
-                Swal.fire(
-                'Success',
-                'Your file has been Deleted.',
-                'success')
+        
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+          }).then((result) => {
+            if (result.isConfirmed) {
+              Swal.fire({
+                title: 'Please Wait !',
+                html: 'Loading...',
+                allowOutsideClick: false,
+                showConfirmButton: false
+              });
+             
+              axios.delete(url).then(res => {
+                  if(res.data.success){
+                      Swal.fire(
+                      'Success',
+                      'Your file has been Deleted.',
+                      'success')
+                  }
+      
+                  setTimeout(() => {
+                      Property();
+                  }, 500);
+      
+              }).catch(err => {
+                  Swal.fire(
+                  'Error',
+                  'Failed To Delete.',
+                  'error');
+              })
             }
+          })
 
-            setTimeout(() => {
-                Property();
-            }, 500);
 
-        }).catch(err => {
-            Swal.fire(
-            'Error',
-            'Failed To Delete.',
-            'error');
-        })
     }
 
     // * Effect

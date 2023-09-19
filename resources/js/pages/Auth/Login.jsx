@@ -5,7 +5,6 @@ import toast, { Toaster } from "react-hot-toast";
 
 function Login() {
     const navigate = useNavigate();
-    const [animate, setAnimate] = useState(1);
     const [loading, setLoading] = useState(false);
     const [Data, setData] = useState({
         username: null,
@@ -32,7 +31,6 @@ function Login() {
         const formData = new FormData();
         formData.append("username", Data.username);
         formData.append("password", Data.password);
-
         axios
             .post("/api/login", formData, { headers: headers })
             .then((res) => {
@@ -41,7 +39,7 @@ function Login() {
                     res.data.data.access_token != null
                 ) {
                     localStorage.setItem(
-                        "access_token",
+                    "access_token",
                         res.data.data.access_token
                     );
                 }
@@ -50,7 +48,6 @@ function Login() {
                 if (err.response.data.message != null) {
                     toast.error(err.response.data.message);
                 } else {
-                    console.log("oioi", err.response);
                     err.response.data.data.forEach((el) => {
                         toast.error(el);
                     });

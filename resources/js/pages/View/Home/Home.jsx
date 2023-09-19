@@ -7,6 +7,7 @@ import axios from "axios";
 // * components
 import Navbar from "../Navbar/Index";
 import LoadingPage from "../../../Components/LoadingPage";
+import { useNavigate } from "react-router-dom";
 
 function SerachCom() {
     return (
@@ -16,7 +17,7 @@ function SerachCom() {
     );
 }
 
-function Card({ item, key }) {
+function Card({ item, key, Navigate}) {
 
     function formatRupiah(angka) {
         const formatter = new Intl.NumberFormat('id-ID', {
@@ -26,6 +27,8 @@ function Card({ item, key }) {
       
         return formatter.format(angka);
     }
+
+
       
     return (
         <div className="h-[500px] w-[350px] rounded-lg border-2 border-black bg-white hover:bg-gray-100" key={key}>
@@ -45,7 +48,7 @@ function Card({ item, key }) {
                 </div>
                 <div className="h-[1px] w-full bg-gray-500 my-2"></div>
                 <div className="text-black font-semibold">
-                    <p className="max-h-[50px] overflow-hidden after:content-['...']">
+                    <p className="text-xl max-h-[50px] overflow-hidden after:content-['...']">
                         {item.lokasi}
                     </p>
                 </div>
@@ -55,7 +58,7 @@ function Card({ item, key }) {
                     </p>
                 </div>
                 <div className="flex h-full items-end">
-                    <button className="px-10 py-2 bg-blue-700 font-semibold text-white rounded-lg active:scale-95 hover:scale-105 transition-all duration-300">Sewa</button>
+                    <button className="px-10 py-2 bg-blue-700 font-semibold text-white rounded-lg active:scale-95 hover:scale-105 transition-all duration-300" onClick={() => {Navigate(`/property/${item.uuid}/detail`)}}>Sewa</button>
                 </div>
             </div>
         </div>
@@ -65,9 +68,11 @@ function Card({ item, key }) {
 function Home() {
 
     // * setup
-    const [DataResource, setDataResource] = useState([]);
+    var Navigate = useNavigate();
     const [Block, setBlock] = useState(true);
     const [Auth, setAuth] = useState(false);
+
+    const [DataResource, setDataResource] = useState([]);
 
     // * Api Call
     const getDataResource = () => {
@@ -89,7 +94,9 @@ function Home() {
         axios.post(url).then(res => {
             setAuth(res.data);
         }).finally(() => {
-            setBlock(false);
+            setTimeout(() => {
+                setBlock(false);
+            }, 1000);
         })
     }
 
@@ -104,12 +111,13 @@ function Home() {
         return () => {
             a = false;
         };
+        
     }, []);
 
     return (
         <>
         
-            <Navbar Auth={Auth.auth} Role={Auth?.user?.role} />
+            <Navbar Auth={Auth.auth} Role={Auth?.user?.role} Block={Block} />
             <SerachCom />
             <div className="bg-white text-white h-screen flex flex-col justify-center p-2">
                 <div className="my-4">
@@ -122,8 +130,8 @@ function Home() {
                 </div>
                 <div className="w-full h-screen flex flex-wrap justify-center overflow-scroll gap-2 scrollbar-none">
                     {/* Card Product Start */}
-                    {DataResource.map((item, index) => (<Card item={item} key={index} />))}
-                    {/* Card Product ENd */}s
+                    {DataResource.map((item, index) => (<Card item={item} key={index} Navigate={Navigate} />))}
+                    {/* Card Product ENd */}
                 </div>
             </div>
         </>

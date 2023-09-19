@@ -101,40 +101,23 @@ function Dashboard({className }) {
                 </div>
             </div>
             {/* Navabr end */}
-            <div className="flex w-full bg-gray-300 h-screen flex-col lg:flex-row">
+            <div className="flex w-full bg-gray-300 h-[calc(100vh-96px)] flex-col lg:flex-row">
                 <div
-                    className={`bg-[#000000] ${
-                        toggle ? "w-80" : "w-16"
-                    } hidden flex-col overflow-auto transition-all duration-300 lg:flex`}
-                >
-                    <div
-                        className={`flex p-4  ${
-                            toggle ? "justify-end" : "justify-center"
-                        } transition-all duration-300`}
-                    >
-                        <GiHamburgerMenu
-                            className="scale-125 text-white cursor-pointer"
-                            onClick={() => {
-                                setToggle((e) => !e);
-                            }}
-                        />
+                    className={`bg-[#000000] ${toggle ? "w-80" : "w-16"} hidden flex-col overflow-auto transition-all duration-300 lg:flex`}>
+                    <div className={`flex p-4  ${toggle ? "justify-end" : "justify-center"} transition-all duration-300`}>
+                        <GiHamburgerMenu className="scale-125 text-white cursor-pointer" onClick={() => {setToggle((e) => !e)}}/>
                     </div>
                     <div className="h-full overflow-y-auto p-2 py-1 gap-2 scrollbar-none max-h-fit bg-[#000000]">
-                        
                         <Menu toggle={toggle} href="/system/user"name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname? "text-black": "text-white"}`} />
                         <Menu toggle={toggle} href="/system/pemilik"name="pemilik" icon={<FaUsers className={`w-[27px] h-[37px] ${"/system/pemilik" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/pemilik" == window.location.pathname? "text-black": "text-white"}`} />
                     </div>
                 </div>
                 {/* Responsive Menu Start*/}
-                {toggle ? (
-                    <ResPonsiveMenu toggle={toggle} setToggle={setToggle} />
-                ) : null}
+                    {toggle ? (<ResPonsiveMenu toggle={toggle} setToggle={setToggle} />) : null}
                 {/* Responsive Menu ENd*/}
                 <div className="w-full overflow-y-auto scrollbar-none">
                     {/* Componenet start */}
-                    <div
-                        className={`bg-gray-300 h-screen  ${className} px-2 py-5  lg:py-10 lg:px-24 transition-all duration-500 overflow-y-auto`}
-                    >
+                    <div className={`bg-gray-300 h-screen  ${className} px-2 py-5  lg:py-10 lg:px-24 transition-all duration-500 overflow-y-auto`}>
                         <Suspense fallback={<Loading />}>
                             <Outlet />
                         </Suspense>

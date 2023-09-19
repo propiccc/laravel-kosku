@@ -27,7 +27,7 @@ Route::prefix('public')->group(function(){
 });
 
 Route::middleware('auth')->group(function () {
-    
+
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'register']);
 
@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     
     Route::prefix('property')->group(function () {
         Route::post('/', [PropertyController::class, 'index']);
+        Route::post('/{uuid}/detail', [PropertyController::class, 'detail']);
         Route::post('store', [PropertyController::class, 'store']);
         Route::post('{uuid}/edit', [PropertyController::class, 'show']);
         Route::post('{uuid}/update', [PropertyController::class, 'update']);

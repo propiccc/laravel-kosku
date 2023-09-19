@@ -10,12 +10,14 @@ import Dashboard from "../Layouts/Dashboard";
 import Guest from "../util/Guest";
 import NotFound from "../pages/Auth/NotFound";
 import Home from "../pages/View/Home/Home";
+import PropertyDetails from "../pages/View/Home/PropertyDetails";
 import DashboardPemilik from '../Layouts/DashboardPemilik';
 
 // ? lazy component
 const UserIndex = lazy(() => import("../pages/System/User/Index"));
 const SewaIndex = lazy(() => import("../pages/UserSystem/Sewa/Index"));
 const PropertyIndex = lazy(() => import("../pages/UserSystem/Property/Index"));
+
 function Router() {
     return (
         <>
@@ -23,6 +25,7 @@ function Router() {
                 
                 <Route path="/*" element={<NotFound />} />
                 <Route path="/" element={<Home />} />
+                <Route path="/property/:uuid/detail" element={<PropertyDetails />} />
 
                 <Route element={<Guest />}>
                     <Route path="/login" element={<Login />} />

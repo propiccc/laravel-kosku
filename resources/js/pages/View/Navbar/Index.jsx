@@ -2,7 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 
-function Index({ Auth, Role }) {
+function Index({ Auth, Role, Block }) {
     // * Data
     const [open, setOpen] = useState(false);
     const [scrollPosition, setScrollPosition] = useState(0);
@@ -22,7 +22,6 @@ function Index({ Auth, Role }) {
     
     useEffect(() => {
         window.addEventListener('scroll', handleScroll, { passive: true });
-    
         return () => {
             window.removeEventListener('scroll', handleScroll);
         };
@@ -38,20 +37,12 @@ function Index({ Auth, Role }) {
                 </span>
             </div>
             <div className="flex p-1 gap-x-3 mr-3 items-center">
-                <NavLink to="/" className="font-semibold hover:text-blue-800 cursor-pointer text-lg">
-                    Home
-                </NavLink>
-               
-                
-                {!Auth ? (
-                    <NavLink to={'/login'}  className="font-semibold hover:text-blue-800 cursor-pointer text-lg">
-                        Login
-                    </NavLink >
-                ) : (
-                    <NavLink to={Role == 'user' ? '/dashboard/property' : '/system/user'} className="font-semibold hover:text-blue-800 cursor-pointer text-lg">
-                        Dashboard
-                    </NavLink>
-                )}
+                <NavLink to="/" className="font-semibold hover:text-blue-800 cursor-pointer text-lg"> Home </NavLink>
+                {!Block ? (
+                <>
+                    {!Auth ? (<NavLink to={'/login'}  className="font-semibold hover:text-blue-800 cursor-pointer text-lg"> Login </NavLink >) : (<NavLink to={Role == 'user' ? '/dashboard/property' : '/system/user'} className="font-semibold hover:text-blue-800 cursor-pointer text-lg"> Dashboard </NavLink>)}
+                </>
+                ) : null} 
             </div>
         </div>
     );
