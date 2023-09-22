@@ -42,6 +42,9 @@ function Login() {
                     "access_token",
                         res.data.data.access_token
                     );
+                    setTimeout(() => {
+                        return navigate("/");
+                    }, 400);
                 }
             })
             .catch((err) => {
@@ -55,9 +58,7 @@ function Login() {
             })
             .finally(() => {
                 setLoading(false);
-                setTimeout(() => {
-                    return navigate("/system/user");
-                }, 400);
+               
             });
     };
 

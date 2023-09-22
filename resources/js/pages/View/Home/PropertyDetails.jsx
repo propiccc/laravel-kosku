@@ -1,7 +1,8 @@
 import '@splidejs/react-splide/css';
 import React, { useEffect, useState } from 'react'
-import { useParams,NavLink } from 'react-router-dom'
+import { useParams,NavLink, useNavigate } from 'react-router-dom'
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
+import { toast, Toaster } from 'react-hot-toast';
 import './Style.css'
 
 import axios from 'axios';
@@ -25,10 +26,11 @@ function LoadingCom(){
 
 
 function PropertyDetails(){
-
     // * Data
     var { uuid } = useParams();
-    const [block, setBlock] = useState();
+    const redirec = useNavigate();
+    const [block, setBlock] = useState(true);
+    const [DisableButton, setDisableButton] = useState(false);
     const [DataProperty, setDataProperty] = useState([]);
 
     // * Functions
@@ -41,6 +43,73 @@ function PropertyDetails(){
             setDataProperty([])
         }).finally(() => {
             setBlock(false);
+        })
+    }
+
+
+    const HandlePending = (uuid, token) =>  {
+        var url = `/api/payment/${uuid}/pending`
+        axios.post(url, {token: token}).then(res => {
+            if (res.data.success) {
+                toast.success(res.data.message);
+            }
+        }).catch(err => {
+            if (err.response.data.message != null) {
+                toast.error(err.response.data.message)
+              } else {
+                err.response.data.data.forEach(el => {
+                  toast.error(el)
+                });
+              }
+        }).finally(() => {
+
+        });
+    }
+
+    const HandleSubmit = () => {
+        setDisableButton(true)
+        var url = `/api/payment/${DataProperty.uuid}/snaptoken`
+        axios.post(url).then(res => {
+            window.snap.pay(res.data.token, {
+                onSuccess: function(result){
+                    axios.post(`/api/property/${DataProperty.uuid}/set`,).then(res => {
+                        if(res.data.success){
+                            toast.success(res.data.message);
+                            setTimeout(() => {
+                                redirec('/dashboard/sewa');
+                            }, 2000);
+                        }
+                    })
+                },
+                onPending: function(result){
+                  alert("wating your payment!");
+                  HandlePending(DataProperty.uuid, res.data.token);
+                
+                },
+                onError: function(result){
+                  alert("payment failed!");
+                },
+            });
+
+            setTimeout(() => {
+                setDisableButton(false)
+            }, 5000);
+
+        }).catch(err => {
+            if (err.response.data.message != null) {
+                toast.error(err.response.data.message);
+              } else {
+                err.response.data.data.forEach(el => {
+                  toast.error(el)
+                });
+              }
+            setTimeout(() => {
+                setDisableButton(false)
+            }, 5000); 
+        }).finally(() => {
+            setTimeout(() => {
+                setDisableButton(false)
+            }, 5000);        
         })
     }
 
@@ -62,16 +131,18 @@ function PropertyDetails(){
     return () => a = false
     },[])
 
+    console.log(DisableButton);
   return (
     <>
-        <div className='bg-gray-300 flex justify-center h-screen'>
+        <Toaster />
+        <div className='bg-gray-700 flex justify-center min-h-screen'>
             {block ? (<LoadingCom />) : 
             (<div className="bg-white pb-1 w-[800px] max-w-[800px] flex flex-col">
-            <div className="bg-gray-200 p-4 flex justify-end sticky top-0">
+            <div className="bg-gray-200 p-4 flex justify-end sticky top-0 z-10" >
                 <NavLink to={'/'} className={'font-semibold'}>Home</NavLink>
             </div>
+
             <div className="bg-red-500 border-t-[2px] border-x-[2px] border-gray-400 flex h-1/2">
-                        
                         {/* Gambar Start  */}
                         <div className="bg-white w-full p-2 border-r-[2px] border-gray-400">
                             <Splide hasTrack={ false }>
@@ -95,7 +166,7 @@ function PropertyDetails(){
                             <div className="bg-transparent font-semibold flex flex-col">
                                 <span className='text-gray-600 text-xl'>Harga : </span>
                                 <span className='text-xl font-semibold text-center'>
-                                {formatRupiah(DataProperty.harga)}/Bulan
+                                    {formatRupiah(DataProperty.harga)}/Bulan
                                 </span>
                             </div>
                             <div className="bg-transparent font-semibold flex flex-col">
@@ -128,9 +199,11 @@ function PropertyDetails(){
                             </p>
                         </div>
                     </div>
-                    <div className="flex mt-1">
-                        <button className='bg-blue-700 rounded-md w-full p-2 font-semibold text-lg text-white active:scale-95 duration-300 transition-all'>Sewa</button>
+
+                    <div className="flex mt-1 px-2">
+                        <button onClick={HandleSubmit} disabled={DisableButton ? true : false} className='bg-blue-700 rounded-md w-full p-2 font-semibold text-lg text-white active:scale-95 duration-300 transition-all'>Sewa</button>
                     </div>
+
                 </div>)}
         </div>
     </>

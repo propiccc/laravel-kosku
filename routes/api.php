@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PropertyController;
 
 /*
@@ -22,15 +23,16 @@ use App\Http\Controllers\PropertyController;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/check', [AuthController::class, 'CheckUser']);
 
+
 Route::prefix('public')->group(function(){
     Route::post('/resource', [PropertyController::class, 'GetProperty']);
 });
 
 Route::middleware('auth')->group(function () {
-
+    
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'register']);
-
+    
     Route::prefix('user')->group(function () {
         Route::post('/', [UserController::class, 'index']);
         Route::post('store', [UserController::class, 'store']);
@@ -38,9 +40,15 @@ Route::middleware('auth')->group(function () {
         Route::post('{uuid}/update', [UserController::class, 'update']);
         Route::delete('{uuid}/delete', [UserController::class, 'delete']);
     });
+    Route::prefix('payment')->group(function () {
+        Route::post('{uuid}/pending', [PaymentController::class, 'pending']);
+        Route::post('{uuid}/snaptoken', [PaymentController::class, 'pay']);
+    });
     
     Route::prefix('property')->group(function () {
         Route::post('/', [PropertyController::class, 'index']);
+        Route::post('/pending', [PropertyController::class, 'PropertyPending']);
+        Route::post('{uuid}/set', [PropertyController::class, 'set']);
         Route::post('/{uuid}/detail', [PropertyController::class, 'detail']);
         Route::post('store', [PropertyController::class, 'store']);
         Route::post('{uuid}/edit', [PropertyController::class, 'show']);

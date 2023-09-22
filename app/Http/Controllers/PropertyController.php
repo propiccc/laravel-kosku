@@ -2,21 +2,35 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
 use App\Helpers\RestApi;
 use App\Models\Property;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\ChildImgProperty;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
+
 class PropertyController extends Controller
 {
-    public function index(Request $request)
+    public function index()
     {
         if (request()->wantsJson()) {
             
             $data = Property::where('pemilik_id', Auth::guard('api')->user()->id)->with('ChildImg')->get();    
+            return response()->json($data, 200);
+
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
+        }
+    }
+    public function PropertyPending()
+    {
+        if (request()->wantsJson()) {
+            
+            $data = Payment::where('user_id', Auth::guard('api')->user()->id)->with('property.ChildImg')->get();    
             return response()->json($data, 200);
 
         } else {
@@ -252,5 +266,29 @@ class PropertyController extends Controller
             return response()->json(['message' => 'bad request!'], 401);
         }
     }
+
+
+public function set($uuid){
+    if (request()->wantsJson()) {
+
+        $property =  Property::where('uuid', $uuid)->first();
+        if(!isset($property)){
+            return response()->json(['message' => 'Data Not Found!'], 404);
+        }
+        
+        if($property->pemilik_id != Auth::guard('api')->user()->id){
+            $property->penyewa_id = Auth::guard('api')->user()->id;
+            $property->save();
+            
+            return response()->json(['message' => 'Property ini Milik Mu', 'success' => true], 200);
+        } else {
+            return response()->json(['message' => 'Tidak Bisa Menyewa Property Sendiri!'], 401);
+        }
+        
+    } else {
+        return response()->json(['message' => 'bad request!'], 401);
+    }
+    
+}
 
 }
