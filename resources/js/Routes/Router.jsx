@@ -12,6 +12,7 @@ import NotFound from "../pages/Auth/NotFound";
 import Home from "../pages/View/Home/Home";
 import PropertyDetails from "../pages/View/Home/PropertyDetails";
 import DashboardPemilik from '../Layouts/DashboardPemilik';
+import Test from '../pages/test';
 
 // ? lazy component
 const UserIndex = lazy(() => import("../pages/System/User/Index"));
@@ -25,6 +26,7 @@ function Router() {
                 
                 <Route path="/*" element={<NotFound />} />
                 <Route path="/" element={<Home />} />
+                <Route path="/test" element={<Test />} />
                 <Route path="/property/:uuid/detail" element={<PropertyDetails />} />
 
                 <Route element={<Guest />}>

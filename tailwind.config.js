@@ -5,7 +5,11 @@ export default {
       "./resources/**/**/*.jsx",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans'],
+      },
+    },
   },
   plugins: [],
 }

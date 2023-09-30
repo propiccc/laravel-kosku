@@ -27,20 +27,20 @@ function Index({ Auth, Role, Block }) {
         };
     }, []);
     return (
-        <div className={`${scrollPosition > 300 ? 'bg-transparent' : 'bg-gray-100'} flex ${scrollPosition > 30 ? 'sticky top-0 transition-all duration-500' : null} `}>
+        <div className={`${scrollPosition < 800 ? 'bg-transparent' : 'bg-gray-200'} flex ${scrollPosition > 100 ? 'sticky top-0 transition-all duration-500' : 'absolute w-full text-white'} `}>
             <div className="text-black flex items-center w-full justify-between">
-                <span className="font-semibold text-4xl text-balck py-5 px-20 ">
+                <span className="font-semibold text-4xl text-balck py-5 px-20 text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-orange-400">
                     KOS
-                    <span className="text-md font-semibold text-red-600">
-                        Ku
+                    <span className="text-md font-semibold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-orange-400">
+                        KU
                     </span>
                 </span>
             </div>
             <div className="flex p-1 gap-x-3 mr-3 items-center">
-                <NavLink to="/" className="font-semibold hover:text-blue-800 cursor-pointer text-lg"> Home </NavLink>
+                <NavLink to="/" className="font-semibold hover:text-blue-300 cursor-pointer text-lg"> Home </NavLink>
                 {!Block ? (
                 <>
-                    {!Auth ? (<NavLink to={'/login'}  className="font-semibold hover:text-blue-800 cursor-pointer text-lg"> Login </NavLink >) : (<NavLink to={Role == 'user' ? '/dashboard/property' : '/system/user'} className="font-semibold hover:text-blue-800 cursor-pointer text-lg"> Dashboard </NavLink>)}
+                    {!Auth ? (<NavLink to={'/login'}  className="font-semibold hover:text-blue-300 cursor-pointer text-lg"> Login </NavLink >) : (<NavLink to={Role == 'user' ? '/dashboard/property' : '/system/user'} className="font-semibold hover:text-blue-300 cursor-pointer text-lg"> Dashboard </NavLink>)}
                 </>
                 ) : null} 
             </div>

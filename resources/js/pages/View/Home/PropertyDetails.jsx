@@ -4,7 +4,6 @@ import { useParams,NavLink, useNavigate } from 'react-router-dom'
 import { Splide, SplideTrack, SplideSlide } from '@splidejs/react-splide';
 import { toast, Toaster } from 'react-hot-toast';
 import './Style.css'
-
 import axios from 'axios';
 
 function LoadingCom(){
@@ -24,8 +23,8 @@ function LoadingCom(){
     )
 }
 
-
 function PropertyDetails(){
+
     // * Data
     var { uuid } = useParams();
     const redirec = useNavigate();
@@ -41,6 +40,7 @@ function PropertyDetails(){
             setDataProperty(res.data);
         }).catch(err => {
             setDataProperty([])
+            redirec('/');
         }).finally(() => {
             setBlock(false);
         })
@@ -48,7 +48,9 @@ function PropertyDetails(){
 
 
     const HandlePending = (uuid, token) =>  {
+
         var url = `/api/payment/${uuid}/pending`
+
         axios.post(url, {token: token}).then(res => {
             if (res.data.success) {
                 toast.success(res.data.message);
@@ -64,6 +66,7 @@ function PropertyDetails(){
         }).finally(() => {
 
         });
+
     }
 
     const HandleSubmit = () => {
@@ -72,12 +75,10 @@ function PropertyDetails(){
         axios.post(url).then(res => {
             window.snap.pay(res.data.token, {
                 onSuccess: function(result){
-                    axios.post(`/api/property/${DataProperty.uuid}/set`,).then(res => {
+                    console.log('data result', result);
+                    axios.post(`/api/property/${DataProperty.uuid}/${res.data.token}/set`,).then(res => {
                         if(res.data.success){
                             toast.success(res.data.message);
-                            setTimeout(() => {
-                                redirec('/dashboard/sewa');
-                            }, 2000);
                         }
                     })
                 },
@@ -86,14 +87,14 @@ function PropertyDetails(){
                   HandlePending(DataProperty.uuid, res.data.token);
                 
                 },
-                onError: function(result){
+                onError: function(result){ 
                   alert("payment failed!");
                 },
             });
 
             setTimeout(() => {
                 setDisableButton(false)
-            }, 5000);
+            }, 2000);
 
         }).catch(err => {
             if (err.response.data.message != null) {
@@ -105,11 +106,11 @@ function PropertyDetails(){
               }
             setTimeout(() => {
                 setDisableButton(false)
-            }, 5000); 
+            }, 2000); 
         }).finally(() => {
             setTimeout(() => {
                 setDisableButton(false)
-            }, 5000);        
+            }, 2000);        
         })
     }
 
@@ -118,7 +119,6 @@ function PropertyDetails(){
           style: 'currency',
           currency: 'IDR',
         });
-      
         return formatter.format(angka);
     }
 
@@ -136,13 +136,15 @@ function PropertyDetails(){
     <>
         <Toaster />
         <div className='bg-gray-700 flex justify-center min-h-screen'>
-            {block ? (<LoadingCom />) : 
-            (<div className="bg-white pb-1 w-[800px] max-w-[800px] flex flex-col">
+
+            {block ? (<LoadingCom />) : (<div className="bg-white pb-1 w-[800px] max-w-[800px] flex flex-col">
+
             <div className="bg-gray-200 p-4 flex justify-end sticky top-0 z-10" >
                 <NavLink to={'/'} className={'font-semibold'}>Home</NavLink>
             </div>
 
             <div className="bg-red-500 border-t-[2px] border-x-[2px] border-gray-400 flex h-1/2">
+
                         {/* Gambar Start  */}
                         <div className="bg-white w-full p-2 border-r-[2px] border-gray-400">
                             <Splide hasTrack={ false }>

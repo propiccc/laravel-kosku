@@ -41,7 +41,10 @@ class PropertyController extends Controller
     {
         if (request()->wantsJson()) {
             
-            $data = Property::with('ChildImg')->get();    
+            $data = Property::where([
+                'penyewa_id' => null,
+                'waktu_sewa' => null
+            ])->with('ChildImg')->get();    
             
             return response()->json($data, 200);
 
@@ -109,7 +112,7 @@ class PropertyController extends Controller
                     
                     if ($image_name != 'blob') {
 
-                        $image_name = date('Y-M-D-h-s') . '-' . $image_name;
+                        $image_name = date('YMDHis') . '-' . $image_name;
                         $image->storeAs('/public/ChildImgProperty', $image_name);
 
                         $ChildImage = ChildImgProperty::create([
@@ -218,7 +221,7 @@ class PropertyController extends Controller
                     
                     if ($image_name != 'blob') {
 
-                        $image_name = date('Y-M-D-h-s') . '-' . $image_name;
+                        $image_name = date('YMDHis') . '-' . $image_name;
                         $image->storeAs('/public/ChildImgProperty', $image_name);
 
                         $ChildImage = ChildImgProperty::create([
@@ -268,7 +271,7 @@ class PropertyController extends Controller
     }
 
 
-public function set($uuid){
+public function set($uuid, $token){
     if (request()->wantsJson()) {
 
         $property =  Property::where('uuid', $uuid)->first();
@@ -276,9 +279,34 @@ public function set($uuid){
             return response()->json(['message' => 'Data Not Found!'], 404);
         }
         
+        
         if($property->pemilik_id != Auth::guard('api')->user()->id){
+
+            $startDate = date('Y-m-d');
+            $endDate = date('Y-m-d', strtotime($startDate . ' +1 month'));
+            $property->waktu_sewa = $endDate;
             $property->penyewa_id = Auth::guard('api')->user()->id;
             $property->save();
+
+            $payment = Payment::where('token', $token)->first();
+
+            if(isset($payment)){
+                $payment->update([
+                    'status' => 'success',
+                ]);
+                return response()->json(['message' => 'Property ini Milik Mu', 'success' => true], 200);
+            } else {
+                $payment = Payment::create([
+                    'property_id' => $property->id,
+                    'user_id' => Auth::guard('api')->user()->id,
+                    'status' => 'success',
+                    'token' =>  $token,
+                    'waktu_sewa' => $endDate
+                ]);
+
+                return response()->json(['message' => 'Property ini Milik Mu', 'success' => true], 200);
+            }
+
             
             return response()->json(['message' => 'Property ini Milik Mu', 'success' => true], 200);
         } else {

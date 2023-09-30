@@ -22,20 +22,20 @@ class PaymentController extends Controller
         \Midtrans\Config::$is3ds = true;
     
         $property = Property::where('uuid', $uuid)->first();
-        if (!isset($property)) {
+        if (!isset($property)) {    
             return RestApi::error(['Data Not Found!'], 404);
         }
         
         if($property->pemilik_id != Auth::guard('api')->user()->id){
             $params = [
                 'transaction_details' => [
-                    'order_id' =>  Str::random(36) . date('His'),
+                    'order_id' =>  Str::random(36) . date('His') ,
                     'gross_amount' => $property->harga,
                 ],
                 'customer_details' => [
                     'first_name' => Auth::guard('api')->user()->name,
                     'email' => Auth::guard('api')->user()->email,
-                    ]
+                ]
             ];
         
             $snapToken = \Midtrans\Snap::getSnapToken($params);
@@ -49,24 +49,29 @@ class PaymentController extends Controller
 
     public function pending(Request $request, $uuid){
         if (request()->wantsJson()) {
+            
             $validate = Validator::make($request->all(), [
                 'token' => ['required', 'string']
             ]);
-
+    
             if ($validate->fails()) {
+
                 $message = [];
+
                 $errors = $validate->errors();
                 foreach ($errors->messages() as $err) {
                     $message[] = $err[0];
                 }
+
                 return RestApi::error($message, 400);
             }
 
             $property  = Property::where('uuid', $uuid)->first();
+
             if(!isset($property)){
                 return response()->json(['success' => false,  'message' => 'Data Not Found!'], 404);
             }
-            
+
             if($property->penyewa_id != null){
                 return response()->json(['success' => false,  'message' => 'Property = Ini Sudah ADa Pemilik Nya'], 404);
             };

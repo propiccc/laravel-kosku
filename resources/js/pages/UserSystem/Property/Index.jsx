@@ -8,13 +8,11 @@ import Swal from 'sweetalert2';
 
 
 function Card({ item, Getproperty, key, HandleDelete}) {
-
     function formatRupiah(angka) {
         const formatter = new Intl.NumberFormat('id-ID', {
           style: 'currency',
           currency: 'IDR',
         });
-      
         return formatter.format(angka);
       }
       

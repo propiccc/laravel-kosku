@@ -118,7 +118,22 @@ function Home() {
         <>
         
             <Navbar Auth={Auth.auth} Role={Auth?.user?.role} Block={Block} />
-            <SerachCom />
+            {/* header start */}
+            <div className="bg-transparent h-[calc(100vh-30px)] flex justify-center">
+                <img src="https://fujifilm-x.com/wp-content/uploads/2019/08/x-t30_sample-images02.jpg" className="absolute -z-10 h-[calc(100vh-30px)] w-full" alt="" />
+                <div className="w-[1300px] flex flex-col p-5 mt-[300px]">
+                    <span className="font-extrabold text-5xl font-poppins text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-orange-400">Get Your Accommodation Here</span>
+                    <span className="font-extrabold text-5xl font-poppins text-center mb-2 text-transparent h-[60px] bg-clip-text bg-gradient-to-r from-purple-500 to-orange-400">Jelajahi Pilihan Penginapan Terluas</span>
+                    <span className="font-extrabold font-poppins text-center text-white">Di Kosku, kami berkomitmen untuk menjadikan perjalanan Anda menjadi pengalaman tak terlupakan. Dengan ribuan pilihan penginapan di seluruh dunia, kami memungkinkan Anda untuk menemukan tempat yang sempurna, apa pun jenis perjalanan Anda.</span>
+                    <span className="font-extrabold font-poppins text-center text-white">ari hotel mewah hingga vila eksklusif, dan penginapan anggaran yang nyaman, kami memiliki sesuatu untuk setiap jenis pelancong.</span>
+                    <div className="flex justify-center gap-x-2 p-1 mt-2">
+                        <button className="border-[2px] border-white rounded-sm px-14 py-2 text-lg font-semibold text-white transition-all duration-300 hover:scale-[101%] hover:bg-blue-700">Lihat Penginpan</button>
+                        <button className="border-[2px] border-white rounded-sm px-14 py-2 text-lg font-semibold text-white transition-all duration-300 hover:scale-[101%] hover:bg-blue-700">Login</button>
+                    </div>
+                </div>
+            </div>
+            {/* header end */}
+
             <div className="bg-white text-white h-screen flex flex-col justify-center p-2">
                 <div className="my-4">
                     <div className="w-full text-black text-4xl text-center font-extrabold">

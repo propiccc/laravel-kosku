@@ -27,9 +27,13 @@ return new class extends Migration
             $table->unsignedBiginteger('penyewa_id')->nullable();
             $table->foreign('penyewa_id')->references('id')->on('users')->onDelete('restrict');
             
+            // *  waktu habis sewa
+            $table->date('waktu_sewa')->nullable();
+
             // * Relations Properties To users 
             $table->unsignedBiginteger('pemilik_id');
             $table->foreign('pemilik_id')->references('id')->on('users')->onDelete('restrict');
+
 
             $table->timestamps();
         });

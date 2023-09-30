@@ -48,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::prefix('property')->group(function () {
         Route::post('/', [PropertyController::class, 'index']);
         Route::post('/pending', [PropertyController::class, 'PropertyPending']);
-        Route::post('{uuid}/set', [PropertyController::class, 'set']);
+        Route::post('{uuid}/{token}/set', [PropertyController::class, 'set']);
         Route::post('/{uuid}/detail', [PropertyController::class, 'detail']);
         Route::post('store', [PropertyController::class, 'store']);
         Route::post('{uuid}/edit', [PropertyController::class, 'show']);

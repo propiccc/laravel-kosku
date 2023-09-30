@@ -12,7 +12,7 @@ class Property extends Model
 {
     use HasFactory, Uuid;
 
-    protected $fillable =  ['color', 'panjang', 'lebar','description', 'khusus', 'lokasi', 'harga', 'penyewa_id','pemilik_id'];
+    protected $fillable =  ['color', 'panjang', 'lebar','description', 'khusus', 'lokasi', 'harga', 'penyewa_id','pemilik_id','waktu_sewa'];
 
     public function ChildImg()
     {
