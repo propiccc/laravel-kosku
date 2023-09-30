@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from "react";
-import { FaUserAlt, FaUsers } from "react-icons/fa";
+import { FaUserAlt, FaUsers, FaChartBar } from "react-icons/fa";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 
@@ -101,6 +101,7 @@ function Dashboard({className }) {
                 </div>
             </div>
             {/* Navabr end */}
+            
             <div className="flex w-full bg-gray-300 h-[calc(100vh-96px)] flex-col lg:flex-row">
                 <div
                     className={`bg-[#000000] ${toggle ? "w-80" : "w-16"} hidden flex-col overflow-auto transition-all duration-300 lg:flex`}>
@@ -108,8 +109,8 @@ function Dashboard({className }) {
                         <GiHamburgerMenu className="scale-125 text-white cursor-pointer" onClick={() => {setToggle((e) => !e)}}/>
                     </div>
                     <div className="h-full overflow-y-auto p-2 py-1 gap-2 scrollbar-none max-h-fit bg-[#000000]">
+                        <Menu toggle={toggle} href="/system/dashboard"name="Dashboard" icon={<FaChartBar className={`w-[27px] h-[37px] ${"/system/dashboard" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/dashboard" == window.location.pathname? "text-black": "text-white"}`} />
                         <Menu toggle={toggle} href="/system/user"name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname? "text-black": "text-white"}`} />
-                        <Menu toggle={toggle} href="/system/pemilik"name="pemilik" icon={<FaUsers className={`w-[27px] h-[37px] ${"/system/pemilik" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/pemilik" == window.location.pathname? "text-black": "text-white"}`} />
                     </div>
                 </div>
                 {/* Responsive Menu Start*/}

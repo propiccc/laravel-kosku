@@ -9,6 +9,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PropertyController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,10 +30,12 @@ Route::prefix('public')->group(function(){
 });
 
 Route::middleware('auth')->group(function () {
+
+    Route::post('/dashboard', [DashboardController::class, 'getData']);
     
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/register', [AuthController::class, 'register']);
-    
+
     Route::prefix('user')->group(function () {
         Route::post('/', [UserController::class, 'index']);
         Route::post('store', [UserController::class, 'store']);

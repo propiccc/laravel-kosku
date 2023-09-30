@@ -16,6 +16,7 @@ import Test from '../pages/test';
 
 // ? lazy component
 const UserIndex = lazy(() => import("../pages/System/User/Index"));
+const DashboardIndex = lazy(() => import("../pages/System/Dashboard/Index"));
 const SewaIndex = lazy(() => import("../pages/UserSystem/Sewa/Index"));
 const PropertyIndex = lazy(() => import("../pages/UserSystem/Property/Index"));
 
@@ -44,6 +45,7 @@ function Router() {
                 <Route path="/system" element={<PrivateRoute />}>
                     <Route element={<Dashboard />}>
                         <Route path="user" element={<UserIndex />} />
+                        <Route path="dashboard" element={<DashboardIndex />} />
                     </Route>
                 </Route>
             </Routes>
