@@ -173,6 +173,28 @@ class PropertyController extends Controller
             return response()->json(['message' => 'bad request!'], 401);
         }
     }
+    public function note($uuid){
+        if (request()->wantsJson()) {
+
+            $data = Payment::where('uuid', $uuid)->with('property.ChildImg')->first();    
+
+            if(!isset($data)){
+                return RestApi::error(['Data Not Found!'], 400);
+            }
+            
+            if(Auth::guard('api')->user()->role == 'admin'){
+                return response()->json($data, 200);
+            
+            } else if(Auth::guard('api')->user()->id == $data->property->penyewa_id){
+                return response()->json($data, 200);
+            } else {
+                return response()->json(['message' => 'No Access For This Property!'], 401);
+            }
+            
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
+        }
+    }
 
     public function update(Request $request, $uuid)
     {

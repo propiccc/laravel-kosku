@@ -12,6 +12,18 @@ use Illuminate\Support\Facades\Validator;
 
 class PaymentController extends Controller
 {
+    public function index(Request $request)
+    {
+        if (request()->wantsJson()) {
+            $data = Payment::paginate(isset($request->tampilkan) ? $request->tampilkan : 10);
+
+            return response()->json($data, 200);
+
+        } else {
+            return response()->json(['message' => 'bad request!'], 401);
+        }
+    }
+
     public function pay($uuid){
         \Midtrans\Config::$serverKey = 'SB-Mid-server-GF7ID6j8OsjbhNJqruKpd--Z';
         // Set to Development/Sandbox Environment (default). Set to true for Production Environment (accept real transaction).

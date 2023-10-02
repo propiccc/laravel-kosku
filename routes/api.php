@@ -44,6 +44,7 @@ Route::middleware('auth')->group(function () {
         Route::delete('{uuid}/delete', [UserController::class, 'delete']);
     });
     Route::prefix('payment')->group(function () {
+        Route::post('/', [PaymentController::class, 'index']);
         Route::post('{uuid}/pending', [PaymentController::class, 'pending']);
         Route::post('{uuid}/snaptoken', [PaymentController::class, 'pay']);
     });
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/pending', [PropertyController::class, 'PropertyPending']);
         Route::post('{uuid}/{token}/set', [PropertyController::class, 'set']);
         Route::post('/{uuid}/detail', [PropertyController::class, 'detail']);
+        Route::post('/{uuid}/note', [PropertyController::class, 'note']);
         Route::post('store', [PropertyController::class, 'store']);
         Route::post('{uuid}/edit', [PropertyController::class, 'show']);
         Route::post('{uuid}/update', [PropertyController::class, 'update']);

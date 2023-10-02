@@ -1,5 +1,5 @@
 import React, { useEffect, useState, Suspense } from "react";
-import { FaUserAlt, FaUsers, FaChartBar } from "react-icons/fa";
+import { FaUserAlt, FaUsers, FaChartBar, FaMoneyCheckAlt } from "react-icons/fa";
 
 import { GiHamburgerMenu } from "react-icons/gi";
 
@@ -64,12 +64,8 @@ function Dashboard({className }) {
         <>
             {/* Navabr Start */}
             <div className="bg-[#000000] w-full flex h-24 justify-between text-white border-b-2 border-gray-200 px-1">
-                <div className="w-full flex items-center justify-start">
-                    <img
-                        className="h-[80px] w-fit text-white"
-                        src="/storage/asset/LogoDashboard.png"
-                        alt="logo bmc"
-                    />
+                <div className="w-full flex items-center justify-start px-4 text-2xl font-semibold">
+                    KOSKU
                 </div>
                 <div className="flex items-center w-full justify-center">
                     <div className="bg-white bg-opacity-5 text-white text-sm px-3 py-2 md:px-10 md:py-2 lg:px-10 lg:py-2 xl:px-10 xl:py-2 rounded-lg">
@@ -111,6 +107,7 @@ function Dashboard({className }) {
                     <div className="h-full overflow-y-auto p-2 py-1 gap-2 scrollbar-none max-h-fit bg-[#000000]">
                         <Menu toggle={toggle} href="/system/dashboard"name="Dashboard" icon={<FaChartBar className={`w-[27px] h-[37px] ${"/system/dashboard" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/dashboard" == window.location.pathname? "text-black": "text-white"}`} />
                         <Menu toggle={toggle} href="/system/user"name="User" icon={<FaUserAlt className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/user" == window.location.pathname? "text-black": "text-white"}`} />
+                        <Menu toggle={toggle} href="/system/penjualan"name="penjualan" icon={<FaMoneyCheckAlt className={`w-[27px] h-[37px] ${"/system/penjualan" == window.location.pathname? "text-black": "text-white"}`}/>} className={`w-[27px] h-[37px] ${"/system/penjualan" == window.location.pathname? "text-black": "text-white"}`} />
                     </div>
                 </div>
                 {/* Responsive Menu Start*/}

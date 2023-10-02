@@ -17,7 +17,7 @@ function SerachCom() {
     );
 }
 
-function Card({ item, key, Navigate}) {
+function Card({ item, Navigate}) {
 
     function formatRupiah(angka) {
         const formatter = new Intl.NumberFormat('id-ID', {
@@ -28,10 +28,8 @@ function Card({ item, key, Navigate}) {
         return formatter.format(angka);
     }
 
-
-      
     return (
-        <div className="h-[500px] w-[350px] rounded-lg border-2 border-black bg-white hover:bg-gray-100" key={key}>
+        <div className="h-[500px] w-[350px] rounded-lg border-2 border-black bg-white hover:bg-gray-100">
             <div className="max-w-[350px] h-[250px] min-h-[250px] bg-gray-100 rounded-t-lg">
                 <img
                     src={item.child_img[0]?.imagedir}
@@ -94,9 +92,7 @@ function Home() {
         axios.post(url).then(res => {
             setAuth(res.data);
         }).finally(() => {
-            setTimeout(() => {
-                setBlock(false);
-            }, 1000);
+             setBlock(false);
         })
     }
 
@@ -106,13 +102,16 @@ function Home() {
         if (a) {
             AOS.init();
             getDataResource();
-            CheckAuth();
         }
         return () => {
             a = false;
         };
         
     }, []);
+
+    useEffect(() => {
+        CheckAuth();
+    },[])
 
     return (
         <>
@@ -127,14 +126,14 @@ function Home() {
                     <span className="font-extrabold font-poppins text-center text-white">Di Kosku, kami berkomitmen untuk menjadikan perjalanan Anda menjadi pengalaman tak terlupakan. Dengan ribuan pilihan penginapan di seluruh dunia, kami memungkinkan Anda untuk menemukan tempat yang sempurna, apa pun jenis perjalanan Anda.</span>
                     <span className="font-extrabold font-poppins text-center text-white">ari hotel mewah hingga vila eksklusif, dan penginapan anggaran yang nyaman, kami memiliki sesuatu untuk setiap jenis pelancong.</span>
                     <div className="flex justify-center gap-x-2 p-1 mt-2">
-                        <button className="border-[2px] border-white rounded-sm px-14 py-2 text-lg font-semibold text-white transition-all duration-300 hover:scale-[101%] hover:bg-blue-700">Lihat Penginpan</button>
-                        <button className="border-[2px] border-white rounded-sm px-14 py-2 text-lg font-semibold text-white transition-all duration-300 hover:scale-[101%] hover:bg-blue-700">Login</button>
+                        <a href="#product" className="border-[2px] border-white rounded-sm px-14 py-2 text-lg font-semibold text-white transition-all duration-300 hover:scale-[101%] hover:bg-blue-700">Lihat Penginpan</a>
+                        {/* <button className="border-[2px] border-white rounded-sm px-14 py-2 text-lg font-semibold text-white transition-all duration-300 hover:scale-[101%] hover:bg-blue-700">Login</button> */}
                     </div>
                 </div>
             </div>
             {/* header end */}
 
-            <div className="bg-white text-white h-screen flex flex-col justify-center p-2">
+            <div className="bg-white text-white h-screen flex flex-col justify-center p-2" id="product">
                 <div className="my-4">
                     <div className="w-full text-black text-4xl text-center font-extrabold">
                         Cari Kosmu Disini
@@ -145,7 +144,11 @@ function Home() {
                 </div>
                 <div className="w-full h-screen flex flex-wrap justify-center overflow-scroll gap-2 scrollbar-none">
                     {/* Card Product Start */}
-                    {DataResource.map((item, index) => (<Card item={item} key={index} Navigate={Navigate} />))}
+                    {DataResource.map((item, index) => (
+                        <div className="" key={index}>
+                            <Card item={item}  Navigate={Navigate} />
+                        </div>
+                    ))}
                     {/* Card Product ENd */}
                 </div>
             </div>
@@ -154,3 +157,4 @@ function Home() {
 }
 
 export default Home;
+

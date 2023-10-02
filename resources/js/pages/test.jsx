@@ -1,19 +1,15 @@
-import React from 'react';
+import { usePDF } from 'react-to-pdf';
 
-function Nota() {
-  return (
-    <div className="w-1/2 mx-auto p-4 border">
-      <h1 className="text-2xl font-bold mb-4">Nota Pembayaran Sewa</h1>
-      <div className="mb-4">
-        <p><strong>Tanggal Sewa:</strong> 28 September 2023</p>
-        <p><strong>User yang Menyewa:</strong> John Doe</p>
+const test = () => {
+   const { toPDF, targetRef } = usePDF({filename: 'page.pdf'});
+   return (
+      <div>
+         <button onClick={() => toPDF()}>Download PDF</button>
+         <div ref={targetRef}>
+            Content to be generated to PDF
+         </div>
       </div>
-      <div className="mb-4">
-        <p><strong>Deskripsi Item:</strong> Apartemen di Midtown</p>
-        <p><strong>Harga Property:</strong> $1,000</p>
-      </div>
-    </div>
-  );
+   )
 }
 
-export default Nota;
+export default test;

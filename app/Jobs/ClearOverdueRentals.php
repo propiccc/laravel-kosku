@@ -29,8 +29,6 @@ class ClearOverdueRentals implements ShouldQueue
     {
     // Mendapatkan semua properti dengan tanggal sewa yang sudah lewat
     $overdueProperties = Property::whereDate('waktu_sewa', '<',  now()->format('Y-m-d'))->get();
-    
-
     // Mengubah penyewa_id menjadi null pada properti yang sudah lewat
     foreach ($overdueProperties as $property) {
         $property->update(['penyewa_id' => null, 'waktu_sewa' => null]);

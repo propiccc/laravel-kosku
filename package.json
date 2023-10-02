@@ -30,6 +30,7 @@
         "react-filepond": "^7.1.2",
         "react-hot-toast": "^2.4.1",
         "react-icons": "^4.8.0",
+        "react-to-pdf": "^1.0.1",
         "react-transition-group": "^4.4.5",
         "sweetalert2": "^11.7.10"
     }

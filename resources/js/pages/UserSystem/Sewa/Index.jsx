@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { MdAssistantDirection } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 
 
 
-function Card({ item, token, status}) {
+function Card({ item, token, status, redirec, uuidPayments}) {
 
   function formatRupiah(angka) {
       const formatter = new Intl.NumberFormat('id-ID', {
@@ -14,7 +15,6 @@ function Card({ item, token, status}) {
     
       return formatter.format(angka);
   }
-
 
   function DateKu() {
     var d = (new Date() + "").split(" ");
@@ -54,12 +54,12 @@ function Card({ item, token, status}) {
               </div>
               <div className="h-[1px] w-full bg-gray-500"></div>
               <div className="text-black font-semibold">
-                  <p className="text-xl max-h-[50px] overflow-hidden after:content-['...']">
+                  <p className="max-h-[40px] overflow-hidden after:content-['...']">
                       {item.lokasi}
                   </p>
               </div>
               <div className="max-w-[300px]">
-                  <p className="text-black max-h-[55px] text-ellipsis text-sm overflow-hidden after:content-['...']">
+                  <p className="text-black max-h-[40px] text-ellipsis text-sm overflow-hidden after:content-['...']">
                       {item.description}
                   </p>
               </div>
@@ -70,7 +70,7 @@ function Card({ item, token, status}) {
               ) : null}
               {status == 'success' ? (
               <div className="flex h-full items-end">
-                  <button className="px-10 py-2 bg-purple-700 font-semibold text-white rounded-lg active:scale-95 hover:scale-105 transition-all duration-300" onClick={() => {window.snap.pay(token)}}>Details</button>
+                  <button className="px-10 py-2 bg-purple-700 font-semibold text-white rounded-lg active:scale-95 hover:scale-105 transition-all duration-300" onClick={() => redirec(`/sewa/${uuidPayments}/detail`)}>Details</button>
               </div>
               ) : null}
           </div>
@@ -83,6 +83,7 @@ function Index() {
   // * Data 
   const [DataProperty, setDataProperty] = useState(null);
   const [Block, setBlock] = useState(null);
+  const redirec = useNavigate();
 
   // * Function 
   const GetProperty = () => {
@@ -114,15 +115,17 @@ function Index() {
     <div className="">
       {DataProperty != null ? (
         <>
-        {DataProperty.map((item, index) => (
-          <div className="bg-blue-400">
-            <div className="" key={index}>
-              <Card item={item.property} token={item.token}  status={item.status} />
-            </div>
-          </div>
-        ))}
+        {DataProperty.length == '0' ? 'No Data In Here' : (
+          <>
+            {DataProperty.map((item, index) => (
+                <div key={index}>
+                  <Card item={item.property} token={item.token}  status={item.status} uuidPayments={item.uuid} redirec={redirec} />
+                </div>
+            ))}
+          </>
+        )}
         </>
-      ) : (<span>No Data</span>)}
+      ) : (<span>Loading</span>)}
     </div>
     </>
   )
