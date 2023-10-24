@@ -104,8 +104,7 @@ function Index() {
                         <button onClick={() => navigate(`/sewa/${item.uuid}/detail`)} className='px-4 py-2 text-white bg-blue-600 rounded-lg mt-3'><FaPencilRuler /></button>
                     </td>
                   </tr>)
-                ))
-              }
+                ))}
               {Penjualan?.data?.length == 0 && !block ? (
                 <tr className='bg-gray-200 h-14'>
                   <td colSpan={6} className='font-semibold'><span className='ml-1'>Not Found</span></td>

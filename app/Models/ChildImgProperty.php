@@ -11,8 +11,8 @@ class ChildImgProperty extends Model
 {
     use HasFactory, Uuid;
     protected $fillable = ['image', 'property_id'];
-    protected $appends = ['imagedir'];
 
+    protected $appends = ['imagedir'];
 
     public function getImagedirAttribute()
     {

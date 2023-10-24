@@ -112,8 +112,8 @@ class PropertyController extends Controller
                     
                     if ($image_name != 'blob') {
 
-                        $image_name = date('YMDHis') . '-' . $image_name;
-                        $image->storeAs('/public/ChildImgProperty', $image_name);
+                            $image_name = date('YMDHis') . '-' . $image_name;
+                            $image->storeAs('/public/ChildImgProperty', $image_name);
 
                         $ChildImage = ChildImgProperty::create([
                             'property_id' => $data->id,
@@ -281,6 +281,7 @@ class PropertyController extends Controller
             foreach ($child_img as $item) {
                 Storage::delete("/public/ChildImgProperty/" . $item->image);
             }
+
             $data->delete();
 
             if ($data) {
